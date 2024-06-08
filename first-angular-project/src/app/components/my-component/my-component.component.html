@@ -1,0 +1,26 @@
+
+<div class="movie__card">
+	<div class="info__section">
+		<div class="movie__header">
+			<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
+			<h1>{{ data.title }}</h1>
+			<h4>{{data.release_date}}</h4>
+			<span class="minutes">{{data.minutes}}</span>
+			<p class="type">{{data.type}}</p>
+			<!-- <button (click)="addToFavorites()">Додати до улюблених</button>
+			<button (click)="addToWatchList()">Додати до списку перегляду</button> -->
+		</div>
+		<div class="movie__desc">
+			<p class="text">{{ data.overview }}</p>
+			<p class="rating">Rating: {{ data.rating }}</p>
+		</div>
+		<div class="movie__social">
+			<ul>
+				<li><i><span class="material-symbols-outlined">thumb_up</span></i></li>
+				<li><i><span class="material-symbols-outlined">favorite</span></i></li>
+				<li><i><span class="material-symbols-outlined">bookmark</span></i></li>
+			</ul>
+		</div>
+		</div>
+	<div class="blur__back"><img [src]="data.back_img" alt="{{data.title}}"></div>
+</div>
