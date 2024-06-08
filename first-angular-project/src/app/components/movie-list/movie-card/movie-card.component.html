@@ -1,9 +1,8 @@
-
 <div class="movie__card">
 	<div class="info__section">
 		<div class="movie__header">
 			<a href="{{data.link}}" target="_blank">
-				<img [src]="data.backdrop_path" alt="{{ data.title }}"class="locandina">
+				<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
 			</a>
 			<h1>{{ data.title }}</h1>
 			<h4>{{data.release_date}}</h4>
@@ -16,11 +15,11 @@
 		</div>
 		<div class="movie__social">
 			<ul>
-				<li ><i><span class="material-symbols-outlined">thumb_up</span></i></li>
-				<li (click)="addToFavorites()"><i><span class="material-symbols-outlined">favorite</span></i></li>
-				<li (click)="addToFavorites()"><i><span class="material-symbols-outlined">bookmark</span></i></li>
+				<li><i><span class="material-symbols-outlined">thumb_up</span></i></li>
+				<!-- <li (click)="addToFavorites()"><i><span class="material-symbols-outlined">favorite</span></i></li>
+				<li (click)="addToFavorites()"><i><span class="material-symbols-outlined">bookmark</span></i></li> -->
 			</ul>
 		</div>
 	</div>
-	<div class="blur__back"><img [src]="data.back_img" alt="{{data.title}}"></div>
+	<div class="blur__back"><img class="bg-img" [src]="data.back_img" alt="{{data.title}}"></div>
 </div>
