@@ -1,0 +1,37 @@
+<div class="list__container">
+	<div class="list__favorite">
+		<h3>Favorite List</h3>
+		<ul class="list__list">
+			<li class="list__item" *ngFor="let movie of favoriteList let i = index">
+				<button type="button" class="list__button" (click)="deleteFromFavorite(i)"><i><span class="material-symbols-outlined">close</span></i></button>
+				<a [href]="movie.link" target="_blank" class="poster">
+					<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
+				</a>
+				<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
+			</li>
+		</ul>
+	</div>
+	<div class="list__watch-list">
+		<h3>Watch List</h3>
+		<ul class="list__list">
+			<li class="list__item" *ngFor="let movie of watchList let i = index">
+				<button type="button" class="list__button"(click)="deleteFromWatchList(i)"><i><span class="material-symbols-outlined">close</span></i></button>
+				<a [href]="movie.link" target="_blank" class="poster">
+					<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
+				</a>
+				<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="movie-list">
+	<app-movie-card 
+	*ngFor='let movie of movies' 
+	[data]="movie" 
+	[isInFavorite]="isInFavorite(movie)"
+	[isInWatchList]="isInWatchList(movie)"
+	(addFavorite)="handleAddFavorite($event)"
+	(addWatchList)="handleAddWatchList($event)">
+</app-movie-card>
+</div>
