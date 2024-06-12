@@ -2,7 +2,7 @@
 	<div class="list__favorite">
 		<h3>Favorite List</h3>
 		<ul class="list__list">
-			<li class="list__item" *ngFor="let movie of favoriteList let i = index">
+			<li class="list__item" *ngFor="let movie of favoriteList let i = index trackBy: trackById">
 				<button type="button" class="list__button" (click)="deleteFromFavorite(i)"><i><span class="material-symbols-outlined">close</span></i></button>
 				<a [href]="movie.link" target="_blank" class="poster">
 					<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">

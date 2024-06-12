@@ -45,4 +45,7 @@ export class MovieListComponent {
 	deleteFromWatchList(index: number) {
 		this.watchList.splice(index, 1)
 	}
+	trackById(index: number, item: any) {
+		return item.id
+	}
 }
