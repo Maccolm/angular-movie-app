@@ -1,7 +1,7 @@
 <div class="movie__card">
 	<div class="info__section">
 		<div class="movie__header">
-			<a href="{{data.link}}" target="_blank">
+			<a [href]="data.link" target="_blank">
 				<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
 			</a>
 			<h1>{{ data.title }}</h1>
