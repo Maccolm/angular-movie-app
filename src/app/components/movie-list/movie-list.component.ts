@@ -12,6 +12,8 @@ import { movies } from '../../../../movie-data';
 })
 export class MovieListComponent {
 
+	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
+	public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
 	favoriteList: any[] = [];
 	watchList: any[] =[];
@@ -44,8 +46,5 @@ export class MovieListComponent {
 	}
 	deleteFromWatchList(index: number) {
 		this.watchList.splice(index, 1)
-	}
-	trackById(index: number, item: any) {
-		return item.id
 	}
 }
