@@ -7,7 +7,7 @@ export const movies = [
 			overview: "In the near future, a group of war journalists attempt to survive while reporting the truth as the United States stands on the brink of civil war.",
 			release_date: "2024-04-10",
 			title: "Civil War",
-			minutes: '117 min',
+			minutes: 117,
 			type: "Action, Crime, Fantasy",
 			rating: 8.5
 		},
@@ -19,7 +19,7 @@ export const movies = [
 			overview: 'Jake Sully lives with his newfound family formed on the planet of Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na\'vi race to protect their planet.',
 			release_date: '2022-12-16',
 			title: 'Avatar: The Way of Water',
-			minutes: '192 min',
+			minutes: 192,
 			type: 'Action, Adventure, Fantasy',
 			rating: 7.6
 		},
@@ -31,7 +31,7 @@ export const movies = [
 			overview: 'In 1987, a battle-scarred and broken Optimus Prime turns to Bumblebee for help as he struggles to hold the Autobots together.',
 			release_date: '2023-06-09',
 			title: 'Transformers: Rise of the Beasts',
-			minutes: '117 min',
+			minutes: 117,
 			type: 'Action, Adventure, Sci-Fi',
 			rating: 6.8
 		},
@@ -43,7 +43,7 @@ export const movies = [
 			overview: 'Natasha Romanoff confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises.',
 			release_date: '2021-07-09',
 			title: 'Black Widow',
-			minutes: '134 min',
+			minutes: 134,
 			type: 'Action, Adventure, Sci-Fi',
 			rating: 6.7
 		},
@@ -55,7 +55,7 @@ export const movies = [
 			overview: 'With Spider-Man\'s identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.',
 			release_date: '2021-12-17',
 			title: 'Spider-Man: No Way Home',
-			minutes: '148 min',
+			minutes: 148,
 			type: 'Action, Adventure, Fantasy',
 			rating: 8.4
 		},
@@ -67,7 +67,7 @@ export const movies = [
 			overview: 'James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology.',
 			release_date: '2021-10-08',
 			title: 'No Time to Die',
-			minutes: '163 min',
+			minutes: 163,
 			type: 'Action, Adventure, Thriller',
 			rating: 7.3
 		}
