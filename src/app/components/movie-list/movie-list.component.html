@@ -2,17 +2,15 @@
 	<div class="list__favorite">
 		<h3>Favorite List</h3>
 		<ul class="list__list">
-			@if (favoriteList.length > 0){
-				@for (movie of favoriteList; track movie.id; let index = $index) {
-					<li class="list__item">
-						<button type="button" class="list__button" (click)="deleteFromFavorite(index)"><i><span class="material-symbols-outlined">close</span></i></button>
-						<a [href]="movie.link" target="_blank" class="poster">
-							<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
-						</a>
-						<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
-					</li>
-				}
-			} @else {
+			@for (movie of favoriteList; track movie.id; let index = $index) {
+				<li class="list__item">
+					<button type="button" class="list__button" (click)="deleteFromFavorite(index)"><i><span class="material-symbols-outlined">close</span></i></button>
+					<a [href]="movie.link" target="_blank" class="poster">
+						<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
+					</a>
+					<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
+				</li>
+			} @empty {
 				{{emptyFavoriteList}}
 			}
 		</ul>
@@ -20,17 +18,15 @@
 	<div class="list__watch-list">
 		<h3>Watch List</h3>
 		<ul class="list__list">
-			@if (watchList.length > 0) {
-				@for (movie of watchList; track movie.id; let i = $index) {
-					<li class="list__item">
-						<button type="button" class="list__button"(click)="deleteFromWatchList(i)"><i><span class="material-symbols-outlined">close</span></i></button>
-						<a [href]="movie.link" target="_blank" class="poster">
-							<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
-						</a>
-						<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
-					</li>
-				}
-			} @else {
+			@for (movie of watchList; track movie.id; let i = $index) {
+				<li class="list__item">
+					<button type="button" class="list__button"(click)="deleteFromWatchList(i)"><i><span class="material-symbols-outlined">close</span></i></button>
+					<a [href]="movie.link" target="_blank" class="poster">
+						<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
+					</a>
+					<a [href]="movie.link" target="_blank" class="item-link">{{movie.title}}</a>
+				</li>
+			} @empty {
 				{{emptyWatchList}}
 			}
 		</ul>
