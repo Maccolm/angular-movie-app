@@ -6,7 +6,7 @@
 			</a>
 			<h1>{{ data.title }}</h1>
 			<h4>{{data.release_date}}</h4>
-			<span class="minutes">{{data.minutes}}</span>
+			<span class="minutes">{{data.minutes | numberDurationFormat}}</span>
 			<p class="type">{{data.type}}</p>
 		</div>
 		<div class="movie__desc">
