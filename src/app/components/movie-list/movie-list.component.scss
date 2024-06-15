@@ -41,7 +41,13 @@ h3{
 	height: 120px;
 	box-shadow: 0 0 20px -10px rgba(0,0,0,0.5);
 }
-
+.movie-list{
+	padding: 15px;
+	display: grid;
+	gap: 30px;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	justify-items: center;
+}
 .list {
   &__container {
 	padding: 15px;
