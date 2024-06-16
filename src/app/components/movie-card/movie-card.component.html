@@ -1,25 +1,31 @@
-<div class="movie__card">
-	<div class="info__section">
-		<div class="movie__header">
-			<a [href]="data.link" target="_blank">
-				<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
-			</a>
-			<h1>{{ data.title }}</h1>
-			<h4>{{data.release_date}}</h4>
-			<span class="minutes">{{data.minutes | numberDurationFormat}}</span>
-			<p class="type">{{data.type}}</p>
-		</div>
+<p-card class="movie__card">
+		<ng-template pTemplate="header">
+			<div class="movie__header">
+				<a [href]="data.link" target="_blank">
+					<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
+				</a>
+				<h1>{{ data.title }}</h1>
+				<h4>{{data.release_date}}</h4>
+				<span class="minutes">{{data.minutes | numberDurationFormat}}</span>
+				<p class="type">{{data.type}}</p>
+			</div>
+		</ng-template>
 		<div class="movie__desc">
 			<p class="text">{{ data.overview }}</p>
 			<p class="rating">Rating: {{ data.rating }}</p>
 		</div>
-		<div class="movie__social">
-			<ul>
-				<li><i><span class="material-symbols-outlined">thumb_up</span></i></li>
-				<li (click)="addToFavorites()"><i><span class="material-symbols-outlined" [ngClass]="{'active' : isInFavorite}">favorite</span></i></li>
-				<li (click)="addToWatchList()"><i><span class="material-symbols-outlined" [ngClass]="{'active' : isInWatchList}">bookmark</span></i></li>
-			</ul>
-		</div>
+		<ng-template pTemplate="footer">
+			<div class="movie__social">
+				<ul>
+					<li><i class="pi pi-check"></i></li>
+					<li><i><span class="material-symbols-outlined">thumb_up</span></i></li>
+					<li (click)="addToFavorites()"><i><span class="material-symbols-outlined" [ngClass]="{'active' : isInFavorite}">favorite</span></i></li>
+					<li (click)="addToWatchList()"><i><span class="material-symbols-outlined" [ngClass]="{'active' : isInWatchList}">bookmark</span></i></li>
+				</ul>
+			</div>
+		</ng-template>
+	<div class="blur__back">
+		<img class="bg-img" [src]="data.back_img" alt="{{data.title}}">
+		<div class="gradient-overlay"></div>
 	</div>
-	<div class="blur__back"><img class="bg-img" [src]="data.back_img" alt="{{data.title}}"></div>
-</div>
+</p-card>
