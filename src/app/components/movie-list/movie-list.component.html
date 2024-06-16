@@ -20,7 +20,7 @@
 		<ul class="list__list">
 			@for (movie of watchList; track movie.id; let i = $index) {
 				<li class="list__item">
-					<button type="button" class="list__button"(click)="deleteFromWatchList(i)"><i><span class="pi pi-times-circle"></span></i></button>
+					<button type="button" class="list__button"(click)="deleteFromWatchList(i)"><i><span class="pi pi-times-circle list__button-icon"></span></i></button>
 					<a [href]="movie.link" target="_blank" class="poster">
 						<img [src]="movie.backdrop_path" [alt]="movie.title" class="locandina center">
 					</a>
