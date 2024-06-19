@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-movie-header',
   standalone: true,
   imports: [],
-  templateUrl: './movie-header.component.html',
-  styleUrl: './movie-header.component.scss'
+  templateUrl: './movie-header-page.component.html',
+  styleUrl: './movie-header-page.component.scss'
 })
 export class MovieHeaderComponent {
 

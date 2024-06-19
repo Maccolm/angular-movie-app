@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MovieSidebarComponent } from './movie-sidebar.component';
+import { MovieHeaderComponent } from './movie-header-page.component';
 
-describe('MovieSidebarComponent', () => {
-  let component: MovieSidebarComponent;
-  let fixture: ComponentFixture<MovieSidebarComponent>;
+describe('MovieHeaderComponent', () => {
+  let component: MovieHeaderComponent;
+  let fixture: ComponentFixture<MovieHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MovieSidebarComponent]
+      imports: [MovieHeaderComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MovieSidebarComponent);
+    fixture = TestBed.createComponent(MovieHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
