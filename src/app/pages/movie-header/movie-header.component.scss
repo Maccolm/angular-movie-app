@@ -1,0 +1,26 @@
+@import '../../app.component.scss';
+
+.header {
+  &__container {
+	height: 80px;
+  }
+  &__list {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12rem;
+  }
+ 
+&__item >*{
+		font-weight: 500;
+		font-size: 18px;
+		line-height: 2;
+		 color: #545454;
+		 transition: color 0.3s ease-out 0s;
+		 &:hover{
+			 color: rgb(215, 142, 5);
+		 }
+	}
+}

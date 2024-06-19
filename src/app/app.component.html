@@ -1,2 +1,10 @@
-<!-- <app-my-component [data]="movies" (addFavorite)="handleAddFavorite()" (addWatchList)="handleAddWatchList()"></app-my-component> -->
- <app-movie-list></app-movie-list>
+ <!-- <app-movie-list></app-movie-list> -->
+<header>
+	<app-movie-header></app-movie-header>
+</header>
+<main>
+	<router-outlet></router-outlet>
+</main>
+<footer>
+	<app-movie-sidebar></app-movie-sidebar>
+</footer>
