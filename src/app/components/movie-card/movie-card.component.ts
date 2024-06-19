@@ -1,13 +1,15 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NumberDurationFormatPipe } from '../../pipes/numberDurationFormat/number-duration-format.pipe';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [CommonModule, NumberDurationFormatPipe],
+  imports: [CommonModule, NumberDurationFormatPipe, CardModule],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class MovieCardComponent implements OnInit {
   @Input() data: any;
