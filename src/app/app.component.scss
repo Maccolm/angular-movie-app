@@ -17,18 +17,42 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 /*--------------------*/
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+header{
+	position: fixed;
+	width: 100%;
+	height: 95px;
+		background: linear-gradient(to bottom, #f0eeeebc 75%, transparent 100%);
+		// background-color: #f0eeeebc;
 
+	z-index: 5;
+	@media  screen and (max-width: 770px) {
+		height: 85px;
+	}
+}
 main{
-	display: flex;
-	justify-content: space-between;
+	padding: 110px 10px 0 200px !important;
+	// display: flex;
+	// justify-content: space-between;
 	padding: 10px;
+	@media screen and (max-width: 989px){
+		padding-left: 45px !important;
+	}
 }
 .main-content {
-	flex: 1;
+	// flex: 1;
+	position: relative;
 }
 .aside {
+	position: fixed;
+	top: 110px;
+	left: 0px;
 	width: 200px;
 	@media screen and (max-width: 989px) {
-		width: 40px;	
+		width: 50px;
+		top: 155px;	
+		left: 0;
+	}
+	@media screen and (max-width: 770px){
+		top: 135px;
 	}
 }

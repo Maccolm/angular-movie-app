@@ -1,8 +1,5 @@
-<!-- <p-menubar>
-	<p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right" />
 
-</p-menubar> -->
-<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem">
+<p-sidebar [(visible)]="sidebarVisible" styleClass="custom-sidebar w-30rem">
 	<ng-template pTemplate="header">
 		<div class="flex align-items-center gap-2">
 			<img src="../../../assets/img/favicon.svg" shape="circle" />
@@ -15,4 +12,4 @@
 		Lorem ipsum dolor sit amet...
 	</p>
 </p-sidebar>
-<p-button (click)="sidebarVisible = true" icon="pi pi-plus" />
+<button class="bar-button" (click)="sidebarVisible = true"><i class="pi pi-bars"></i></button>

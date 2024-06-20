@@ -2,6 +2,31 @@
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 
-.p-sidebar {
+.bar-button{
+	position: fixed;
+	display: block;
+	top: 110px;
+	left: 0;
+	background: none;
+	width: 50px;
+	border: none;
+	padding: 10px 7px;
+	border-bottom: 1px solid rgb(216, 216, 216);
+	@media screen and (min-width: 989px) {
+		display: none;
+	}
+	@media screen and (max-width: 770px){
+		top: 90px;
+	}
+}
+.bar-button i {
+	font-size: 20px;
+
+}
+:host ::ng-deep .custom-sidebar{
 	background-color: #fff;
+	top: 110px; 
+	@media screen and (max-width: 989px) {
+		top: 105px;	
+	}
 }
