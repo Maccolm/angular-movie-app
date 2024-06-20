@@ -1,15 +1,30 @@
 
 <p-sidebar [(visible)]="sidebarVisible" styleClass="custom-sidebar w-30rem">
-	<ng-template pTemplate="header">
-		<div class="flex align-items-center gap-2">
-			<img src="../../../assets/img/favicon.svg" shape="circle" />
-			<span class="font-bold">
-				Amy Elsner
-			</span>
+	<ng-template pTemplate="body">
+		<div class="aside-menu__container">
+			<ul class="aside-menu__list">
+				<li class="aside-menu__item">
+					<div class="text">
+						<p>Now playing</p>
+					</div>
+				</li>
+				<li class="aside-menu__item">	
+					<div class="text">
+						<p>Popular</p>
+					</div>
+				</li>
+				<li class="aside-menu__item">			
+					<div class="text">
+						<p>Top rate</p>
+					</div>
+				</li>
+				<li class="aside-menu__item">
+					<div class="text">
+						<p>Upcoming</p>
+					</div>
+				</li>
+			</ul>
 		</div>
 	</ng-template>
-	<p>
-		Lorem ipsum dolor sit amet...
-	</p>
 </p-sidebar>
 <button class="bar-button" (click)="sidebarVisible = true"><i class="pi pi-bars"></i></button>

@@ -28,6 +28,7 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 	top: 0;
 	@media screen and (max-width: 435px) {
 		grid-template-columns:  1fr;
+		padding: 0;
 	}
 }
 h3{
