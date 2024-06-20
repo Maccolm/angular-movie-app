@@ -17,6 +17,19 @@ img{vertical-align: top;}
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 /*--------------------*/
 
+.movie-list{
+	padding: 0 15px;
+	display: grid;
+	gap: 30px;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	justify-items: center;
+	position: relative;
+	right: 0;
+	top: 0;
+	@media screen and (max-width: 435px) {
+		grid-template-columns:  1fr;
+	}
+}
 h3{
 	font-weight: 700;
 	margin-bottom: 15px;
@@ -27,13 +40,6 @@ h3{
 	margin-right: 20px;
 	height: 230px;
 	box-shadow: 0 0 20px -10px rgba(0,0,0,0.5);
-}
-.movie-list{
-	padding: 15px;
-	display: grid;
-	gap: 30px;
-	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-	justify-items: center;
 }
 .list {
   &__container {

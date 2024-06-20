@@ -2,7 +2,10 @@
 
 .header {
   &__container {
-	height: 80px;
+	height: 110px;
+	@media  screen and (max-width: 770px) {
+		height: 85px;
+	}
   }
   &__list {
 	height: 100%;
@@ -11,16 +14,36 @@
 	justify-content: center;
 	align-items: center;
 	gap: 12rem;
+	@media  screen and (max-width: 735px) {
+		justify-content: center;
+		gap: 30px;
+	}
   }
  
-&__item >*{
+	&__item >*{
+		display: flex;
+		align-items: center;
+		gap: 7px;
 		font-weight: 500;
 		font-size: 18px;
 		line-height: 2;
-		 color: #545454;
-		 transition: color 0.3s ease-out 0s;
-		 &:hover{
-			 color: rgb(215, 142, 5);
-		 }
+		color: #545454;
+		transition: color 0.3s ease-out 0s;
+		&:hover{
+			color: rgb(215, 142, 5);
+		}
 	}
 }
+@media  screen and (max-width: 635px) {
+		.header__item p{
+			display: none;
+		}
+		.header__item i{
+			font-size: 25px;
+		}
+		.header__list{
+			gap: 30px;
+			justify-content: end;
+			padding-right: 30px;
+		}
+	}

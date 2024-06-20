@@ -1,8 +1,7 @@
-*{
-  box-sizing: border-box;
-  margin: 0;
+.movie__header h1,h4, p, ul {
+	box-sizing: border-box;
+	margin: 0;
 }
-
 .link{
   display: block;
   text-align: center;
@@ -23,6 +22,10 @@
   border-radius: 10px;
   transition: all 0.4s;
   box-shadow: 0px 0px 120px -25px rgba(0,0,0, 0.5);
+  @media screen and (max-width: 435px){
+	max-height: 100%;
+  }
+  
   &:hover{
 	  transform: scale(1.02);
 	  box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
@@ -45,9 +48,17 @@
 			padding: 25px;
 			height: 40%;
 			margin-top: 15px;
+			@media screen and (max-width: 435px){
+				margin-top: 5px;
+				padding: 15px;
+			}
 			h1{
 				color: black;
 				font-weight: 400;
+				@media screen and (max-width: 435px) {
+					font-size: 18px;
+					font-weight: 500;
+				}
 			}
 			h4{
 				color: #323131;
@@ -85,10 +96,16 @@
       .text{
         color: #545454;
       }
+		@media screen and (max-width: 435px) {
+			padding: 5px 15px;
+		}
     }
     .movie__social{
 		padding-left: 15px;
       padding-bottom: 20px;
+		@media screen and (max-width: 435px){
+			padding-top: 15px;
+		}
       ul{
         list-style: none;
         padding: 0;
@@ -149,10 +166,16 @@ color: rgb(215, 142, 5);
 //p-card-component===============================================
 .p-card-header{
 	height: 230px;
+	@media screen and (max-width: 435px){
+		height: auto;
+	}
 }
 .p-card-body{
 	height: 230px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	@media screen and (max-width: 435px) {
+		height: auto;
+	}
 }

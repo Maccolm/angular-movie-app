@@ -1,0 +1,18 @@
+.header {
+  &__logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 57px;
+	width: 70px;
+	padding: 25px;
+	padding-left: 10px;
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	@media  screen and (max-width: 770px) {
+		height: 30px;
+		width: 50px;
+	}
+  }
+}

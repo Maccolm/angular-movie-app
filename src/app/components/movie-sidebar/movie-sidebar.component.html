@@ -1,9 +1,18 @@
-<p-sidebar [(visible)]="visibleSidebar">
+<!-- <p-menubar>
+	<p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right" />
+
+</p-menubar> -->
+<p-sidebar [(visible)]="sidebarVisible" styleClass="w-30rem">
 	<ng-template pTemplate="header">
-		<span class="font-semibold text-xl">Sidebar</span>
+		<div class="flex align-items-center gap-2">
+			<img src="../../../assets/img/favicon.svg" shape="circle" />
+			<span class="font-bold">
+				Amy Elsner
+			</span>
+		</div>
 	</ng-template>
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+		Lorem ipsum dolor sit amet...
 	</p>
 </p-sidebar>
-<p-button (click)="visibleSidebar = true" icon="pi pi-arrow-right" />
+<p-button (click)="sidebarVisible = true" icon="pi pi-plus" />

@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
+import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
 
 @Component({
   selector: 'app-movie-sidebar',
   standalone: true,
-  imports: [SidebarModule, ButtonModule],
+  imports: [MenubarModule, ButtonModule, SidebarModule],
   templateUrl: './movie-sidebar.component.html',
   styleUrl: './movie-sidebar.component.scss'
 })
 export class MovieSidebarComponent {
-	visibleSidebar: boolean = true
+	sidebarVisible: boolean = false
 }

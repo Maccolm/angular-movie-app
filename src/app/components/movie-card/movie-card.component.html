@@ -17,8 +17,8 @@
 		<ng-template pTemplate="footer">
 			<div class="movie__social">
 				<ul>
-					<li><i><span class="pi pi-thumbs-up-fill"></span></i></li>
-					<li><i><span class="pi pi-thumbs-down-fill"></span></i></li>
+					<!-- <li><i><span class="pi pi-thumbs-up-fill"></span></i></li>
+					<li><i><span class="pi pi-thumbs-down-fill"></span></i></li> -->
 					<li (click)="addToFavorites()"><i><span class="pi pi-heart-fill" [ngClass]="{'active' : isInFavorite}"></span></i></li>
 					<li (click)="addToWatchList()"><i><span class="pi pi-bookmark-fill" [ngClass]="{'active' : isInWatchList}"></span></i></li>
 				</ul>

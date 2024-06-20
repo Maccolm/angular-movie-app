@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MovieSidebarComponent } from "../../components/movie-sidebar/movie-sidebar.component";
 
 
+
 @Component({
     selector: 'app-movie-sidebar-page',
     standalone: true,
