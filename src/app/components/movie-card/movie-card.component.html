@@ -2,17 +2,18 @@
 		<ng-template pTemplate="header">
 			<div class="movie__header">
 				<a [href]="data.link" target="_blank">
-					<img [src]="data.backdrop_path" alt="{{ data.title }}" class="locandina">
+					<img src="https://image.tmdb.org/t/p/w500/{{data.poster_path}}" alt="{{ data.title }}" class="locandina">
 				</a>
 				<h1>{{ data.title }}</h1>
 				<h4>{{data.release_date}}</h4>
-				<span class="minutes">{{data.minutes | numberDurationFormat}}</span>
+				<!-- <span class="minutes">{{data.minutes | numberDurationFormat}}</span> -->
 				<p class="type">{{data.type}}</p>
 			</div>
 		</ng-template>
 		<div class="movie__desc">
-			<p class="text">{{ data.overview }}</p>
-			<p class="rating">Rating: {{ data.rating }}</p>
+			<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
+			<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="showDialog()" severity="info" ></p-button>
+			<p class="rating">Rating: {{ data.vote_average }}</p>
 		</div>
 		<ng-template pTemplate="footer">
 			<div class="movie__social">
@@ -25,7 +26,11 @@
 			</div>
 		</ng-template>
 	<div class="blur__back">
-		<img class="bg-img" [src]="data.back_img" alt="{{data.title}}">
+		<img class="bg-img" src="https://image.tmdb.org/t/p/w500/{{data.backdrop_path}}" alt="{{data.title}}">
 		<div class="gradient-overlay"></div>
 	</div>
 </p-card>
+
+<p-dialog header="Details" [(visible)]="displayDialog" modal="modal" [style]="{width: '500px'}">
+	<p>{{data.overview}}</p>
+</p-dialog>

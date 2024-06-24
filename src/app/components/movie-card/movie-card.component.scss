@@ -95,6 +95,7 @@
       height: 50%;
       .text{
         color: #545454;
+		  margin-bottom: 15px;
       }
 		@media screen and (max-width: 435px) {
 			padding: 5px 15px;
@@ -178,4 +179,10 @@ color: rgb(215, 142, 5);
 	@media screen and (max-width: 435px) {
 		height: auto;
 	}
+}
+.p-button{
+	font-size: 16px;
+	padding: 10px;
+	border-radius: 7px;
+	transition: background-color 0.3s ease-out 0s;
 }

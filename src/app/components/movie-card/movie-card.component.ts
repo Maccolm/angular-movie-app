@@ -2,11 +2,15 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewEncapsulation } fro
 import { CommonModule } from '@angular/common';
 import { NumberDurationFormatPipe } from '../../pipes/numberDurationFormat/number-duration-format.pipe';
 import { CardModule } from 'primeng/card';
+import { DialogModule }from 'primeng/dialog'
+import { LimitedSymbolsPipe } from '../../pipes/limitedSymbols/limited-symbols.pipe';
+import { ButtonModule } from 'primeng/button';
+
 
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [CommonModule, NumberDurationFormatPipe, CardModule],
+  imports: [CommonModule, NumberDurationFormatPipe, CardModule, DialogModule, LimitedSymbolsPipe, ButtonModule],
   templateUrl: './movie-card.component.html',
   styleUrl: './movie-card.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -19,6 +23,7 @@ export class MovieCardComponent implements OnInit {
   @Output() addWatchList = new EventEmitter<any>();
 
   public movie: any;
+  public displayDialog: boolean = false
 
   ngOnInit(): void {
     this.movie = this.data;
@@ -38,5 +43,9 @@ export class MovieCardComponent implements OnInit {
       link: this.movie.link,
       id: this.movie.id,
     });
+  }
+  
+  showDialog() {
+	  this.displayDialog = true
   }
 }

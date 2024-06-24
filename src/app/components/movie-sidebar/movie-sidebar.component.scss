@@ -82,3 +82,12 @@
 .aside-menu__item i {
 font-size: 30px;
 }
+::ng-deep .p-sidebar-mask{
+	 display: none;
+}
+::ng-deep .p-sidebar .p-sidebar-content {
+	padding: 0;
+}
+::ng-deep .p-sidebar .p-sidebar-header{
+	padding: 0;
+}

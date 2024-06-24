@@ -1,10 +1,12 @@
 <div class="header__container">
-	<ul class="header__list">
-		<li class="header__item">
-			<button class="favorites"><i class="pi pi-heart-fill"></i> <p>Favorites</p></button>
-		</li>
-		<li class="header__item">
-			<button class="watch-list"><i class="pi pi-bookmark-fill"></i> <p>Watch list</p></button>
-		</li>
-	</ul>
+	<nav class="header__list">
+		<a class="favorites header__item" [routerLink] = "[{ outlets: ['favorites']}]">
+			<i class="pi pi-heart-fill"></i>
+			<p>Favorites</p>
+		</a>
+		<a class="watch-list header__item" [routerLink]="[{ outlets:  ['watch-list']}]">
+			<i class="pi pi-bookmark-fill"></i> 
+			<p>Watch list</p>
+		</a>
+	</nav>
 </div>
