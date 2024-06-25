@@ -1,7 +1,7 @@
 @import "primeng/resources/themes/saga-blue/theme.css";
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
-
+@import '../../../../nullstyle/nullstyle.scss';
 .bar-button{
 	position: fixed;
 	display: block;
@@ -59,7 +59,6 @@
 	&__item {
 		height: 53px;
 		margin: 0 0 5px 0;
-		padding: 10px 5px;
 		border: 1px solid rgb(216, 216, 216);
 		border-right: none;
 		border-top: none;
@@ -76,7 +75,11 @@
 		transition: background-color 0.3s ease-out 0s;
 		&:hover{
 			background-color: rgb(216, 216, 216);
-		}		
+		}
+		a{
+			padding: 10px 5px;
+			width: 100%;
+		}
 	}
 }
 .aside-menu__item i {
@@ -90,4 +93,11 @@ font-size: 30px;
 }
 ::ng-deep .p-sidebar .p-sidebar-header{
 	padding: 0;
+}
+
+a:visited{
+color: #545454;
+}
+a{
+	color: #545454;
 }

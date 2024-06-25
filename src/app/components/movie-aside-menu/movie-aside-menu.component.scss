@@ -11,11 +11,9 @@
 	}
 	&__item {
 		margin: 0 0 5px 0;
-		padding: 10px 5px;
 		border: 1px solid rgb(216, 216, 216);
 		border-right: none;
 		border-top: none;
-		// border-radius: 5px;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
 		font-size: 18px;
@@ -28,7 +26,13 @@
 		transition: background-color 0.3s ease-out 0s;
 		&:hover{
 			background-color: rgb(216, 216, 216);
-		}		
+		}
+		&:active{
+			background-color: rgb(167, 167, 167);
+		}
+		p{
+			padding: 10px 5px;
+		}
 	}
 }
 .aside-menu__item i {
@@ -46,4 +50,13 @@
 	height: 53px;
   }
 }
-
+.text{
+	height: 100%;
+	width: 100%;
+}
+a:visited{
+	color: #545454;
+}
+a{
+	color: #545454;
+}

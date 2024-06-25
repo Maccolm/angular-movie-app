@@ -1,0 +1,12 @@
+<div class="header__container">
+	<nav class="header__list">
+		<button class="favorites header__item" (click)="navigateWithData(favoriteMoviesIds, 'favorite')">
+			<i class="pi pi-heart-fill"></i>
+			<p>Favorites</p>
+		</button>
+		<button class="watch-list header__item" (click)="navigateWithData(watchLaterIds)">
+			<i class="pi pi-bookmark-fill"></i>
+			<p>Watch list</p>
+		</button>
+	</nav>
+</div>

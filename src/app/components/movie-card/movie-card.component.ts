@@ -19,8 +19,10 @@ export class MovieCardComponent implements OnInit {
   @Input() data: any;
   @Input() isInFavorite: boolean = false;
   @Input() isInWatchList: boolean = false;
-  @Output() addFavorite = new EventEmitter<any>();
-  @Output() addWatchList = new EventEmitter<any>();
+  @Output() addToFavorites = new EventEmitter<string>();
+  @Output() addToWatchList = new EventEmitter<string>();
+  @Output() removeFavorite = new EventEmitter<string>();
+  @Output() removeWatchList = new EventEmitter<string>();
 
   public movie: any;
   public displayDialog: boolean = false
@@ -28,22 +30,20 @@ export class MovieCardComponent implements OnInit {
   ngOnInit(): void {
     this.movie = this.data;
   }
-  addToFavorites() {
-    this.addFavorite.emit({
-      title: this.movie.title,
-      backdrop_path: this.movie.backdrop_path,
-      link: this.movie.link,
-      id: this.movie.id,
-    });
-  }
-  addToWatchList() {
-    this.addWatchList.emit({
-      title: this.movie.title,
-      backdrop_path: this.movie.backdrop_path,
-      link: this.movie.link,
-      id: this.movie.id,
-    });
-  }
+	toggleFavorite(){
+		if(this.isInFavorite) {
+			this.removeFavorite.emit(this.movie.id)
+		} else {
+			this.addToFavorites.emit(this.movie.id)
+		}
+	}
+	toggleWatchList() {
+		if (this.isInWatchList) {
+			this.removeWatchList.emit(this.movie.id)
+		} else {
+			this.addToWatchList.emit(this.movie.id)
+		}
+	}
   
   showDialog() {
 	  this.displayDialog = true

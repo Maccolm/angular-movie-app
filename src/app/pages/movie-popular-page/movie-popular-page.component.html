@@ -1,0 +1,12 @@
+<div class="movie-list">
+	<app-movie-header [favoriteMoviesIds]="favoriteMoviesIds" [watchLaterIds]="watchLaterMoviesListIds"></app-movie-header>
+	
+	@for (movie of movies; track movie){
+	<app-movie-card 
+	[data]='movie' 
+	[isInFavorite]="isInFavorite(movie)"
+	[isInWatchList]="isInWatchList(movie)"
+	style="display: block; max-width: 430px; width: 100%;">
+	</app-movie-card>
+	}
+</div>

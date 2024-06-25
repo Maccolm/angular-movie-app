@@ -27,7 +27,6 @@ export class MovieListComponent {
 			this.favoriteList.splice(index, 1)
 		}
 		console.log(this.movies);
-		
 	}
 	handleAddWatchList(movie: any) {
 		const index = this.watchList.findIndex((item) => item.id === movie.id)

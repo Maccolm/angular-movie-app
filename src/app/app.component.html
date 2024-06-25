@@ -1,8 +1,6 @@
 <header>
 	<app-logo-page></app-logo-page>
-	<app-movie-header>
-		<router-outlet name="header"></router-outlet>
-	</app-movie-header>
+	<app-movie-header-page ></app-movie-header-page>
 </header>
 <main>
 	<div class="aside-bar">
@@ -13,6 +11,9 @@
 	</aside>
 	<div class="main-content">
 		<router-outlet></router-outlet>
+	</div>
+	<div class="wrapper">
+		<router-outlet name="header"></router-outlet>
 	</div>
 </main>
 <footer>

@@ -1,0 +1,14 @@
+.movie-list{
+	padding: 0 15px;
+	display: grid;
+	gap: 30px;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+	justify-items: center;
+	position: relative;
+	right: 0;
+	top: 0;
+	@media screen and (max-width: 435px) {
+		grid-template-columns:  1fr;
+		padding: 0;
+	}
+}

@@ -91,7 +91,7 @@
       }
     }
     .movie__desc{
-      padding: 25px;
+		padding: 8px 9px 15px 8px;
       height: 50%;
       .text{
         color: #545454;
@@ -166,13 +166,13 @@ color: rgb(215, 142, 5);
 }
 //p-card-component===============================================
 .p-card-header{
-	height: 230px;
+	height: 170px;
 	@media screen and (max-width: 435px){
 		height: auto;
 	}
 }
 .p-card-body{
-	height: 230px;
+	height: 250px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -185,4 +185,20 @@ color: rgb(215, 142, 5);
 	padding: 10px;
 	border-radius: 7px;
 	transition: background-color 0.3s ease-out 0s;
+}
+.p-card .p-card-content{
+	padding: 1.25rem 0 0 0;
+}
+.p-card .p-card-footer{
+	padding: 0;
+}
+.p-card .p-card-footer{
+	padding: 0;
+}
+.movie__card .p-card .movie__social{
+	padding-left: 0;
+	padding-top: 12px;
+}
+.pi{
+	font-size: 20px;
 }
