@@ -9,7 +9,7 @@ import { MovieTopRatePageComponent } from './pages/movie-top-rate-page/movie-top
 import { MovieUpcomingPageComponent } from './pages/movie-upcoming-page/movie-upcoming-page.component';
 
 export const routes: Routes = [
-	{path: '', component: MovieListPageComponent},
+	{path: '', component: MovieNowPlayingPageComponent},
 	{path: 'movie/:id', component: MovieDescriptionComponent},
 	{path: 'now-playing', component: MovieNowPlayingPageComponent},
 	{path: 'popular', component: MoviePopularPageComponent},

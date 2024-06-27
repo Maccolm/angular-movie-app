@@ -21,8 +21,8 @@ export class MovieCardComponent implements OnInit {
   @Input() isInWatchList: boolean = false;
   @Output() addToFavorites = new EventEmitter<string>();
   @Output() addToWatchList = new EventEmitter<string>();
-  @Output() removeFavorite = new EventEmitter<string>();
-  @Output() removeWatchList = new EventEmitter<string>();
+  @Output() deleteFromFavorite = new EventEmitter<string>();
+  @Output() deleteFromWatchList = new EventEmitter<string>();
 
   public movie: any;
   public displayDialog: boolean = false
@@ -32,14 +32,14 @@ export class MovieCardComponent implements OnInit {
   }
 	toggleFavorite(){
 		if(this.isInFavorite) {
-			this.removeFavorite.emit(this.movie.id)
+			this.deleteFromFavorite.emit(this.movie.id)
 		} else {
 			this.addToFavorites.emit(this.movie.id)
 		}
 	}
 	toggleWatchList() {
 		if (this.isInWatchList) {
-			this.removeWatchList.emit(this.movie.id)
+			this.deleteFromWatchList.emit(this.movie.id)
 		} else {
 			this.addToWatchList.emit(this.movie.id)
 		}

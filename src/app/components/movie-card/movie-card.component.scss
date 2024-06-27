@@ -202,3 +202,38 @@ color: rgb(215, 142, 5);
 .pi{
 	font-size: 20px;
 }
+//detail-window=================================================================================
+.movie__card-detail{
+	max-width: 870px;
+	box-shadow: none;
+	&:hover{
+		transform: scale(1);
+		box-shadow: none;
+	}
+	.p-card-header{
+		height: auto;
+	}
+	.p-card-body{
+		height: auto;
+	}
+}
+.movie__card-detail .p-card .p-card-header .movie__header{
+	text-shadow: none;
+}
+.blur__side .gradient-overlay{
+	background: linear-gradient(to right, #ffffff 15%, transparent 100%);
+}
+.movie__card-detail .p-card .p-card-header .movie__header .type.type-detail{
+		color: #959595;
+}
+.movie__card .p-card .movie__desc-detail{
+	padding-top: 35px;
+}
+.movie__card-detail .blur__side .bg-img{
+	height: 100%;
+}
+.movie__card .p-card .movie__desc-detail{
+	background-color: #ffffff8f;
+	height: 100%;
+	border-radius: 10px;
+}

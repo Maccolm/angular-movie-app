@@ -1,1 +1,13 @@
-<p>movie-favorite-list-page works!</p>
+<div class="wrapper">
+	<h1>Favorite List</h1>
+	<div class="movie-list">
+		@for (movie of favoriteMovies; track movie) {
+			<app-movie-card
+				[data]="movie"
+				[isInFavorite]="true"
+				[isInWatchList]="false"
+				style="display: block; max-width: 430px; width: 100%;">
+			</app-movie-card>
+		}
+	</div>
+</div>

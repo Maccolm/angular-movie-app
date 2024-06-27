@@ -2,10 +2,8 @@ import { Component} from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 import { MovieListPageComponent } from "./pages/movie-list-page/movie-list-page.component";
-import { MovieHeaderPageComponent } from "./pages/movie-header-page/movie-header-page.component";
-import { MovieSidebarPageComponent } from "./pages/movie-sidebar-page/movie-sidebar-page.component";
-import { LogoPageComponent } from "./pages/logo-page/logo-page.component";
-import { MovieAsideMenuPageComponent } from "./pages/movie-aside-menu-page/movie-aside-menu-page.component";
+import { MovieAsideMenuComponent } from "./components/movie-aside-menu/movie-aside-menu.component";
+import { MovieSidebarComponent } from "./components/movie-sidebar/movie-sidebar.component";
 
 @Component({
     selector: 'app-root ',
@@ -16,12 +14,10 @@ import { MovieAsideMenuPageComponent } from "./pages/movie-aside-menu-page/movie
         RouterOutlet,
         MovieListComponent,
         MovieListPageComponent,
-        MovieSidebarPageComponent,
-        LogoPageComponent,
-        MovieAsideMenuPageComponent,
         RouterModule,
         RouterLink,
-        MovieHeaderPageComponent
+        MovieAsideMenuComponent,
+        MovieSidebarComponent
     ]
 })
 export class AppComponent {

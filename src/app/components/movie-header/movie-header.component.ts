@@ -17,7 +17,6 @@ export class MovieHeaderComponent  {
 	navigateWithData(data: string[], favorite?: string){
 		const dataString = JSON.stringify(data);
 		const path = favorite ? 'favorites' : 'watch-list';
-		
 	
 		this.router.navigate([{ outlets: { header: [path] }}], { queryParams: { data: dataString } });
 	}
