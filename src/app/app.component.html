@@ -1,2 +1,17 @@
-<!-- <app-my-component [data]="movies" (addFavorite)="handleAddFavorite()" (addWatchList)="handleAddWatchList()"></app-my-component> -->
- <app-movie-list></app-movie-list>
+<header>
+
+</header>
+<main>
+	<div class="aside-bar">
+		<app-movie-sidebar></app-movie-sidebar>
+	</div>
+	<aside class="aside">
+		<app-movie-aside-menu></app-movie-aside-menu>
+	</aside>
+	<div class="main-content">
+		<router-outlet></router-outlet>
+	</div>
+	<div class="wrapper">
+		<router-outlet name="header"></router-outlet>
+	</div>
+</main>

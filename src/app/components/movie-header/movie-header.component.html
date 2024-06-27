@@ -1,0 +1,18 @@
+<div class="header__container">
+	<div class="header__logo-container">
+		<a routerLink='' class="header__logo">
+			<img src="../../../assets/img/favicon.svg" alt="logo">
+			<h1>Litis</h1>
+		</a>
+	</div>
+	<nav class="header__list">
+		<button class="favorites header__item" (click)="navigateWithData(favoriteMoviesIds, 'favorite')">
+			<i class="pi pi-heart-fill"></i>
+			<p>Favorites</p>
+		</button>
+		<button class="watch-list header__item" (click)="navigateWithData(watchLaterIds)">
+			<i class="pi pi-bookmark-fill"></i>
+			<p>Watch list</p>
+		</button>
+	</nav>
+</div>

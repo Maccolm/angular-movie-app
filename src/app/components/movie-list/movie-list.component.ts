@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
-import { movies } from '../../../../movie-data';
-
+import { nowPlayingMovies } from '../../../../mock-data'
 @Component({
   selector: 'app-movie-list',
   standalone: true,
@@ -17,7 +16,8 @@ export class MovieListComponent {
 
 	favoriteList: any[] = [];
 	watchList: any[] =[];
-	movies = movies
+	movies = nowPlayingMovies
+	
 
 	handleAddFavorite(movie: any) {
 		const index = this.favoriteList.findIndex((item) => item.id === movie.id)
@@ -26,6 +26,7 @@ export class MovieListComponent {
 		} else {
 			this.favoriteList.splice(index, 1)
 		}
+		console.log(this.movies);
 	}
 	handleAddWatchList(movie: any) {
 		const index = this.watchList.findIndex((item) => item.id === movie.id)

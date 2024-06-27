@@ -1,0 +1,13 @@
+<div class="wrapper">
+	<h1 class="wrapper__label">Watch List</h1>
+	<div class="movie-list">
+		@for (movie of watchLaterMovies; track movie) {
+		<app-movie-card 
+			[data]="movie" 
+			[isInFavorite]="false" 
+			[isInWatchList]="true"
+			style="display: block; max-width: 430px; width: 100%;">
+		</app-movie-card>
+		}
+	</div>
+</div>

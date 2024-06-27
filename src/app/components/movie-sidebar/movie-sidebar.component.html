@@ -1,0 +1,22 @@
+
+<p-sidebar [(visible)]="sidebarVisible" styleClass="custom-sidebar w-30rem">
+	<ng-template pTemplate="body">
+		<div class="aside-menu__container">
+			<ul class="aside-menu__list">
+				<li class="aside-menu__item">
+					<a routerLink="now-playing" class="text">Now playing</a>
+				</li>
+				<li class="aside-menu__item">	
+					<a routerLink="popular" class="text">Popular</a>
+				</li>
+				<li class="aside-menu__item">			
+					<a routerLink="top-rate" class="text">Top Rate</a>
+				</li>
+				<li class="aside-menu__item">
+					<a routerLink="upcoming" class="text">Upcoming</a>
+				</li>
+			</ul>
+		</div>
+	</ng-template>
+</p-sidebar>
+<button class="bar-button" (click)="sidebarVisible = true"><i class="pi pi-bars"></i></button>

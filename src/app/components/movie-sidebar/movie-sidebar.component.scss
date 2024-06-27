@@ -1,0 +1,103 @@
+@import "primeng/resources/themes/saga-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+@import '../../../../nullstyle/nullstyle.scss';
+.bar-button{
+	position: fixed;
+	display: block;
+	left: 0;
+	background: none;
+	width: 50px;
+	border: none;
+	padding: 10px 7px;
+	border-bottom: 1px solid rgb(216, 216, 216);
+	top: 70px;
+	cursor: pointer;
+	@media screen and (min-width: 989px) {
+		display: none;
+	}
+}
+.bar-button i {
+	font-size: 20px;
+
+}
+:host ::ng-deep .custom-sidebar{
+	background-color: #9c9c9c;
+	top: 65px; 
+	button{
+		border: none;
+		border-radius: 50%;
+		height: 25px;
+		width: 25px;
+		transition: background-color 0.3s ease-out 0s;
+		cursor: pointer;
+		timesicon{
+			font-size: 20px;
+			color: #b43d3d;
+			transition: all 0.3s ease-out 0s;
+		}
+		&:hover{
+			background-color: #b43d3d;
+			timesicon{
+				color: #fff;
+			}
+		}
+	}
+}
+.aside-menu{
+	&__container{
+		position: relative;
+		padding-top: 25px;
+		height: 100%;
+		background-color: #fff;
+		overflow: hidden;
+	}
+	&__list {
+		width: 100%;
+		padding-left: 40px;
+	}
+	&__item {
+		height: 53px;
+		margin: 0 0 5px 0;
+		border: 1px solid rgb(216, 216, 216);
+		border-right: none;
+		border-top: none;
+		border-left: none;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		font-size: 18px;
+		display: flex;
+		align-items: center;
+		padding-left: 10px;
+		gap: 10px;
+		color: #545454;
+		cursor: pointer;
+		transition: background-color 0.3s ease-out 0s;
+		&:hover{
+			background-color: rgb(216, 216, 216);
+		}
+		a{
+			padding: 10px 5px;
+			width: 100%;
+		}
+	}
+}
+.aside-menu__item i {
+font-size: 30px;
+}
+::ng-deep .p-sidebar-mask{
+	 display: none;
+}
+::ng-deep .p-sidebar .p-sidebar-content {
+	padding: 0;
+}
+::ng-deep .p-sidebar .p-sidebar-header{
+	padding: 0;
+}
+
+a:visited{
+color: #545454;
+}
+a{
+	color: #545454;
+}
