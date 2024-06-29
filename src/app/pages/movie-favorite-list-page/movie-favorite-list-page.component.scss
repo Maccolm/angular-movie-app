@@ -13,7 +13,10 @@
 	}
 }
 .wrapper{
-	padding: 35px 15px;
+	padding: 5px 15px;
+	>h1{
+		margin: 0 0 20px 0;
+	}
 }
 .movie-list{
 	display: flex;
