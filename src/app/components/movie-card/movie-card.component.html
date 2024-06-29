@@ -33,7 +33,7 @@
 		<ng-template pTemplate="header">
 			<div class="movie__header">
 				<a [href]="data.link" target="_blank">
-					<img src="https://image.tmdb.org/t/p/w500/{{data.poster_path}}" alt="{{ data.title }}" class="locandina">
+					<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 				</a>
 				<h1>{{ data.title }}</h1>
 				<h4>{{data.release_date}}</h4>
@@ -56,7 +56,7 @@
 			</div>
 		</ng-template>
 		<div class="blur__back blur__side">
-			<img class="bg-img" src="https://image.tmdb.org/t/p/w500/{{data.backdrop_path}}" alt="{{data.title}}">
+			<img class="bg-img" [src]="IMAGINE_PATH + data.backdrop_path" alt="{{data.title}}">
 			<div class="gradient-overlay"></div>
 		</div>
 	</p-card>

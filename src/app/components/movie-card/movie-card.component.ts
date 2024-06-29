@@ -25,7 +25,8 @@ export class MovieCardComponent implements OnInit {
   @Output() deleteFromWatchList = new EventEmitter<string>();
 
   public movie: any;
-  public displayDialog: boolean = false
+  public displayDialog: boolean = false;
+  public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 
   ngOnInit(): void {
     this.movie = this.data;

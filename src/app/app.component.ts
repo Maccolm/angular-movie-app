@@ -1,9 +1,11 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { MovieListComponent } from './components/movie-list/movie-list.component';
 import { MovieListPageComponent } from "./pages/movie-list-page/movie-list-page.component";
 import { MovieAsideMenuComponent } from "./components/movie-aside-menu/movie-aside-menu.component";
 import { MovieSidebarComponent } from "./components/movie-sidebar/movie-sidebar.component";
+import { MovieHeaderComponent } from "./components/movie-header/movie-header.component";
+import { MovieService } from './services/movie.service';
 
 @Component({
     selector: 'app-root ',
@@ -17,9 +19,16 @@ import { MovieSidebarComponent } from "./components/movie-sidebar/movie-sidebar.
         RouterModule,
         RouterLink,
         MovieAsideMenuComponent,
-        MovieSidebarComponent
+        MovieSidebarComponent,
+        MovieHeaderComponent
     ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+	popular: any[] = []
 
+	constructor(private movieService: MovieService) {}
+
+	ngOnInit(): void {
+		this.popular = this.movieService.getPopularMovies();
+	}
 }
