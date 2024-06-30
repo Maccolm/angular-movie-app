@@ -6,18 +6,60 @@ import { nowPlayingMovies, popularMovies, topRatedMovies, upcomingMovies } from 
 })
 export class MovieService {
 
-  constructor() { }
+	favoriteMovies: any[] = [];
+	watchList: any[] = [];
 
-  getPopularMovies(){
-	return popularMovies;
-  }
-  getUpcomingMovies() {
-	return upcomingMovies;
-  }
-  getNowPlayingMovies(){
-	return nowPlayingMovies;
-  }
-  getTopRateMovies(){
-	return topRatedMovies;
-  }
+	constructor() { }
+  
+	getPopularMovies(){
+		return popularMovies;
+	}
+	getUpcomingMovies() {
+		return upcomingMovies;
+	}
+	getNowPlayingMovies(){
+		return nowPlayingMovies;
+	}
+	getTopRateMovies(){
+		return topRatedMovies;
+	}
+
+	getFavoriteMovies(){
+		return this.favoriteMovies;
+	}
+	getWatchList(){
+		return this.watchList;
+	}
+	setFavoriteMovies(movie: any){
+		const isInFavorite = this.favoriteMovies.find(m => m === movie)
+		if (!isInFavorite) {
+			this.favoriteMovies.push(movie)
+		} else{
+			console.log('it is already in favorite');
+		}
+	}
+	setWatchList(movie: any){
+		const isInWatchList = this.watchList.find(m => m === movie)
+		if (!isInWatchList) {
+			this.watchList.push(movie)
+		} else {
+			console.log('already in watchList');
+			
+		}
+	}
+	isInFavoriteList(movie: any): boolean{
+		return this.favoriteMovies.includes(movie)
+	}
+	isInWatchList(movie: any): boolean {
+		return this.watchList.includes(movie)
+	}
+
+	deleteFromWatchList(movie: any){
+		const index = this.watchList.findIndex(m => m === movie)
+		this.watchList.splice(index, 1)
+	}
+	deleteFromFavorites(movie: any) {
+		const index = this.favoriteMovies.findIndex(m => movie === m)
+		this.favoriteMovies.splice(index, 1)
+	}
 }

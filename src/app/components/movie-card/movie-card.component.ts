@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule }from 'primeng/dialog'
 import { LimitedSymbolsPipe } from '../../pipes/limitedSymbols/limited-symbols.pipe';
 import { ButtonModule } from 'primeng/button';
+import { MovieService } from '../../services/movie.service';
 
 
 @Component({
@@ -17,34 +18,27 @@ import { ButtonModule } from 'primeng/button';
 })
 export class MovieCardComponent implements OnInit {
   @Input() data: any;
-  @Input() isInFavorite: boolean = false;
   @Input() isInWatchList: boolean = false;
-  @Output() addToFavorites = new EventEmitter<string>();
-  @Output() addToWatchList = new EventEmitter<string>();
-  @Output() deleteFromFavorite = new EventEmitter<string>();
-  @Output() deleteFromWatchList = new EventEmitter<string>();
+  @Input() isInFavorite: boolean = false;
+	
+ 
+	public movie: any;
+	public displayDialog: boolean = false;
+	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 
-  public movie: any;
-  public displayDialog: boolean = false;
-  public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
+  constructor(private movieService: MovieService){}
 
   ngOnInit(): void {
     this.movie = this.data;
   }
-	toggleFavorite(){
-		if(this.isInFavorite) {
-			this.deleteFromFavorite.emit(this.movie.id)
-		} else {
-			this.addToFavorites.emit(this.movie.id)
-		}
-	}
-	toggleWatchList() {
-		if (this.isInWatchList) {
-			this.deleteFromWatchList.emit(this.movie.id)
-		} else {
-			this.addToWatchList.emit(this.movie.id)
-		}
-	}
+  addToFavorites(){
+	this.movieService.setFavoriteMovies(this.movie)
+	this.isInFavorite = true
+  }
+  addToWatchList(){
+	this.movieService.setWatchList(this.movie)
+	this.isInWatchList = true
+  }
   
   showDialog() {
 	  this.displayDialog = true

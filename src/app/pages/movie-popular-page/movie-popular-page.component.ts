@@ -18,6 +18,11 @@ export class MoviePopularPageComponent implements OnInit {
 	ngOnInit( ): void {
 		this.popularMovies = this.movieService.getPopularMovies();
   }
- 
+ isInFavorite(movie: any){
+	return this.movieService.isInFavoriteList(movie)
+ }
+ isInWatchList(movie: any){
+	return this.movieService.isInWatchList(movie)
+ }
 }
 
