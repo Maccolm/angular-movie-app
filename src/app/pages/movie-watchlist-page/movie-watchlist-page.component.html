@@ -1,13 +1,23 @@
 <div class="wrapper">
 	<h1 class="wrapper__label">Watch List</h1>
 	<div class="movie-list">
-		@for (movie of watchLaterMovies; track movie) {
-		<app-movie-card 
-			[data]="movie" 
-			[isInFavorite]="false" 
-			[isInWatchList]="true"
-			style="display: block; max-width: 430px; width: 100%;">
-		</app-movie-card>
+		@for (movie of watchList; track movie) {
+		<div class="list__item">
+			<app-movie-card 
+				[data]="movie" 
+				[isInFavorite]="isInFavorite(movie)"
+				[isInWatchList]="isInWatchList(movie)"
+				style="display: block; max-width: 430px; width: 100%;">
+			</app-movie-card>
+			<button type="button" class="list__button" (click)="deleteFromWatchList(movie)">
+				<span class="p-button-label list__button-sm"><i class="pi pi-trash"></i> Delete</span>
+					<i>
+						<span class="pi pi-times-circle list__button-icon"></span>
+					</i>
+			</button>
+		</div>	
+		} @empty {
+			{{emptyWatchList}}
 		}
 	</div>
 </div>

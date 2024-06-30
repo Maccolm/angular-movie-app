@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { popularMovies } from '../../../../mock-data';
 import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
+import { MovieService } from '../../services/movie.service';
 
 @Component({
     selector: 'app-movie-watchlist-page',
@@ -11,15 +10,22 @@ import { MovieCardComponent } from "../../components/movie-card/movie-card.compo
     imports: [MovieCardComponent]
 })
 export class MovieWatchlistPageComponent {
- watchLaterMovies: any[] = [];
+ watchList: any[] = [];
+ public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
-  constructor(private route: ActivatedRoute) {}
+
+  constructor(private movieService: MovieService) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const dataString = params['data'];
-      const watchLaterIds = dataString ? JSON.parse(dataString) : [];
-      this.watchLaterMovies = popularMovies.filter(movie => watchLaterIds.includes(movie.id));
-    });
+	this.watchList = this.movieService.getWatchList()
+  }
+  isInFavorite(movie: any) :boolean {
+	return this.movieService.isInFavoriteList(movie)
+  }
+  isInWatchList(movie: any) :boolean {
+	return this.movieService.isInWatchList(movie)
+  }
+  deleteFromWatchList(movie: any){
+	this.movieService.deleteFromWatchList(movie)
   }
 }

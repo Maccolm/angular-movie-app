@@ -6,13 +6,13 @@
 		</a>
 	</div>
 	<nav class="header__list">
-		<button class="favorites header__item" (click)="navigateWithData(favoriteMoviesIds, 'favorite')">
+		<a routerLink="/favorites" class="favorites header__item">
 			<i class="pi pi-heart-fill"></i>
 			<p>Favorites</p>
-		</button>
-		<button class="watch-list header__item" (click)="navigateWithData(watchLaterIds)">
+		</a>
+		<a routerLink="/watch-list" class="watch-list header__item">
 			<i class="pi pi-bookmark-fill"></i>
 			<p>Watch list</p>
-		</button>
+		</a>
 	</nav>
 </div>

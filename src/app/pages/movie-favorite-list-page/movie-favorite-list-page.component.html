@@ -2,12 +2,22 @@
 	<h1>Favorite List</h1>
 	<div class="movie-list">
 		@for (movie of favoriteMovies; track movie) {
-			<app-movie-card
-				[data]="movie"
-				[isInFavorite]="true"
-				[isInWatchList]="false"
-				style="display: block; max-width: 430px; width: 100%;">
-			</app-movie-card>
+			<div class="list__item">
+				<app-movie-card
+					[data]="movie"
+					[isInFavorite]="isInFavorite(movie)"
+					[isInWatchList]="isInWatchList(movie)"
+					style="display: block; max-width: 430px; width: 100%;">
+				</app-movie-card>
+				<button type="button" class="list__button" (click)="deleteFromFavorites(movie)">
+					<span class="p-button-label list__button-sm"><i class="pi pi-trash"></i> Delete</span>
+					<i>
+						<span class="pi pi-times-circle list__button-icon"></span>
+					</i>
+				</button>
+			</div>
+		} @empty {
+			{{emptyFavoriteList}}
 		}
 	</div>
 </div>
