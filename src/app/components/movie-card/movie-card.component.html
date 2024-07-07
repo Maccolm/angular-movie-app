@@ -11,7 +11,7 @@
 	</ng-template>
 	<div class="movie__desc">
 		<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
-		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="showDialog()" severity="info" ></p-button>
+		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="navigateWithData()" severity="info" ></p-button>
 		<p class="rating">Rating: {{ data.vote_average }}</p>
 	</div>
 	<ng-template pTemplate="footer">
@@ -29,7 +29,7 @@
 </p-card>
 
 <!-- describe movie -->
-<p-dialog header="Details" [(visible)]="displayDialog" modal="modal">
+<!-- <p-dialog header="Details" [(visible)]="displayDialog" modal="modal">
 	<p-card class="movie__card movie__card-detail">
 		<ng-template pTemplate="header">
 			<div class="movie__header">
@@ -61,4 +61,4 @@
 			<div class="gradient-overlay"></div>
 		</div>
 	</p-card>
-</p-dialog>
+</p-dialog> -->

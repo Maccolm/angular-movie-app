@@ -3,20 +3,25 @@ import { MovieCardComponent } from "../../components/movie-card/movie-card.compo
 import { MovieHeaderComponent } from "../../components/movie-header/movie-header.component";
 import { MovieService } from '../../services/movie.service';
 @Component({
-    selector: 'app-movie-top-rate-page',
-    standalone: true,
-    templateUrl: './movie-top-rate-page.component.html',
-    styleUrl: './movie-top-rate-page.component.scss',
-    imports: [MovieCardComponent, MovieHeaderComponent]
+  selector: 'app-movie-top-rate-page',
+  standalone: true,
+  templateUrl: './movie-top-rate-page.component.html',
+  styleUrl: './movie-top-rate-page.component.scss',
+  imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MovieTopRatePageComponent {
- public topRated: any[] = []
+  public topRated: any[] = [];
 
-	constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) {}
 
-	ngOnInit(): void {
-		this.topRated = this.movieService.getTopRateMovies();
+  ngOnInit(): void {
+    this.topRated = this.movieService.getTopRateMovies();
   }
-
+  isInFavorite(movie: any) {
+    return this.movieService.isInFavoriteList(movie);
+  }
+  isInWatchList(movie: any) {
+    return this.movieService.isInWatchList(movie);
+  }
 }
 

@@ -62,4 +62,10 @@ export class MovieService {
 		const index = this.favoriteMovies.findIndex(m => movie === m)
 		this.favoriteMovies.splice(index, 1)
 	}
+	 getMovieById(id: number) {
+    return this.getPopularMovies().find(m => m.id === id) ||
+           this.getUpcomingMovies().find(m => m.id === id) ||
+           this.getNowPlayingMovies().find(m => m.id === id) ||
+           this.getTopRateMovies().find(m => m.id === id);
+  }
 }

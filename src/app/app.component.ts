@@ -5,7 +5,6 @@ import { MovieListPageComponent } from "./pages/movie-list-page/movie-list-page.
 import { MovieAsideMenuComponent } from "./components/movie-aside-menu/movie-aside-menu.component";
 import { MovieSidebarComponent } from "./components/movie-sidebar/movie-sidebar.component";
 import { MovieHeaderComponent } from "./components/movie-header/movie-header.component";
-import { MovieService } from './services/movie.service';
 
 @Component({
     selector: 'app-root ',
@@ -24,11 +23,9 @@ import { MovieService } from './services/movie.service';
     ]
 })
 export class AppComponent implements OnInit{
-	popular: any[] = []
 
-	constructor(private movieService: MovieService) {}
+	constructor() {}
 
 	ngOnInit(): void {
-		this.popular = this.movieService.getPopularMovies();
 	}
 }

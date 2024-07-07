@@ -5,17 +5,23 @@ import { MovieHeaderComponent } from "../../components/movie-header/movie-header
 import { MovieService } from '../../services/movie.service';
 
 @Component({
-    selector: 'app-movie-upcoming-page',
-    standalone: true,
-    templateUrl: './movie-upcoming-page.component.html',
-    styleUrl: './movie-upcoming-page.component.scss',
-    imports: [MovieCardComponent, MovieHeaderComponent]
+  selector: 'app-movie-upcoming-page',
+  standalone: true,
+  templateUrl: './movie-upcoming-page.component.html',
+  styleUrl: './movie-upcoming-page.component.scss',
+  imports: [MovieCardComponent, MovieHeaderComponent],
 })
-export class MovieUpcomingPageComponent implements OnInit{
- public upcoming: any[] = []
+export class MovieUpcomingPageComponent implements OnInit {
+  public upcoming: any[] = [];
 
-constructor(private movieService: MovieService) {}
-ngOnInit(): void {
-	this.upcoming = this.movieService.getUpcomingMovies();
-}
+  constructor(private movieService: MovieService) {}
+  ngOnInit(): void {
+    this.upcoming = this.movieService.getUpcomingMovies();
+  }
+  isInFavorite(movie: any) {
+    return this.movieService.isInFavoriteList(movie);
+  }
+  isInWatchList(movie: any) {
+    return this.movieService.isInWatchList(movie);
+  }
 }
