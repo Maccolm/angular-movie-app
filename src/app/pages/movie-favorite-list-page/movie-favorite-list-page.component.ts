@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { popularMovies, nowPlayingMovies, topRatedMovies, upcomingMovies} from '../../../../mock-data';
 import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
+import { MovieService } from '../../services/movie.service';
 
 @Component({
     selector: 'app-movie-favorite-list-page',
@@ -12,14 +11,20 @@ import { MovieCardComponent } from "../../components/movie-card/movie-card.compo
 })
 export class MovieFavoriteListPageComponent  implements OnInit{
 	favoriteMovies: any[] = [];
-
-	constructor(private route: ActivatedRoute) {}
+	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
+	
+	constructor(private movieService: MovieService) {}
 
 	ngOnInit(): void {
-	 this.route.queryParams.subscribe(params => {
-      const dataString = params['data'];
-      const watchLaterIds = dataString ? JSON.parse(dataString) : [];
-      this.favoriteMovies = popularMovies.filter(movie => watchLaterIds.includes(movie.id));
-    });
+		this.favoriteMovies = this.movieService.getFavoriteMovies();
+	}
+	isInWatchList(movie: any):boolean{
+		return this.movieService.isInWatchList(movie)
+	}
+	isInFavorite(movie: any):boolean {
+		return this.movieService.isInFavoriteList(movie)
+	}
+	deleteFromFavorites(movie: any) {
+		this.movieService.deleteFromFavorites(movie)
 	}
 }

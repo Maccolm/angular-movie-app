@@ -1,1 +1,24 @@
-<p>movie-description works!</p>
+@if(movie){
+
+<p-card class="movie__card movie__card-detail">
+		<ng-template pTemplate="header">
+			<div class="movie__header">
+				<img [src]="IMAGINE_PATH + movie.poster_path" alt="{{ movie.title }}" class="locandina">
+				<h1>{{ movie.title }}</h1>
+				<h4>{{movie.release_date}}</h4>
+				<p class="type type-detail"> Original language: "{{movie.original_language}}"</p>
+				<p class="rating">Popularity: "{{movie.popularity}}"</p>
+			</div>
+		</ng-template>
+		<div class="movie__desc movie__desc-detail">
+			<p class="text">{{ movie.overview }}</p>
+			<p class="rating">Rating: {{ movie.vote_average }}</p>
+		</div>
+		<div class="blur__back blur__side">
+			<img class="bg-img" [src]="IMAGINE_PATH + movie.backdrop_path" alt="{{movie.title}}">
+		</div>
+	</p-card>
+}
+@if(!movie){
+	<p>Loading...</p>
+}

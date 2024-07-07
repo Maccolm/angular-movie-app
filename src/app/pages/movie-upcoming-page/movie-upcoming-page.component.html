@@ -1,16 +1,11 @@
-<app-movie-header [favoriteMoviesIds]="favoriteMoviesIdsForHeader"
-	[watchLaterIds]="favoriteMoviesIdsForHeader"></app-movie-header>
 <div class="movie-list">
-	@for (movie of movies; track movie){
-	<app-movie-card 
-		[data]='movie' 
-		[isInFavorite]="isInFavorite(movie.id, 'upcoming')"
-		[isInWatchList]="isInWatchList(movie.id, 'upcoming')"
-		(addToFavorites)="handleAddFavorite($event, 'upcoming')"
-		(addToWatchList)="handleAddWatchList($event, 'upcoming')"
-		(deleteFromFavorite)="deleteFromFavorite($event, 'upcoming')"
-		(deleteFromWatchList)="deleteFromWatchList($event, 'upcoming')"
-		style="display: block; max-width: 430px; width: 100%;">
+  @for (movie of upcoming; track movie){
+	<app-movie-card
+		[data]="movie"
+		[isInFavorite]="isInFavorite(movie)"
+		[isInWatchList]="isInWatchList(movie)"
+		style="display: block; max-width: 430px; width: 100%"
+	>
 	</app-movie-card>
-	}
+  }
 </div>

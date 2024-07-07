@@ -237,3 +237,7 @@ color: rgb(215, 142, 5);
 	height: 100%;
 	border-radius: 10px;
 }
+//if needed to cancel hover animation 
+.list__item .movie__card:hover{
+	transform: scale(1);
+}

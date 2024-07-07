@@ -1,39 +1,40 @@
 <p-card class="movie__card">
-		<ng-template pTemplate="header">
-			<div class="movie__header">
-				<a [href]="data.link" target="_blank">
-					<img src="https://image.tmdb.org/t/p/w500/{{data.poster_path}}" alt="{{ data.title }}" class="locandina">
-				</a>
-				<h1>{{ data.title }}</h1>
-				<h4>{{data.release_date}}</h4>
-				<p class="type">{{data.type}}</p>
-			</div>
-		</ng-template>
-		<div class="movie__desc">
-			<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
-			<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="showDialog()" severity="info" ></p-button>
-			<p class="rating">Rating: {{ data.vote_average }}</p>
+	<ng-template pTemplate="header">
+		<div class="movie__header">
+			<a [href]="data.link" target="_blank">
+				<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
+			</a>
+			<h1>{{ data.title }}</h1>
+			<h4>{{data.release_date}}</h4>
+			<p class="type">{{data.type}}</p>
 		</div>
-		<ng-template pTemplate="footer">
-			<div class="movie__social">
-				<ul>
-					<li (click)="toggleFavorite()"><i><span class="pi pi-heart-fill" [ngClass]="{'active' : isInFavorite}"></span></i></li>
-					<li (click)="toggleWatchList()"><i><span class="pi pi-bookmark-fill" [ngClass]="{'active' : isInWatchList}"></span></i></li>
-				</ul>
-			</div>
-		</ng-template>
+	</ng-template>
+	<div class="movie__desc">
+		<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
+		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="navigateWithData()" severity="info" ></p-button>
+		<p class="rating">Rating: {{ data.vote_average }}</p>
+	</div>
+	<ng-template pTemplate="footer">
+		<div class="movie__social">
+			<ul>
+				<li (click)="addToFavorites()"><i><span class="pi pi-heart-fill" [ngClass]="{'active' : isInFavorite}"></span></i></li>
+				<li (click)="addToWatchList()"><i><span class="pi pi-bookmark-fill" [ngClass]="{'active' : isInWatchList}"></span></i></li>
+			</ul>
+		</div>
+	</ng-template>
 	<div class="blur__back">
-		<img class="bg-img" src="https://image.tmdb.org/t/p/w500/{{data.backdrop_path}}" alt="{{data.title}}">
+		<img class="bg-img" [src]="IMAGINE_PATH + data.backdrop_path" alt="{{data.title}}">
 		<div class="gradient-overlay"></div>
 	</div>
 </p-card>
 
-<p-dialog header="Details" [(visible)]="displayDialog" modal="modal">
+<!-- describe movie -->
+<!-- <p-dialog header="Details" [(visible)]="displayDialog" modal="modal">
 	<p-card class="movie__card movie__card-detail">
 		<ng-template pTemplate="header">
 			<div class="movie__header">
 				<a [href]="data.link" target="_blank">
-					<img src="https://image.tmdb.org/t/p/w500/{{data.poster_path}}" alt="{{ data.title }}" class="locandina">
+					<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 				</a>
 				<h1>{{ data.title }}</h1>
 				<h4>{{data.release_date}}</h4>
@@ -48,16 +49,16 @@
 		<ng-template pTemplate="footer">
 			<div class="movie__social">
 				<ul>
-					<li (click)="toggleFavorite()"><i><span class="pi pi-heart-fill"
+					<li (click)="addToFavorites()"><i><span class="pi pi-heart-fill"
 								[ngClass]="{'active' : isInFavorite}"></span></i></li>
-					<li (click)="toggleWatchList()"><i><span class="pi pi-bookmark-fill"
+					<li (click)="addToWatchList()"><i><span class="pi pi-bookmark-fill"
 								[ngClass]="{'active' : isInWatchList}"></span></i></li>
 				</ul>
 			</div>
 		</ng-template>
 		<div class="blur__back blur__side">
-			<img class="bg-img" src="https://image.tmdb.org/t/p/w500/{{data.backdrop_path}}" alt="{{data.title}}">
+			<img class="bg-img" [src]="IMAGINE_PATH + data.backdrop_path" alt="{{data.title}}">
 			<div class="gradient-overlay"></div>
 		</div>
 	</p-card>
-</p-dialog>
+</p-dialog> -->
