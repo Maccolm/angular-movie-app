@@ -18,10 +18,4 @@ export class MovieUpcomingPageComponent implements OnInit {
   ngOnInit(): void {
     this.upcoming = this.movieService.getUpcomingMovies();
   }
-  isInFavorite(movie: any) {
-    return this.movieService.isInFavoriteList(movie);
-  }
-  isInWatchList(movie: any) {
-    return this.movieService.isInWatchList(movie);
-  }
 }

@@ -18,15 +18,4 @@ export class MovieNowPlayingPageComponent implements OnInit {
   ngOnInit(): void {
     this.nowPlaying = this.movieService.getNowPlayingMovies();
   }
-  isInFavorite(movie: any) {
-    return this.movieService.isInFavoriteList(movie);
-  }
-  isInWatchList(movie: any) {
-    return this.movieService.isInWatchList(movie);
-  }
-  navigateWithData() {
-    const dataArray = ['np', ''];
-    const dataString = JSON.stringify(dataArray);
-    this.router.navigate(['/page2', { data: dataString }]);
-  }
 }

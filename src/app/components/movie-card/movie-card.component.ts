@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NumberDurationFormatPipe } from '../../pipes/numberDurationFormat/number-duration-format.pipe';
 import { CardModule } from 'primeng/card';
@@ -30,9 +23,9 @@ import { Router } from '@angular/router';
 })
 export class MovieCardComponent implements OnInit {
   @Input() data: any;
-  @Input() isInWatchList: boolean = false;
-  @Input() isInFavorite: boolean = false;
 
+  public isInFavorite: boolean = false;
+  public isInWatchList: boolean = false;
   public movie: any;
   public displayDialog: boolean = false;
   public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
@@ -41,6 +34,8 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.movie = this.data;
+    this.isInFavorite = this.movieService.isInFavoriteList(this.movie);
+    this.isInWatchList = this.movieService.isInWatchList(this.movie);
   }
   addToFavorites() {
     this.movieService.setFavoriteMovies(this.movie);

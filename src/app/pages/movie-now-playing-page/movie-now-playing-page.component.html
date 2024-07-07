@@ -2,8 +2,6 @@
   @for (movie of nowPlaying; track movie){
   <app-movie-card
     [data]="movie"
-    [isInFavorite]="isInFavorite(movie)"
-    [isInWatchList]="isInWatchList(movie)"
     style="display: block; max-width: 430px; width: 100%"
   >
   </app-movie-card>

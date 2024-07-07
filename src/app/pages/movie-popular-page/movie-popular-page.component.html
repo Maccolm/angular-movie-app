@@ -1,10 +1,8 @@
 <div class="movie-list">
 	@for (movie of popularMovies; track movie){
-	<app-movie-card 
-	[data]='movie' 
-	[isInFavorite]="isInFavorite(movie)"
-	[isInWatchList]="isInWatchList(movie)"
-	style="display: block; max-width: 430px; width: 100%;">
-	</app-movie-card>
+		<app-movie-card 
+		[data]='movie' 
+		style="display: block; max-width: 430px; width: 100%;">
+		</app-movie-card>
 	}
 </div>

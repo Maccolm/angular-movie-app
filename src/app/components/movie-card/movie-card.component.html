@@ -17,8 +17,16 @@
 	<ng-template pTemplate="footer">
 		<div class="movie__social">
 			<ul>
-				<li (click)="addToFavorites()"><i><span class="pi pi-heart-fill" [ngClass]="{'active' : isInFavorite}"></span></i></li>
-				<li (click)="addToWatchList()"><i><span class="pi pi-bookmark-fill" [ngClass]="{'active' : isInWatchList}"></span></i></li>
+				@if(isInFavorite){
+					<li  class='active' >In<i><span class="pi pi-heart-fill"></span></i></li>
+				} @else {
+					<li (click)="addToFavorites()" class="btn-list">Add to<i><span class="pi pi-heart-fill"></span></i></li>
+				}
+				@if(isInWatchList){
+					<li class="active">In<i><span class="pi pi-bookmark-fill"></span></i></li>
+				} @else {
+					<li (click)="addToWatchList()" class="btn-list">Add to<i><span class="pi pi-bookmark-fill"></span></i></li>
+				}
 			</ul>
 		</div>
 	</ng-template>
@@ -28,37 +36,3 @@
 	</div>
 </p-card>
 
-<!-- describe movie -->
-<!-- <p-dialog header="Details" [(visible)]="displayDialog" modal="modal">
-	<p-card class="movie__card movie__card-detail">
-		<ng-template pTemplate="header">
-			<div class="movie__header">
-				<a [href]="data.link" target="_blank">
-					<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
-				</a>
-				<h1>{{ data.title }}</h1>
-				<h4>{{data.release_date}}</h4>
-				<p class="type type-detail"> Original language: "{{data.original_language}}"</p>
-				<p class="rating">Popularity: "{{data.popularity}}"</p>
-			</div>
-		</ng-template>
-		<div class="movie__desc movie__desc-detail">
-			<p class="text">{{ data.overview}}</p>
-			<p class="rating">Rating: {{ data.vote_average }}</p>
-		</div>
-		<ng-template pTemplate="footer">
-			<div class="movie__social">
-				<ul>
-					<li (click)="addToFavorites()"><i><span class="pi pi-heart-fill"
-								[ngClass]="{'active' : isInFavorite}"></span></i></li>
-					<li (click)="addToWatchList()"><i><span class="pi pi-bookmark-fill"
-								[ngClass]="{'active' : isInWatchList}"></span></i></li>
-				</ul>
-			</div>
-		</ng-template>
-		<div class="blur__back blur__side">
-			<img class="bg-img" [src]="IMAGINE_PATH + data.backdrop_path" alt="{{data.title}}">
-			<div class="gradient-overlay"></div>
-		</div>
-	</p-card>
-</p-dialog> -->

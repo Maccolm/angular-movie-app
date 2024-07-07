@@ -18,12 +18,6 @@ export class MovieFavoriteListPageComponent  implements OnInit{
 	ngOnInit(): void {
 		this.favoriteMovies = this.movieService.getFavoriteMovies();
 	}
-	isInWatchList(movie: any):boolean{
-		return this.movieService.isInWatchList(movie)
-	}
-	isInFavorite(movie: any):boolean {
-		return this.movieService.isInFavoriteList(movie)
-	}
 	deleteFromFavorites(movie: any) {
 		this.movieService.deleteFromFavorites(movie)
 	}

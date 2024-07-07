@@ -19,12 +19,6 @@ export class MovieWatchlistPageComponent {
   ngOnInit() {
 	this.watchList = this.movieService.getWatchList()
   }
-  isInFavorite(movie: any) :boolean {
-	return this.movieService.isInFavoriteList(movie)
-  }
-  isInWatchList(movie: any) :boolean {
-	return this.movieService.isInWatchList(movie)
-  }
   deleteFromWatchList(movie: any){
 	this.movieService.deleteFromWatchList(movie)
   }
