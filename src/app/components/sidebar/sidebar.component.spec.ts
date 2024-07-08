@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MovieSidebarComponent } from './movie-sidebar.component';
+import { MovieSidebarComponent } from './sidebar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { CommonModule } from '@angular/common';
 

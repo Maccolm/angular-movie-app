@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
     LimitedSymbolsPipe,
     ButtonModule,
   ],
-  templateUrl: './movie-card.component.html',
-  styleUrl: './movie-card.component.scss',
+  templateUrl: './card-movie.component.html',
+  styleUrl: './card-movie.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class MovieCardComponent implements OnInit {

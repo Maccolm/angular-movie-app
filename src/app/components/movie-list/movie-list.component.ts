@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { MovieCardComponent } from '../card-movie/movie-card.component';
 import { nowPlayingMovies } from '../../../../mock-data'
 @Component({
   selector: 'app-movie-list',

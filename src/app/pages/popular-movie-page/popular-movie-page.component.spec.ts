@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MoviePopularPageComponent } from './movie-popular-page.component';
+import { MoviePopularPageComponent } from './popular-movie-page.component';
 
 describe('MoviePopularPageComponent', () => {
   let component: MoviePopularPageComponent;

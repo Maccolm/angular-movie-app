@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MovieTopRatePageComponent } from './movie-top-rate-page.component';
+import { MovieTopRatePageComponent } from './top-rate-movie-page.component';
 
 describe('MovieTopRatePageComponent', () => {
   let component: MovieTopRatePageComponent;

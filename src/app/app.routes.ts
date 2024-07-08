@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { MovieDescriptionComponent } from './pages/movie-description-page/movie-description-page.component';
-import { MovieFavoriteListPageComponent } from './pages/movie-favorite-list-page/movie-favorite-list-page.component';
+import { MovieDescriptionComponent } from './pages/description-movie-page/description-movie-page.component';
+import { MovieFavoriteListPageComponent } from './pages/favorite-list-movie-page/favorite-list-movie-page.component';
 import { MovieWatchlistPageComponent } from './pages/movie-watchlist-page/movie-watchlist-page.component';
-import { MovieNowPlayingPageComponent } from './pages/movie-now-playing-page/movie-now-playing-page.component';
-import { MoviePopularPageComponent } from './pages/movie-popular-page/movie-popular-page.component';
-import { MovieTopRatePageComponent } from './pages/movie-top-rate-page/movie-top-rate-page.component';
-import { MovieUpcomingPageComponent } from './pages/movie-upcoming-page/movie-upcoming-page.component';
+import { MovieNowPlayingPageComponent } from './pages/now-playing-movie-page/now-playing-movie-page.component';
+import { MoviePopularPageComponent } from './pages/popular-movie-page/popular-movie-page.component';
+import { MovieTopRatePageComponent } from './pages/top-rate-movie-page/top-rate-movie-page.component';
+import { MovieUpcomingPageComponent } from './pages/upcoming-movie-page/upcoming-movie-page.component';
 
 export const routes: Routes = [
 	{path: '', component: MovieNowPlayingPageComponent},

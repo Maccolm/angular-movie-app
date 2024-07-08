@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
-import { MovieHeaderComponent } from "../../components/movie-header/movie-header.component";
+import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
+import { MovieHeaderComponent } from "../../components/header-movie/header-movie.component";
 import { MovieService } from '../../services/movie.service';
 
 @Component({
     selector: 'app-movie-popular-page',
     standalone: true,
-    templateUrl: './movie-popular-page.component.html',
-    styleUrl: './movie-popular-page.component.scss',
+    templateUrl: './popular-movie-page.component.html',
+    styleUrl: './popular-movie-page.component.scss',
     imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MoviePopularPageComponent implements OnInit {

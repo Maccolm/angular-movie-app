@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
+import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { upcomingMovies } from '../../../../mock-data';
-import { MovieHeaderComponent } from "../../components/movie-header/movie-header.component";
+import { MovieHeaderComponent } from "../../components/header-movie/header-movie.component";
 import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-movie-upcoming-page',
   standalone: true,
-  templateUrl: './movie-upcoming-page.component.html',
-  styleUrl: './movie-upcoming-page.component.scss',
+  templateUrl: './upcoming-movie-page.component.html',
+  styleUrl: './upcoming-movie-page.component.scss',
   imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MovieUpcomingPageComponent implements OnInit {

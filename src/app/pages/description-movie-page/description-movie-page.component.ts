@@ -8,8 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-movie-description-page',
   standalone: true,
   imports: [CardModule],
-  templateUrl: './movie-description-page.component.html',
-  styleUrl: './movie-description-page.component.scss',
+  templateUrl: './description-movie-page.component.html',
+  styleUrl: './description-movie-page.component.scss',
 })
 export class MovieDescriptionComponent {
   @Input() data: any;

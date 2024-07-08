@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MovieFavoriteListPageComponent } from './movie-favorite-list-page.component';
+import { MovieFavoriteListPageComponent } from './favorite-list-movie-page.component';
 
 describe('MovieFavoriteListPageComponent', () => {
   let component: MovieFavoriteListPageComponent;

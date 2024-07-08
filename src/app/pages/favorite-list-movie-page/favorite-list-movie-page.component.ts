@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MovieCardComponent } from "../../components/movie-card/movie-card.component";
+import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieService } from '../../services/movie.service';
 
 @Component({
     selector: 'app-movie-favorite-list-page',
     standalone: true,
-    templateUrl: './movie-favorite-list-page.component.html',
-    styleUrl: './movie-favorite-list-page.component.scss',
+    templateUrl: './favorite-list-movie-page.component.html',
+    styleUrl: './favorite-list-movie-page.component.scss',
     imports: [MovieCardComponent]
 })
 export class MovieFavoriteListPageComponent  implements OnInit{

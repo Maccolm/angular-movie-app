@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MovieUpcomingPageComponent } from './movie-upcoming-page.component';
+import { MovieUpcomingPageComponent } from './upcoming-movie-page.component';
 
 describe('MovieUpcomingPageComponent', () => {
   let component: MovieUpcomingPageComponent;

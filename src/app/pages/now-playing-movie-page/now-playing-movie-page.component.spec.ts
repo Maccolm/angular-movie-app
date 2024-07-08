@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MovieNowPlayingPageComponent } from './movie-now-playing-page.component';
+import { MovieNowPlayingPageComponent } from './now-playing-movie-page.component';
 
 describe('MovieNowPlayingPageComponent', () => {
   let component: MovieNowPlayingPageComponent;

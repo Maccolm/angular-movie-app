@@ -5,13 +5,9 @@ import{ Router, RouterLink } from '@angular/router';
   selector: 'app-movie-header',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './movie-header.component.html',
-  styleUrl: './movie-header.component.scss'
+  templateUrl: './header-movie.component.html',
+  styleUrl: './header-movie.component.scss',
 })
-export class MovieHeaderComponent  {
-
-
-	constructor(){ }
-	
-	
+export class MovieHeaderComponent {
+  constructor() {}
 }
