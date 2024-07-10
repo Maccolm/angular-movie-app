@@ -80,6 +80,11 @@
 			padding: 10px 5px;
 			width: 100%;
 		}
+		&__item.active-link {
+			background-color: rgb(216, 216, 216);
+			color: white; 
+			font-weight: bold; 
+	}
 	}
 }
 .aside-menu__item i {

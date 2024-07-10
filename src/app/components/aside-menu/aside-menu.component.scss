@@ -30,9 +30,17 @@
 		&:active{
 			background-color: rgb(167, 167, 167);
 		}
+		&:target{
+			background-color: rgb(167, 167, 167);
+		}
 		p{
 			padding: 10px 5px;
 		}
+		&.active-link {
+			background-color: rgb(216, 216, 216);
+			color: white; 
+			font-weight: 600;
+	}
 	}
 }
 .aside-menu__item i {
