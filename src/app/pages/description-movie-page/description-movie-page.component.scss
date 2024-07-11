@@ -1,3 +1,16 @@
+h1{
+	font-size: clamp(1rem, -0.568rem + 7.84vw, 5.313rem);
+	letter-spacing: -1px;
+	margin: 0;
+}
+.movie__header{
+	display: flex;
+	justify-content: start;
+	gap: 25px;
+	@media screen and (max-width: 768px) {
+		display: block;
+	}
+}
 .movie__card-detail{
 	max-width: 1200px;
 	padding: 0 15px;
@@ -26,7 +39,6 @@
 .locandina{
 	width: -webkit-fill-available;
 	max-width: 500px;
-	margin: 0 auto 20px auto;
 	display: block;
 	object-fit: cover;
 }
@@ -39,4 +51,25 @@
 	width: -webkit-fill-available;
 	object-fit: cover;
 	max-width: 700px;
+}
+::ng-deep.p-card .p-card-content{
+	padding: 0;
+}
+.companies-wrapper{
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+.company{
+	&__container{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+	&__logo{
+		max-width: 60px;
+		width: 100%;
+		object-fit: cover;
+		position: relative;
+	}
 }

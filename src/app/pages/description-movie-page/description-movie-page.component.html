@@ -1,18 +1,33 @@
 @if(movie){
-
 <p-card class="movie__card movie__card-detail">
 		<ng-template pTemplate="header">
 			<div class="movie__header">
 				<img [src]="IMAGINE_PATH + movie.poster_path" alt="{{ movie.title }}" class="locandina">
-				<h1>{{ movie.title }}</h1>
-				<h4>{{movie.release_date}}</h4>
-				<p class="type type-detail"> Original language: "{{movie.original_language}}"</p>
-				<p class="rating">Popularity: "{{movie.popularity}}"</p>
+				<div class="header__aside">
+					<h1>{{ movie.title }}</h1>
+					<p><span class="rating">Released</span>: {{movie.release_date}}</p>
+					<p><span class="rating">Genres:</span> "{{this.genres}}"</p>
+					<p><span class="rating">Duration:</span> {{movie.runtime | numberDurationFormat}}</p>
+					<p> <span class="rating">Original language:</span> "{{this.originalLanguages}}"</p>
+					<p><span class="rating">Rating:</span> {{movie.vote_average}}</p>
+					<p><span class="rating">Popularity</span>: {{movie.popularity}}</p>
+					<p><span class="rating">Budget:</span> {{movie.budget | budgetNumberFormat}}$</p>
+					<p><span class="rating">Country:</span> "{{this.countries}}"</p>
+					<div class="companies-wrapper">
+						<h3>Production Companies:</h3>
+						@for(company of movie.production_companies; track movie.production_companies){
+							<div class="company__container">
+								<img class="company__logo" [src]="IMAGINE_PATH + company.logo_path" alt="{{company.name}}">
+								 <p>{{company.name}}</p>
+							</div>
+						}
+					</div>
+				</div>
 			</div>
 		</ng-template>
 		<div class="movie__desc movie__desc-detail">
+			<h3>Description</h3>
 			<p class="text">{{ movie.overview }}</p>
-			<p class="rating">Rating: {{ movie.vote_average }}</p>
 		</div>
 		<div class="blur__back blur__side">
 			<img class="bg-img" [src]="IMAGINE_PATH + movie.backdrop_path" alt="{{movie.title}}">

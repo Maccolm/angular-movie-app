@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiMovieModel } from '../models/movie.models';
+import { ApiMovieModel, DetailsMovie } from '../models/movie.models';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,10 @@ export class MovieService {
     return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/top_rated${this.apiKey}`);
   }
 
+   getMovieById(id: number) {
+    return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}${this.apiKey}`)
+  }
+  
   getFavoriteMovies() {
     return this.favoriteMovies;
   }
@@ -66,8 +70,5 @@ export class MovieService {
   deleteFromFavorites(movie: any) {
     const index = this.favoriteMovies.findIndex((m) => movie === m);
     this.favoriteMovies.splice(index, 1);
-  }
-  getMovieById(id: number) {
-    return 
   }
 }
