@@ -16,7 +16,9 @@ export class MoviePopularPageComponent implements OnInit {
 	constructor(private movieService: MovieService) {}
 
 	ngOnInit( ): void {
-		this.popularMovies = this.movieService.getPopularMovies();
+		this.movieService.getPopularMovies().subscribe(movies => {
+			this.popularMovies = movies.results;
+		})
   }
 }
 
