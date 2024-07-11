@@ -1,16 +1,48 @@
 h1{
-	font-size: clamp(1rem, -0.568rem + 7.84vw, 5.313rem);
+	font-size: clamp(1rem, -0.078rem + 5.39vw, 5.313rem);
 	letter-spacing: -1px;
 	margin: 0;
+	line-height: 0.9;
+	margin-bottom: 2rem;
 }
 .movie__header{
 	display: flex;
 	justify-content: start;
 	gap: 25px;
+	padding: 1.25rem;
+	padding-bottom: 0;
 	@media screen and (max-width: 768px) {
 		display: block;
+		h1{
+			margin-top: 2rem;
+		}
 	}
 }
+.header__aside{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.companies-wrapper{
+	margin-top: auto;
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+.company{
+	&__container{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+	&__logo{
+		max-width: 60px;
+		width: 100%;
+		object-fit: cover;
+		position: relative;
+	}
+}
+//body============================================================
 .movie__card-detail{
 	max-width: 1200px;
 	padding: 0 15px;
@@ -26,10 +58,6 @@ h1{
 	.p-card-body{
 		height: auto;
 	}
-}
-.movie__header{
-	padding: 1.25rem;
-	padding-bottom: 0;
 }
 .rating{
 	margin-bottom: 20px;
@@ -54,22 +82,4 @@ h1{
 }
 ::ng-deep.p-card .p-card-content{
 	padding: 0;
-}
-.companies-wrapper{
-	display: flex;
-	gap: 20px;
-	flex-wrap: wrap;
-}
-.company{
-	&__container{
-		display: flex;
-		align-items: center;
-		gap: 5px;
-	}
-	&__logo{
-		max-width: 60px;
-		width: 100%;
-		object-fit: cover;
-		position: relative;
-	}
 }

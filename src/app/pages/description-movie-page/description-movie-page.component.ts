@@ -4,12 +4,12 @@ import { CardModule } from 'primeng/card';
 import { ActivatedRoute } from '@angular/router';
 import { NumberDurationFormatPipe } from "../../pipes/numberDurationFormat/number-duration-format.pipe";
 import { BudgetNumberFormatPipe } from '../../pipes/budgetNumberFormat/budget-number-format.pipe';
-
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-movie-description-page',
   standalone: true,
-  imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe],
+  imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule],
   templateUrl: './description-movie-page.component.html',
   styleUrl: './description-movie-page.component.scss',
 })
