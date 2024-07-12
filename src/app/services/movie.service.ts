@@ -20,17 +20,16 @@ export class MovieService {
   getPopularMovies(): Observable<ApiMovieModel> {
     return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/popular${this.apiKey}`)
   }
-  getUpcomingMovies() {
+  getUpcomingMovies(): Observable<ApiMovieModel> {
     return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/upcoming${this.apiKey}`);
   }
-  getNowPlayingMovies() {
+  getNowPlayingMovies(): Observable<ApiMovieModel> {
     return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/now_playing${this.apiKey}`)
   }
-  getTopRateMovies() {
+  getTopRateMovies(): Observable<ApiMovieModel> {
     return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/top_rated${this.apiKey}`);
   }
-
-   getMovieById(id: number) {
+   getMovieById(id: number): Observable<DetailsMovie> {
     return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}${this.apiKey}`)
   }
   

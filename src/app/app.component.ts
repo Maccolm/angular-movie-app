@@ -4,7 +4,6 @@ import { MovieListComponent } from './components/movie-list/movie-list.component
 import { MovieAsideMenuComponent } from "./components/aside-menu/aside-menu.component";
 import { MovieSidebarComponent } from "./components/sidebar/sidebar.component";
 import { MovieHeaderComponent } from "./components/header-movie/header-movie.component";
-import { MovieService } from './services/movie.service';
 
 @Component({
     selector: 'app-root ',
@@ -23,9 +22,8 @@ import { MovieService } from './services/movie.service';
 })
 export class AppComponent implements OnInit{
 
-	constructor(private movieService: MovieService) {}
+	constructor() {}
 
 	ngOnInit(): void {
-
 	}
 }
