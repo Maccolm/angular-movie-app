@@ -15,7 +15,9 @@ export class MovieTopRatePageComponent {
   constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
-    this.topRated = this.movieService.getTopRateMovies();
+   	this.movieService.getTopRateMovies().subscribe((movies) => {
+      this.topRated = movies.results
+    });
   }
 }
 

@@ -1,71 +1,73 @@
 import { Injectable } from '@angular/core';
-import { nowPlayingMovies, popularMovies, topRatedMovies, upcomingMovies } from '../../../mock-data';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ApiMovieModel, DetailsMovie } from '../models/movie.models';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovieService {
+  private apiKey = '?api_key=81c0dd880c00cce619f4569514eade3b';
+  private apiToken =
+    'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MWMwZGQ4ODBjMDBjY2U2MTlmNDU2OTUxNGVhZGUzYiIsIm5iZiI6MTcyMDY4NjE3Ni40MTk4ODQsInN1YiI6IjY2OGRkYTJiMTI2YjJmN2Q0NDU5YzBjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NNGPUfrm-0XCZxI5QIoiPs4KN7p-0hKIaDqxO0MYmGs';
 
-	favoriteMovies: any[] = [];
-	watchList: any[] = [];
+ private  apiUrl = 'https://api.themoviedb.org/3/movie';
+  favoriteMovies: any[] = [];
+  watchList: any[] = [];
 
-	constructor() { }
+  constructor(private httpClient: HttpClient) {}
+
+  getPopularMovies(): Observable<ApiMovieModel> {
+    return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/popular${this.apiKey}`)
+  }
+  getUpcomingMovies(): Observable<ApiMovieModel> {
+    return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/upcoming${this.apiKey}`);
+  }
+  getNowPlayingMovies(): Observable<ApiMovieModel> {
+    return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/now_playing${this.apiKey}`)
+  }
+  getTopRateMovies(): Observable<ApiMovieModel> {
+    return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/top_rated${this.apiKey}`);
+  }
+   getMovieById(id: number): Observable<DetailsMovie> {
+    return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}${this.apiKey}`)
+  }
   
-	getPopularMovies(){
-		return popularMovies;
-	}
-	getUpcomingMovies() {
-		return upcomingMovies;
-	}
-	getNowPlayingMovies(){
-		return nowPlayingMovies;
-	}
-	getTopRateMovies(){
-		return topRatedMovies;
-	}
+  getFavoriteMovies() {
+    return this.favoriteMovies;
+  }
+  getWatchList() {
+    return this.watchList;
+  }
+  setFavoriteMovies(movie: any) {
+    const isInFavorite = this.favoriteMovies.find((m) => m === movie);
+    if (!isInFavorite) {
+      this.favoriteMovies.push(movie);
+    } else {
+      console.log('it is already in favorite');
+    }
+  }
+  setWatchList(movie: any) {
+    const isInWatchList = this.watchList.find((m) => m === movie);
+    if (!isInWatchList) {
+      this.watchList.push(movie);
+    } else {
+      console.log('already in watchList');
+    }
+  }
+  isInFavoriteList(movie: any): boolean {
+    return this.favoriteMovies.includes(movie);
+  }
+  isInWatchList(movie: any): boolean {
+    return this.watchList.includes(movie);
+  }
 
-	getFavoriteMovies(){
-		return this.favoriteMovies;
-	}
-	getWatchList(){
-		return this.watchList;
-	}
-	setFavoriteMovies(movie: any){
-		const isInFavorite = this.favoriteMovies.find(m => m === movie)
-		if (!isInFavorite) {
-			this.favoriteMovies.push(movie)
-		} else{
-			console.log('it is already in favorite');
-		}
-	}
-	setWatchList(movie: any){
-		const isInWatchList = this.watchList.find(m => m === movie)
-		if (!isInWatchList) {
-			this.watchList.push(movie)
-		} else {
-			console.log('already in watchList');
-			
-		}
-	}
-	isInFavoriteList(movie: any): boolean{
-		return this.favoriteMovies.includes(movie)
-	}
-	isInWatchList(movie: any): boolean {
-		return this.watchList.includes(movie)
-	}
-
-	deleteFromWatchList(movie: any){
-		const index = this.watchList.findIndex(m => m === movie)
-		this.watchList.splice(index, 1)
-	}
-	deleteFromFavorites(movie: any) {
-		const index = this.favoriteMovies.findIndex(m => movie === m)
-		this.favoriteMovies.splice(index, 1)
-	}
-	 getMovieById(id: number) {
-    return this.getPopularMovies().find(m => m.id === id) ||
-           this.getUpcomingMovies().find(m => m.id === id) ||
-           this.getNowPlayingMovies().find(m => m.id === id) ||
-           this.getTopRateMovies().find(m => m.id === id);
+  deleteFromWatchList(movie: any) {
+    const index = this.watchList.findIndex((m) => m === movie);
+    this.watchList.splice(index, 1);
+  }
+  deleteFromFavorites(movie: any) {
+    const index = this.favoriteMovies.findIndex((m) => movie === m);
+    this.favoriteMovies.splice(index, 1);
   }
 }
