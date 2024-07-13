@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { MovieHeaderComponent } from '../../components/header-movie/header-movie.component';
 import { MovieService } from '../../services/movie.service';
-import { ApiMovieModel, Movie } from '../../models/movie.models';
+import { Movie } from '../../models/movie.models';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-movie-now-playing-page',
   standalone: true,
@@ -10,16 +11,20 @@ import { ApiMovieModel, Movie } from '../../models/movie.models';
   styleUrl: './now-playing-movie-page.component.scss',
   imports: [MovieCardComponent, MovieHeaderComponent],
 })
-export class MovieNowPlayingPageComponent implements OnInit {
+export class MovieNowPlayingPageComponent implements OnInit, OnDestroy {
   public nowPlaying: Movie[] = [];
-  router: any;
+  private subscription!: Subscription;
 
   constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
-    this.movieService.getNowPlayingMovies().subscribe((movies) => {
+   this.subscription = this.movieService.getNowPlayingMovies().subscribe((movies) => {
       this.nowPlaying = movies.results;
-      console.log(this.nowPlaying);
     });
+  }
+  ngOnDestroy(){
+	if (this.subscription){
+		this.subscription.unsubscribe()
+	}
   }
 }
