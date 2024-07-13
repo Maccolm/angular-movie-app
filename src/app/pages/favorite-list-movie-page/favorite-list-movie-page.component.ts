@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieService } from '../../services/movie.service';
+import { Movie } from '../../models/movie.models';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-movie-favorite-list-page',
@@ -9,16 +11,24 @@ import { MovieService } from '../../services/movie.service';
     styleUrl: './favorite-list-movie-page.component.scss',
     imports: [MovieCardComponent]
 })
-export class MovieFavoriteListPageComponent  implements OnInit{
-	favoriteMovies: any[] = [];
+export class MovieFavoriteListPageComponent  implements OnInit, OnDestroy{
+	private subscription!: Subscription;
+	favoriteMovies: Movie[] = [];
 	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
 	
 	constructor(private movieService: MovieService) {}
 
 	ngOnInit(): void {
-		this.favoriteMovies = this.movieService.getFavoriteMovies();
+		this.subscription = this.movieService.getFavoriteMovies().subscribe(movies => {
+			this.favoriteMovies = movies;
+		});
 	}
-	deleteFromFavorites(movie: any) {
+	ngOnDestroy(): void {
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
+	}
+	deleteFromFavorites(movie: Movie) {
 		this.movieService.deleteFromFavorites(movie)
 	}
 }

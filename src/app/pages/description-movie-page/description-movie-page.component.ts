@@ -53,11 +53,11 @@ export class MovieDescriptionComponent implements OnInit, OnDestroy {
   }
   
   addToFavorites() {
-    this.movieService.setFavoriteMovies(this.movie);
+    this.movieService.setToFavoriteMovies(this.movie);
     this.isInFavorite = true;
   }
   addToWatchList() {
-    this.movieService.setWatchList(this.movie);
+    this.movieService.setToWatchList(this.movie);
     this.isInWatchList = true;
   }
 }
