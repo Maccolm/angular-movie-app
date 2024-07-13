@@ -47,7 +47,7 @@
 .aside-menu{
 	&__container{
 		position: relative;
-		padding-top: 25px;
+		padding-top: 1px;
 		height: 100%;
 		background-color: #fff;
 		overflow: hidden;
@@ -97,7 +97,7 @@ font-size: 30px;
 	padding: 0;
 }
 ::ng-deep .p-sidebar .p-sidebar-header{
-	padding: 0;
+	padding: 12px;
 }
 
 a:visited{

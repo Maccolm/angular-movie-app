@@ -12,11 +12,11 @@ export class MovieService {
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MWMwZGQ4ODBjMDBjY2U2MTlmNDU2OTUxNGVhZGUzYiIsIm5iZiI6MTcyMDY4NjE3Ni40MTk4ODQsInN1YiI6IjY2OGRkYTJiMTI2YjJmN2Q0NDU5YzBjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NNGPUfrm-0XCZxI5QIoiPs4KN7p-0hKIaDqxO0MYmGs';
 
  private  apiUrl = 'https://api.themoviedb.org/3/movie';
- favoriteMoviesSubject = new BehaviorSubject<Movie[]>([]);
- watchListSubject = new BehaviorSubject<Movie[]>([]);
+ private readonly favoriteMoviesSubject = new BehaviorSubject<Movie[]>([]);
+ private readonly watchListSubject = new BehaviorSubject<Movie[]>([]);
  
- favoriteMovies: Movie[] = [];
- watchList: Movie[] = [];
+ public readonly favoriteMovies: Movie[] = [];
+ public readonly watchList: Movie[] = [];
 
   constructor(private httpClient: HttpClient) {}
 	
