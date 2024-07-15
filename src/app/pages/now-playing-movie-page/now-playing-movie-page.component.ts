@@ -3,7 +3,8 @@ import { MovieCardComponent } from '../../components/card-movie/movie-card.compo
 import { MovieHeaderComponent } from '../../components/header-movie/header-movie.component';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
+import { ClearObservable } from '../../directives/clearObservable';
 @Component({
   selector: 'app-movie-now-playing-page',
   standalone: true,
@@ -11,20 +12,19 @@ import { Subscription } from 'rxjs';
   styleUrl: './now-playing-movie-page.component.scss',
   imports: [MovieCardComponent, MovieHeaderComponent],
 })
-export class MovieNowPlayingPageComponent implements OnInit, OnDestroy {
+export class MovieNowPlayingPageComponent extends ClearObservable implements OnInit {
   public nowPlaying: Movie[] = [];
-  private subscription!: Subscription;
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) {
+	super()
+  }
 
   ngOnInit(): void {
-   this.subscription = this.movieService.getNowPlayingMovies().subscribe((movies) => {
+   this.movieService.getNowPlayingMovies()
+	.pipe(takeUntil(this.destroy$))
+	.subscribe((movies) => {
       this.nowPlaying = movies.results;
     });
   }
-  ngOnDestroy(){
-	if (this.subscription){
-		this.subscription.unsubscribe()
-	}
+
   }
-}
