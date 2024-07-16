@@ -70,28 +70,12 @@ export class AuthService {
 		 console.error('An error occurred:', error);
 		 return throwError(error);
 	}
+	public authenticateAndGetSessionId(): Observable<string> {
+		return this.getRequestToken().pipe(
+		  switchMap(requestToken => this.validateRequestToken(requestToken).pipe(
+			 switchMap(() => this.createSession(requestToken))
+		  ))
+		);
+	 }
 }
 
-
-
-// add this code to ngOnInit in your appConfig.component
-
-
-// this.authService.authenticateAndGetAccountId().subscribe(
-//     accountId => {
-//         this.movieService.setAccountId(accountId);
-//         console.log('Account ID:', accountId);
-//     },
-//     error => {
-//         console.error('Authentication failed:', error);
-//     }
-// );
-
-
-// and save accountId in your MovieService
-
-// accountId: number | null = null;
-
-// setAccountId(id: number) {
-//     this.accountId = id;
-// }

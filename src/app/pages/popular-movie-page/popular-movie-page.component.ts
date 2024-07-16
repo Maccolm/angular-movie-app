@@ -3,6 +3,7 @@ import { MovieCardComponent } from "../../components/card-movie/movie-card.compo
 import { MovieHeaderComponent } from "../../components/header-movie/header-movie.component";
 import { MovieService } from '../../services/movie.service';
 import { Subscription } from 'rxjs';
+import { Movie } from '../../models/movie.models';
 
 @Component({
     selector: 'app-movie-popular-page',
@@ -12,15 +13,18 @@ import { Subscription } from 'rxjs';
     imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MoviePopularPageComponent implements OnInit, OnDestroy {
-	popularMovies: any = [];
+	popularMovies: Movie[] = [];
 	private subscription!: Subscription;
 
 	constructor(private movieService: MovieService) {}
 
 	ngOnInit( ): void {
-		this.subscription = this.movieService.getPopularMovies().subscribe(movies => {
-			this.popularMovies = movies.results;
-		})
+		//Так при оновлені сторінки в мене заванитажуються і відразу показує помічені фільми в favorite list, але при цьому сторінка завантажується в 2 рази довше ніж інші.  
+		this.subscription = this.movieService.getPopularMovies().subscribe(
+			movies => {
+				this.popularMovies = movies.results
+			}
+		)
   }
   ngOnDestroy(): void {
 	if(this.subscription) {

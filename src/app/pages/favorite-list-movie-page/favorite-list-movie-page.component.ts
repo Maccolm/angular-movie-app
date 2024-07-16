@@ -21,7 +21,10 @@ export class MovieFavoriteListPageComponent  implements OnInit, OnDestroy{
 	ngOnInit(): void {
 		this.subscription = this.movieService.getFavoriteMovies().subscribe(movies => {
 			this.favoriteMovies = movies;
-		});
+		},
+		error => {
+			console.error('Failed to load favorite movies:', error);
+		 });
 	}
 	ngOnDestroy(): void {
 		if (this.subscription) {
