@@ -87,6 +87,22 @@ export class MovieService {
 		this.favoriteMoviesSubject$.next(this.favoriteMovies)
     }
   }
+  removeFromFavoriteMovies(movie: Movie): Observable<Movie> {
+	const url = `https://api.themoviedb.org/3/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
+	const body = {
+	  media_type: 'movie',
+	  media_id: movie.id,
+	  favorite: false
+	};
+	this.deleteFromFavorites(movie)
+	return this.httpClient.post<Movie>(url, body).pipe(
+      map(response => {
+        this.getFavoriteMovies().subscribe(); 
+        return response;
+      }),
+		catchError(this.handleError)
+    );
+  }
   setToWatchList(movie: Movie) {
     const isInWatchList = this.isInWatchList(movie);
     if (!isInWatchList) {
@@ -113,7 +129,7 @@ export class MovieService {
   }
 
   deleteFromFavorites(movie: Movie) {
-    const index = this.favoriteMovies.findIndex((m) => movie === m);
+    const index = this.favoriteMovies.findIndex((m) => movie.id === m.id);
     this.favoriteMovies.splice(index, 1);
 
 	 this.favoriteMoviesSubject$.next(this.favoriteMovies);

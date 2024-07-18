@@ -32,6 +32,13 @@ export class MovieFavoriteListPageComponent  implements OnInit, OnDestroy{
 		}
 	}
 	deleteFromFavorites(movie: Movie) {
-		this.movieService.deleteFromFavorites(movie)
+		this.subscription.add(
+			this.movieService.removeFromFavoriteMovies(movie).subscribe(response => {
+				console.log('removed from favorites', response);
+				this.favoriteMovies = this.favoriteMovies.filter(m => m.id !== movie.id);
+			},
+			error => console.error('Failed to remove movie from favorites:', error)
+		)
+	)
 	}
 }
