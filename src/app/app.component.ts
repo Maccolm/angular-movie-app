@@ -47,9 +47,6 @@ export class AppComponent implements OnInit {
 //1) тут я отримую список улюблених фільмів та сетаю в сабжект, це працює після оновлення сторінки
 	 this.subscription = this.movieService.getFavoriteMovies().subscribe(movies => {
 		const favoriteMovies = movies;
-		favoriteMovies.forEach(movie => {
-			this.movieService.setToFavoriteMoviesSubject(movie)
-		})
 	},
 	error => {
 		console.error('Failed to load favorite movies:', error);

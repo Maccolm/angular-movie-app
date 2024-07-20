@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, forkJoin, map, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { ApiMovieModel, DetailsMovie, Movie } from '../models/movie.models';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class MovieService {
   private apiToken =
     'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MWMwZGQ4ODBjMDBjY2U2MTlmNDU2OTUxNGVhZGUzYiIsIm5iZiI6MTcyMDY4NjE3Ni40MTk4ODQsInN1YiI6IjY2OGRkYTJiMTI2YjJmN2Q0NDU5YzBjYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NNGPUfrm-0XCZxI5QIoiPs4KN7p-0hKIaDqxO0MYmGs';
 	private accountId: number | null = this.getAccountId();
-	private sessionId: string | null = this.getSessionId();
+	private sessionId: string = this.getSessionId();
 	
 	private  apiUrl = 'https://api.themoviedb.org/3/movie';
 	private baseUrl = 'https://api.themoviedb.org/3';
@@ -57,9 +57,9 @@ export class MovieService {
 	const url = `${this.baseUrl}/account/${this.accountId}/favorite/movies${this.apiKey}&session_id=${this.sessionId}`;
     return this.httpClient.get<{ results: Movie[] }>(url).pipe(
       map(response => response.results),
+		tap(movies => this.favoriteMoviesSubject$.next(movies)),
       catchError(this.handleError)
     );
-   //  return this.favoriteMoviesSubject$.asObservable();
   }
 
   getWatchList(): Observable<Movie[]> {
@@ -67,19 +67,18 @@ export class MovieService {
   }
 
   setToFavoriteMovies(movie: Movie) {
-	const url = `https://api.themoviedb.org/3/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
+	const url = `${this.baseUrl}/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
 	const body = {
 	  media_type: 'movie',
 	  media_id: movie.id,
 	  favorite: true
 	};
 	this.setToFavoriteMoviesSubject(movie)
-	return this.httpClient.post<any>(url, body).pipe(
+	return this.httpClient.post<Movie>(url, body).pipe(
 	  map(response => response),
 	  catchError(this.handleError)
 	);
   }
-  //тут в мене все зберігається локально та ця функція спрацьовує після перезавантаження сторінки, щоб дані підтягнулися та зявилися на екрані
   setToFavoriteMoviesSubject(movie: Movie) {
 	const isInFavorite = this.isInFavoriteList(movie);
     if (!isInFavorite) {
@@ -88,21 +87,19 @@ export class MovieService {
     }
   }
   removeFromFavoriteMovies(movie: Movie): Observable<Movie> {
-	const url = `https://api.themoviedb.org/3/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
+	const url = `${this.baseUrl}/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
 	const body = {
 	  media_type: 'movie',
 	  media_id: movie.id,
 	  favorite: false
 	};
-	this.deleteFromFavorites(movie)
 	return this.httpClient.post<Movie>(url, body).pipe(
-      map(response => {
-        this.getFavoriteMovies().subscribe(); 
-        return response;
-      }),
+		response => response,
 		catchError(this.handleError)
-    );
-  }
+	)
+
+}
+  
   setToWatchList(movie: Movie) {
     const isInWatchList = this.isInWatchList(movie);
     if (!isInWatchList) {
