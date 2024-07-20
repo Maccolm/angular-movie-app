@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
+import { ClearObservable } from '../../directives/clearObservable';
 
 @Component({
   selector: 'app-movie-watchList-page',
@@ -11,24 +12,32 @@ import { Subscription } from 'rxjs';
   styleUrl: './movie-watchList-page.component.scss',
   imports: [MovieCardComponent],
 })
-export class MovieWatchListPageComponent implements OnInit, OnDestroy {
+export class MovieWatchListPageComponent extends ClearObservable implements OnInit  {
   watchList: Movie[] = [];
-  private subscription!: Subscription;
+  
   public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService) {
+	super()
+  }
 
   ngOnInit() {
-    this.subscription = this.movieService.getWatchList().subscribe(movies =>{
+   this.movieService.getWatchList().subscribe(movies =>{
 		this.watchList = movies;
 	 })
   }
-  ngOnDestroy(): void {
-	if(this.subscription){
-		this.subscription.unsubscribe()
-	}
-  }
+ 
   deleteFromWatchList(movie: Movie) {
-    this.movieService.deleteFromWatchList(movie);
+    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe(response => {
+		console.log(response);
+		if (response) {
+			this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
+				this.watchList = movies;
+				this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(movies => console.log(movies)
+				)
+			})
+		}
+		
+	 });
   }
 }

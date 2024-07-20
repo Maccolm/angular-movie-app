@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { ApiMovieModel, DetailsMovie, Movie } from '../models/movie.models';
 
@@ -13,13 +13,16 @@ export class MovieService {
 	private accountId: number | null = this.getAccountId();
 	private sessionId: string = this.getSessionId();
 	
-	private  apiUrl = 'https://api.themoviedb.org/3/movie';
+	private apiUrl = 'https://api.themoviedb.org/3/movie';
 	private baseUrl = 'https://api.themoviedb.org/3';
 	private readonly favoriteMoviesSubject$ = new BehaviorSubject<Movie[]>([]);
 	private readonly watchListSubject$ = new BehaviorSubject<Movie[]>([]);
-	favoritesMovies$ = this.favoriteMoviesSubject$.asObservable();
 	
-	public favoriteMovies: Movie[] = [];
+	favoriteMovies$ = this.favoriteMoviesSubject$.asObservable();
+	watchList$ = this.watchListSubject$.asObservable();
+	
+
+	public readonly favoriteMovies: Movie[] = [];
 	public readonly watchList: Movie[] = [];
 	
 	constructor(private httpClient: HttpClient) {}
@@ -53,6 +56,7 @@ export class MovieService {
 		return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}${this.apiKey}`)
   }
   
+//favorite list functions===========================================
   getFavoriteMovies(): Observable<Movie[]> {
 	const url = `${this.baseUrl}/account/${this.accountId}/favorite/movies${this.apiKey}&session_id=${this.sessionId}`;
     return this.httpClient.get<{ results: Movie[] }>(url).pipe(
@@ -61,11 +65,6 @@ export class MovieService {
       catchError(this.handleError)
     );
   }
-
-  getWatchList(): Observable<Movie[]> {
-    return this.watchListSubject$.asObservable();
-  }
-
   setToFavoriteMovies(movie: Movie) {
 	const url = `${this.baseUrl}/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
 	const body = {
@@ -97,42 +96,61 @@ export class MovieService {
 		response => response,
 		catchError(this.handleError)
 	)
-
-}
-  
+	}
+	isInFavoriteList(movie: Movie): boolean {
+		const favoriteMovies = this.favoriteMoviesSubject$.getValue();
+		return favoriteMovies.find(m => m.id === movie.id) !== undefined;
+	}
+//watchList functions==================================================
+	getWatchList(): Observable<Movie[]> {
+		const url = `${this.baseUrl}/account/${this.accountId}/watchlist/movies${this.apiKey}&session_id=${this.sessionId}`;
+		return this.httpClient.get<{ results: Movie[] }>(url).pipe(
+			map(response => response.results),
+			tap(movies => this.watchListSubject$.next(movies)),
+			catchError(this.handleError)
+		);
+	}
   setToWatchList(movie: Movie) {
-    const isInWatchList = this.isInWatchList(movie);
-    if (!isInWatchList) {
-      this.watchList.push(movie);
+	const url = `${this.baseUrl}/account/${this.accountId}/watchlist${this.apiKey}&session_id=${this.sessionId}`;
+    const body = {
+		media_type: 'movie',
+		media_id: movie.id,
+		watchlist: true
+	 };
+	 this.setToWatchListSubject$(movie)
+	 return this.httpClient.post<Movie>(url, body).pipe(
+		map(response => response),
+		catchError(this.handleError)
+	 );
+  }
+  setToWatchListSubject$(movie: Movie){
+	const isInWatchList = this.isInWatchList(movie)
+	if(!isInWatchList) {
+		this.watchList.push(movie);
 		this.watchListSubject$.next(this.watchList)
-    }
+	}
   }
-  
+  deleteFromWatchList(movie: Movie) {
+	const url = `${this.baseUrl}/account/${this.accountId}/watchlist${this.apiKey}&session_id=${this.sessionId}`;
+	const body = {
+	  media_type: 'movie',
+	  media_id: movie.id,
+	  watchlist: false
+	};
+	return this.httpClient.post<Movie>(url, body).pipe(
+		response => response,
+		catchError(this.handleError)
+	)
+  }
 
-  isInFavoriteList(movie: Movie): boolean {
-	const favoriteMovies = this.favoriteMoviesSubject$.getValue()
-    return favoriteMovies.find(m => m.id === movie.id) !== undefined;
-  }
 
   isInWatchList(movie: Movie): boolean {
-    return this.watchList.find(m => m.id === movie.id) !== undefined;
+	  const watchList = this.watchListSubject$.getValue();
+	  return watchList.find(m => m.id === movie.id) !== undefined;
+	}
+
+	private handleError(error: any) {
+	 console.error('An error occurred:', error);
+	 return throwError(error);
   }
-
-  deleteFromWatchList(movie: Movie) {
-    const index = this.watchList.findIndex((m) => m === movie);
-    this.watchList.splice(index, 1);
-
-	 this.watchListSubject$.next(this.watchList)
-  }
-
-  deleteFromFavorites(movie: Movie) {
-    const index = this.favoriteMovies.findIndex((m) => movie.id === m.id);
-    this.favoriteMovies.splice(index, 1);
-
-	 this.favoriteMoviesSubject$.next(this.favoriteMovies);
-  }
-  private handleError(error: any) {
-	console.error('An error occurred:', error);
-	return throwError(error);
- }
 }

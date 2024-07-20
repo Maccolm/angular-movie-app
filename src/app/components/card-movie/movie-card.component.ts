@@ -36,25 +36,35 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.movie = this.data;
-	 //запутаний шлях отримання значення isInFavorite, але так воно завантажується динамічно після завантаження сторінки і карток і самі фільми завантажуються швидко
 	 this.subscriptions.add(
-		this.movieService.favoritesMovies$.subscribe(favorites => {
+		this.movieService.favoriteMovies$.subscribe(favorites => {
 			this.isInFavorite = this.movieService.isInFavoriteList(this.movie);
 		})
 	 )
-    this.isInWatchList = this.movieService.isInWatchList(this.movie);
+	 this.subscriptions.add(
+		this.movieService.watchList$.subscribe(movie =>{
+			this.isInWatchList = this.movieService.isInWatchList(this.movie);
+		})
+	 )
   }
   addToFavorites() {
-    this.movieService.setToFavoriteMovies(this.movie).subscribe(
-		response => {
-			console.log('added to fv', response);
-			
-		}
-	 );
+	this.subscriptions.add(
+		this.movieService.setToFavoriteMovies(this.movie).subscribe(
+		  response => {
+			  console.log('added to fv', response);
+		  }
+		)
+	)
     this.isInFavorite = true;
   }
   addToWatchList() {
-    this.movieService.setToWatchList(this.movie);
+    this.subscriptions.add(
+		this.movieService.setToWatchList(this.movie).subscribe(
+			response => {
+				console.log('added to watchList', response);
+			}
+		)
+	 )
     this.isInWatchList = true;
   }
   navigateWithData() {

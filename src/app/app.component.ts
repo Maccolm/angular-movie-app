@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
   ],
 })
 export class AppComponent implements OnInit {
-	private subscription!: Subscription;
+	private subscriptions: Subscription = new Subscription;
   constructor(private movieService: MovieService, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -44,18 +44,20 @@ export class AppComponent implements OnInit {
         console.error('Authentication failed:', error);
       }
     );
-//1) тут я отримую список улюблених фільмів та сетаю в сабжект, це працює після оновлення сторінки
-	 this.subscription = this.movieService.getFavoriteMovies().subscribe(movies => {
+//1) тут я отримую список улюблених та watchlist фільмів та сетаю в сабжект, це працює після оновлення сторінки
+	 this.subscriptions.add( this.movieService.getFavoriteMovies().subscribe(movies => {
 		const favoriteMovies = movies;
 	},
 	error => {
 		console.error('Failed to load favorite movies:', error);
-	 });
+	 })
+	)
+	this.subscriptions.add( this.movieService.getWatchList().subscribe(movies =>{
+		const watchList = movies
+	}))
 }
 
 	ngOnDestroy(): void {
-		if (this.subscription) {
-			this.subscription.unsubscribe();
-		}
+		this.subscriptions.unsubscribe();
 	}
 }

@@ -34,7 +34,7 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 			if(response) {
 				this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 					this.favoriteMovies = movies;
-					this.movieService.favoritesMovies$.subscribe(movies => console.log(movies)
+					this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(movies => console.log(movies)
 					)
 				})
 			}
