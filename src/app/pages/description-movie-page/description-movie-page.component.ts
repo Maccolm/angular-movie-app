@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { CardModule } from 'primeng/card';
 import { ActivatedRoute } from '@angular/router';
 import { NumberDurationFormatPipe } from "../../pipes/numberDurationFormat/number-duration-format.pipe";
 import { BudgetNumberFormatPipe } from '../../pipes/budgetNumberFormat/budget-number-format.pipe';
 import { DividerModule } from 'primeng/divider';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
+import { ClearObservable } from '../../directives/clearObservable';
 
 @Component({
   selector: 'app-movie-description-page',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './description-movie-page.component.html',
   styleUrl: './description-movie-page.component.scss',
 })
-export class MovieDescriptionComponent implements OnInit, OnDestroy {
+export class MovieDescriptionComponent extends ClearObservable implements OnInit {
   @Input() data: any;
   @Input() isInWatchList: boolean = false;
   @Input() isInFavorite: boolean = false;
@@ -29,13 +30,15 @@ export class MovieDescriptionComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription()
 
-  constructor(private movieService: MovieService,  private route: ActivatedRoute) {}
+  constructor(private movieService: MovieService,  private route: ActivatedRoute) {
+	super()
+  }
 
   ngOnInit(): void {
-		const paramsSub = this.route.paramMap.subscribe((params) => {
+		const paramsSub = this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
 		const movieId = +params.get('id')!; 
 		if (movieId) {
-			const descriptionMovieSub = this.movieService.getMovieById(movieId).subscribe(movie =>{
+			const descriptionMovieSub = this.movieService.getMovieById(movieId).pipe(takeUntil(this.destroy$)).subscribe(movie =>{
 				this.movie = movie;
 				this.originalLanguages = this.movie.spoken_languages.map((language: { english_name: string; }) => language.english_name).join(', ');
 				this.genres = this.movie.genres.map((genre: { name: string; }) => genre.name).join(', ');
@@ -47,9 +50,6 @@ export class MovieDescriptionComponent implements OnInit, OnDestroy {
 	});
 
 	this.subscriptions.add(paramsSub);
-  }
-  ngOnDestroy() {
-	this.subscriptions.unsubscribe();
   }
   
   addToFavorites() {

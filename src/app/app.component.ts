@@ -6,7 +6,8 @@ import { MovieSidebarComponent } from './components/sidebar/sidebar.component';
 import { MovieHeaderComponent } from './components/header-movie/header-movie.component';
 import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
-import { Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs';
+import { ClearObservable } from './directives/clearObservable';
 
 @Component({
   selector: 'app-root ',
@@ -23,41 +24,25 @@ import { Subscription } from 'rxjs';
     MovieHeaderComponent,
   ],
 })
-export class AppComponent implements OnInit {
-	private subscriptions: Subscription = new Subscription;
-  constructor(private movieService: MovieService, private authService: AuthService) {}
+export class AppComponent extends ClearObservable implements OnInit {
+  constructor(private movieService: MovieService) {
+	super()
+  }
 
   ngOnInit(): void {
-    this.authService.authenticateAndGetAccountId().subscribe(
-      (accountId) => {
-        this.movieService.setAccountId(accountId);
-        console.log('Account ID:', accountId);
-		
-		  this.authService.authenticateAndGetSessionId().subscribe(
-			 sessionId => {
-				 console.log('SessionId:', sessionId);
-				 this.movieService.setSessionId(sessionId)
-			 }
-		  )
-      },
-      (error) => {
-        console.error('Authentication failed:', error);
-      }
-    );
-//1) тут я отримую список улюблених та watchlist фільмів та сетаю в сабжект, це працює після оновлення сторінки
-	 this.subscriptions.add( this.movieService.getFavoriteMovies().subscribe(movies => {
-		const favoriteMovies = movies;
-	},
-	error => {
-		console.error('Failed to load favorite movies:', error);
-	 })
-	)
-	this.subscriptions.add( this.movieService.getWatchList().subscribe(movies =>{
+	//коли ціх субскрайбів немає, то при оновленні сторінки помітки in favorite, watchlist зникають. Тільки з ними вони залишаються на місці.
+	this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
+		const favoriteMovies = movies
+		favoriteMovies.forEach(movie => {
+			this.movieService.setToFavoriteMoviesSubject(movie)
+		})
+	})
+	this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 		const watchList = movies
-	}))
+		watchList.forEach(movie => {
+			this.movieService.setToWatchListSubject$(movie)
+		})
+	})
 }
 
-	ngOnDestroy(): void {
-		this.subscriptions.unsubscribe();
-	}
 }

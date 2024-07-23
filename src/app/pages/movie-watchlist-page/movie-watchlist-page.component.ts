@@ -22,22 +22,16 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
   }
 
   ngOnInit() {
-   this.movieService.getWatchList().subscribe(movies =>{
-		this.watchList = movies;
-	 })
-  }
- 
+	this.loadWatchList();
+}
+	loadWatchList(){
+	 this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies =>{
+		 this.watchList = movies;
+	  })
+ 	}
   deleteFromWatchList(movie: Movie) {
-    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe(response => {
-		console.log(response);
-		if (response) {
-			this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-				this.watchList = movies;
-				this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(movies => console.log(movies)
-				)
-			})
-		}
-		
+    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
+		this.loadWatchList();
 	 });
   }
 }

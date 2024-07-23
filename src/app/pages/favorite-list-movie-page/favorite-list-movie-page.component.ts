@@ -21,23 +21,17 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 	}
 
 	ngOnInit(): void {
+		this.loadFavoriteMovies()
+	}
+	loadFavoriteMovies(){
 		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 			this.favoriteMovies = movies;
-		},
-		error => {
-			console.error('Failed to load favorite movies:', error);
-		 });
+		})
 	}
+	//в мене автоматично не змінювалися фільми, тільки при оновленні сторінки. Вже не знаю як зробити, щоб воно прибирало видалені фільми окрім цього
 	deleteFromFavorites(movie: Movie) {
-		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe(response => {
-			console.log(response);
-			if(response) {
-				this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-					this.favoriteMovies = movies;
-					this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(movies => console.log(movies)
-					)
-				})
-			}
+		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
+			this.loadFavoriteMovies();
 		})
 	 }
 }

@@ -19,7 +19,6 @@ export class MoviePopularPageComponent implements OnInit, OnDestroy {
 	constructor(private movieService: MovieService) {}
 
 	ngOnInit( ): void {
-		//Так при оновлені сторінки в мене заванитажуються і відразу показує помічені фільми в favorite list, але при цьому сторінка завантажується в 2 рази довше ніж інші.  
 		this.subscription = this.movieService.getPopularMovies().subscribe(
 			movies => {
 				this.popularMovies = movies.results
