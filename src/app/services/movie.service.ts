@@ -9,7 +9,6 @@ import {
 } from 'rxjs';
 import { ApiMovieModel, DetailsMovie, Movie } from '../models/movie.models';
 import { environment } from '../../environments/environment';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -71,7 +70,7 @@ export class MovieService {
       media_id: movie.id,
       favorite: true,
     };
-    this.setToFavoriteMoviesSubject(movie);
+   //  this.setToFavoriteMoviesSubject(movie);
     return this.httpClient.post<Movie>(url, body);
   }
   setToFavoriteMoviesSubject(movie: Movie) {
@@ -113,7 +112,7 @@ export class MovieService {
       media_id: movie.id,
       watchlist: true,
     };
-    this.setToWatchListSubject$(movie);
+   //  this.setToWatchListSubject$(movie);
     return this.httpClient.post<Movie>(url, body);
   }
   setToWatchListSubject$(movie: Movie) {

@@ -34,15 +34,14 @@ export class AppComponent extends ClearObservable implements OnInit {
 	this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 		const favoriteMovies = movies
 		favoriteMovies.forEach(movie => {
-			this.movieService.setToFavoriteMoviesSubject(movie)
-		})
-	})
+			this.movieService.setToFavoriteMoviesSubject(movie);
+		});
+	});
 	this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 		const watchList = movies
 		watchList.forEach(movie => {
-			this.movieService.setToWatchListSubject$(movie)
-		})
-	})
-}
-
+			this.movieService.setToWatchListSubject$(movie);
+		});
+	});
+	}
 }
