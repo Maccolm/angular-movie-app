@@ -6,14 +6,16 @@ import { MovieNowPlayingPageComponent } from './pages/now-playing-movie-page/now
 import { MoviePopularPageComponent } from './pages/popular-movie-page/popular-movie-page.component';
 import { MovieTopRatePageComponent } from './pages/top-rate-movie-page/top-rate-movie-page.component';
 import { MovieUpcomingPageComponent } from './pages/upcoming-movie-page/upcoming-movie-page.component';
+import { favoriteMoviesResolver } from './routerGuards/favoriteMovies.resolver';
+import { watchListMoviesResolver } from './routerGuards/watchList.resolver';
 
 export const routes: Routes = [
-	{path: '', component: MovieNowPlayingPageComponent},
-	{path: 'now-playing', component: MovieNowPlayingPageComponent},
-	{path: 'popular', component: MoviePopularPageComponent},
-	{path: 'top-rate', component: MovieTopRatePageComponent},
-	{path: 'upcoming', component: MovieUpcomingPageComponent},
-	{path: 'favorites', component: MovieFavoriteListPageComponent},
-	{path: 'watch-list', component: MovieWatchListPageComponent},
+	{path: '', component: MovieNowPlayingPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'now-playing', component: MovieNowPlayingPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'popular', component: MoviePopularPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'top-rate', component: MovieTopRatePageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'upcoming', component: MovieUpcomingPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'favorites', component: MovieFavoriteListPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
+	{path: 'watch-list', component: MovieWatchListPageComponent, resolve: {favoriteMovies: favoriteMoviesResolver, watchList: watchListMoviesResolver}},
 	{path: 'movie/:id', component: MovieDescriptionComponent},
 ];

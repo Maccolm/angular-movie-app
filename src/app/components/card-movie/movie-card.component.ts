@@ -6,7 +6,8 @@ import { LimitedSymbolsPipe } from '../../pipes/limitedSymbols/limited-symbols.p
 import { ButtonModule } from 'primeng/button';
 import { MovieService } from '../../services/movie.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
+import { ClearObservable } from '../../directives/clearObservable';
 
 @Component({
   selector: 'app-movie-card',
@@ -22,7 +23,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './card-movie.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class MovieCardComponent implements OnInit, OnDestroy {
+export class MovieCardComponent extends ClearObservable implements OnInit {
   @Input() data: any;
 
   public isInFavorite: boolean = false;
@@ -32,47 +33,36 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 
   private subscriptions: Subscription = new Subscription;
-  constructor(private movieService: MovieService, private router: Router) {}
+  constructor(private movieService: MovieService, private router: Router) {
+	super()
+  }
 
   ngOnInit(): void {
     this.movie = this.data;
-	 this.subscriptions.add(
-		this.movieService.favoriteMovies$.subscribe(favorites => {
-			this.isInFavorite = this.movieService.isInFavoriteList(this.movie);
-		})
-	 )
-	 this.subscriptions.add(
-		this.movieService.watchList$.subscribe(movie =>{
-			this.isInWatchList = this.movieService.isInWatchList(this.movie);
-		})
-	 )
+		this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(favorites => {
+			favorites.find(m => m.id === this.movie.id) ? this.isInFavorite = true : this.isInFavorite = false;
+	});
+	this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(watchList =>{
+		watchList.find(m => m.id === this.movie.id) ? this.isInWatchList = true : this.isInWatchList = false;
+	});
   }
   addToFavorites() {
-	this.subscriptions.add(
-		this.movieService.setToFavoriteMovies(this.movie).subscribe(
-		  response => {
-			  console.log('added to fv', response);
-		  }
-		)
-	)
+	this.movieService.setToFavoriteMovies(this.movie).subscribe(
+		response => {
+			console.log('added to fv', response);
+		});
     this.isInFavorite = true;
   }
   addToWatchList() {
-    this.subscriptions.add(
-		this.movieService.setToWatchList(this.movie).subscribe(
-			response => {
-				console.log('added to watchList', response);
-			}
-		)
-	 )
+	this.movieService.setToWatchList(this.movie).subscribe(
+		response => {
+			console.log('added to watchList', response);
+		});
     this.isInWatchList = true;
   }
   navigateWithData() {
     const id = this.movie.id;
     this.router.navigate(['/movie', id]);
-  }
-  ngOnDestroy(): void {
-	this.subscriptions.unsubscribe()
   }
 }
 

@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-movie-favorite-list-page',
@@ -16,22 +17,26 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 	favoriteMovies: Movie[] = [];
 	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
 	
-	constructor(private movieService: MovieService) {
+	constructor(private movieService: MovieService, private route: ActivatedRoute) {
 		super();
 	}
 
 	ngOnInit(): void {
-		this.loadFavoriteMovies()
+		this.route.data.pipe(takeUntil(this.destroy$)).subscribe(data => {
+			this.favoriteMovies = data['favoriteMovies'];
+			this.favoriteMovies.forEach(movie => {
+				this.movieService.setToFavoriteMoviesSubject(movie)
+			})
+		});
 	}
-	loadFavoriteMovies(){
+	updateFavoriteMovies(){
 		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
 			this.favoriteMovies = movies;
-		})
+		});
 	}
-	//в мене автоматично не змінювалися фільми, тільки при оновленні сторінки. Вже не знаю як зробити, щоб воно прибирало видалені фільми окрім цього
 	deleteFromFavorites(movie: Movie) {
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
-			this.loadFavoriteMovies();
+			this.updateFavoriteMovies();
 		})
 	 }
 }

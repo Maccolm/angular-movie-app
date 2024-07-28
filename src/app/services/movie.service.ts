@@ -70,7 +70,6 @@ export class MovieService {
       media_id: movie.id,
       favorite: true,
     };
-   //  this.setToFavoriteMoviesSubject(movie);
     return this.httpClient.post<Movie>(url, body);
   }
   setToFavoriteMoviesSubject(movie: Movie) {
@@ -87,12 +86,13 @@ export class MovieService {
       media_id: movie.id,
       favorite: false,
     };
-	 const index = this.favoriteMovies.findIndex(fv => fv.id === movie.id)
-	 this.favoriteMovies.splice(index, 1)
-	 this.favoriteMoviesSubject$.next(this.favoriteMovies)
-	 
     return this.httpClient.post<Movie>(url, body);
   }
+  updateFavoriteMoviesSubject(movies: Movie[]){
+	this.favoriteMovies.length = 0;
+	this.favoriteMovies.push(...movies);
+      this.favoriteMoviesSubject$.next(this.favoriteMovies);
+	}
   isInFavoriteList(movie: Movie): boolean {
     const favoriteMovies = this.favoriteMoviesSubject$.getValue();
     return favoriteMovies.find((m) => m.id === movie.id) !== undefined;
@@ -112,7 +112,6 @@ export class MovieService {
       media_id: movie.id,
       watchlist: true,
     };
-   //  this.setToWatchListSubject$(movie);
     return this.httpClient.post<Movie>(url, body);
   }
   setToWatchListSubject$(movie: Movie) {
@@ -129,13 +128,13 @@ export class MovieService {
       media_id: movie.id,
       watchlist: false,
     };
-	 const index = this.watchList.findIndex(fv => fv.id === movie.id)
-	 this.watchList.splice(index, 1)
-	 this.watchListSubject$.next(this.watchList)
-	 
     return this.httpClient.post<Movie>(url, body);
   }
-
+  updateWatchListSubject(movies: Movie[]) {
+	this.watchList.length = 0;
+	this.watchList.push(...movies);
+      this.watchListSubject$.next(this.watchList);
+  }
   isInWatchList(movie: Movie): boolean {
     const watchList = this.watchListSubject$.getValue();
     return watchList.find((m) => m.id === movie.id) !== undefined;
