@@ -25,23 +25,41 @@ import { ClearObservable } from './directives/clearObservable';
   ],
 })
 export class AppComponent extends ClearObservable implements OnInit {
-  constructor(private movieService: MovieService) {
+  constructor(private movieService: MovieService, private authService: AuthService) {
 	super()
   }
 
   ngOnInit(): void {
-	//коли ціх субскрайбів немає, то при оновленні сторінки помітки in favorite, watchlist зникають. Тільки з ними вони залишаються на місці.
-	this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-		const favoriteMovies = movies
-		favoriteMovies.forEach(movie => {
-			this.movieService.setToFavoriteMoviesSubject(movie);
+	this.authService.authenticateAndGetAccountId().subscribe(
+      data => {
+			const { accountId, sessionId } = data
+        this.movieService.setAccountId(accountId);
+		  this.movieService.setSessionId(sessionId)
+        console.log('Account ID:', accountId);
+        console.log('sessionID:', sessionId);
+
+		  this.loadFavoriteMovies()
+		  this.loadWatchList()
+      },
+      error => {
+        console.error('Authentication failed:', error);
+      }
+    );
+	}
+	loadFavoriteMovies(){
+		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			const favoriteMovies = movies
+			favoriteMovies.forEach(movie => {
+				this.movieService.setToFavoriteMoviesSubject(movie);
+			});
 		});
-	});
-	this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-		const watchList = movies
-		watchList.forEach(movie => {
-			this.movieService.setToWatchListSubject$(movie);
+	}
+	loadWatchList() {
+		this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			const watchList = movies
+			watchList.forEach(movie => {
+				this.movieService.setToWatchListSubject$(movie);
+			});
 		});
-	});
 	}
 }
