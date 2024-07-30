@@ -1,24 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieService } from '../../services/movie.service';
+import { Movie } from '../../models/movie.models';
+import { takeUntil } from 'rxjs';
+import { ClearObservable } from '../../directives/clearObservable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-movie-favorite-list-page',
-    standalone: true,
-    templateUrl: './favorite-list-movie-page.component.html',
-    styleUrl: './favorite-list-movie-page.component.scss',
-    imports: [MovieCardComponent]
+	selector: 'app-movie-favorite-list-page',
+	standalone: true,
+	templateUrl: './favorite-list-movie-page.component.html',
+	styleUrl: './favorite-list-movie-page.component.scss',
+	imports: [MovieCardComponent]
 })
-export class MovieFavoriteListPageComponent  implements OnInit{
-	favoriteMovies: any[] = [];
+export class MovieFavoriteListPageComponent extends ClearObservable implements OnInit {
+	favoriteMovies: Movie[] = [];
 	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
-	
-	constructor(private movieService: MovieService) {}
+
+	constructor(private movieService: MovieService) {
+		super();
+	}
 
 	ngOnInit(): void {
-		this.favoriteMovies = this.movieService.getFavoriteMovies();
+		this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+			this.favoriteMovies = data;
+		});
 	}
-	deleteFromFavorites(movie: any) {
-		this.movieService.deleteFromFavorites(movie)
+	deleteFromFavorites(movie: Movie) {
+		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+			if (response) {
+				this.favoriteMovies = this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
+				this.movieService.updateFavoriteMoviesSubject(this.favoriteMovies);
+			}
+		})
 	}
 }

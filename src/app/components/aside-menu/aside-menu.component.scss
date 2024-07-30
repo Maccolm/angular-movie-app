@@ -1,4 +1,5 @@
 @import "../../../../nullstyle/nullstyle.scss";
+$activeGreyColor: rgb(167, 167, 167);
 .aside-menu{
 	&__container{
 		top: 0;
@@ -28,10 +29,10 @@
 			background-color: rgb(216, 216, 216);
 		}
 		&:active{
-			background-color: rgb(167, 167, 167);
+			background-color: $activeGreyColor;
 		}
 		&:target{
-			background-color: rgb(167, 167, 167);
+			background-color: $activeGreyColor;
 		}
 		p{
 			padding: 10px 5px;

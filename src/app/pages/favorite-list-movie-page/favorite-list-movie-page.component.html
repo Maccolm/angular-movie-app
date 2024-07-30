@@ -1,7 +1,7 @@
 <div class="wrapper">
 	<h1>Favorite List</h1>
 	<div class="movie-list">
-		@for (movie of favoriteMovies; track movie) {
+		@for (movie of favoriteMovies; track movie.id) {
 			<div class="list__item">
 				<app-movie-card
 					[data]="movie"

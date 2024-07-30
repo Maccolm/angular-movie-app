@@ -22,6 +22,8 @@
 	}
   }
 	&__item{
+		padding: 7px 10px;
+		border-radius: 7px;
 		display: flex;
 		align-items: center;
 		gap: 7px;
@@ -29,9 +31,14 @@
 		font-size: 20px;
 		line-height: 2;
 		color: #f2f2f2;
-		transition: color 0.3s ease-out 0s;
+		transition: all 0.3s ease-out 0s;
 		&:hover{
 			color: rgb(215, 142, 5);
+			background-color: $activeGreyColor;
+		}
+		&:focus{
+			color: rgb(215, 142, 5);
+			background-color: rgb(226 226 226);
 		}
 	}
 	&__item i {
