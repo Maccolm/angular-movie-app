@@ -32,14 +32,15 @@ export class AppComponent extends ClearObservable implements OnInit {
   ngOnInit(): void {
 	this.authService.authenticateAndGetAccountId().subscribe(
       data => {
-			const { accountId, sessionId } = data
-        this.movieService.setAccountId(accountId);
-		  this.movieService.setSessionId(sessionId)
-        console.log('Account ID:', accountId);
-        console.log('sessionID:', sessionId);
+			const { accountId, sessionId } = data;
+        this.authService.setAccountId(accountId);
+		  this.authService.setSessionId(sessionId)
+		  console.log(data);
 
-		  this.loadFavoriteMovies()
-		  this.loadWatchList()
+		  if (data !== null) {
+			  this.loadFavoriteMovies()
+			  this.loadWatchList()
+		  }
       },
       error => {
         console.error('Authentication failed:', error);

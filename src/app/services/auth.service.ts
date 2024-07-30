@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, Observable, switchMap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, switchMap, throwError } from "rxjs";
 import { environment } from "../../environments/environment";
 import { SessionResponse, tokenResponse } from "../models/auth.models";
 
@@ -15,9 +15,22 @@ export class AuthService {
 	private apiKey = '81c0dd880c00cce619f4569514eade3b';
 	private username = 'VitaliiShapovalov';
 	private password = 'cN.hwyTvag3s.8m';
-	private readonly tokenBearer = environment.apiToken 
+	private readonly tokenBearer = environment.apiToken
 
 	constructor(private http: HttpClient) { }
+	setAccountId(accountId: number): void {
+		window.localStorage.setItem('account_id', accountId.toString());
+	}
+	getPublicAccountId() {
+		const account_id = window.localStorage.getItem('account_id'); 
+		return account_id ? parseInt( account_id, 10) : null;
+	}
+	setSessionId(sessionId: string): void {
+		window.localStorage.setItem('session_id', sessionId);
+	}
+	getSessionId() {
+		return window.localStorage.getItem('session_id');
+	}
 
 	private getRequestToken(): Observable<string> {
 		const url = `${this.apiUrl}/authentication/token/new?api_key=${this.apiKey}`;

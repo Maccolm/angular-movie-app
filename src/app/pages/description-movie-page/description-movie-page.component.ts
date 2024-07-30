@@ -31,7 +31,6 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 
-
 	constructor(private movieService: MovieService, private route: ActivatedRoute) {
 		super()
 	}
@@ -55,14 +54,13 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 				})
 			}
 		});
-
 	}
-
 	addToFavorites() {
 		this.loadingFavorites = true;
 		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			console.log('added to fv', response);
 			this.isInFavorite = true;
+			this.movieService.setToFavoriteMoviesSubject(this.movie);
 			this.loadingFavorites = false;
 		});
 	}
@@ -71,6 +69,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			console.log('added to fv', response);
 			this.isInWatchList = true;
+			this.movieService.setToWatchListSubject$(this.movie);
 			this.loadingWatchList = false;
 		});
 	}
