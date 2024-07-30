@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-movie-watchList-page',
@@ -22,16 +23,17 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
   }
 
   ngOnInit() {
-	this.loadWatchList();
+	this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(data =>{
+		this.watchList = data;
+	})
+	
 }
-	loadWatchList(){
-	 this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies =>{
-		 this.watchList = movies;
-	  })
- 	}
   deleteFromWatchList(movie: Movie) {
-    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
-		this.loadWatchList();
+    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+		if(response){
+			this.watchList = this.watchList.filter(m => m.id !== movie.id)
+			this.movieService.updateWatchListSubject(this.watchList)
+		}
 	 });
   }
 }

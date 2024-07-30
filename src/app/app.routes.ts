@@ -6,6 +6,8 @@ import { MovieNowPlayingPageComponent } from './pages/now-playing-movie-page/now
 import { MoviePopularPageComponent } from './pages/popular-movie-page/popular-movie-page.component';
 import { MovieTopRatePageComponent } from './pages/top-rate-movie-page/top-rate-movie-page.component';
 import { MovieUpcomingPageComponent } from './pages/upcoming-movie-page/upcoming-movie-page.component';
+import { favoriteMoviesResolver } from './routerGuards/favoriteMovies.resolver';
+import { watchListMoviesResolver } from './routerGuards/watchList.resolver';
 
 export const routes: Routes = [
 	{path: '', component: MovieNowPlayingPageComponent},

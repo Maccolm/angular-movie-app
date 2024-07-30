@@ -83,3 +83,9 @@ h1{
 ::ng-deep.p-card .p-card-content{
 	padding: 0;
 }
+.buttons{
+	padding-top: 20px;
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
