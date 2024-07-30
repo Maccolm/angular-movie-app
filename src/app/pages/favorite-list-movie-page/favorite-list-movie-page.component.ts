@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
@@ -19,14 +19,11 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 	
 	constructor(private movieService: MovieService, private route: ActivatedRoute) {
 		super();
-	}
+	}	
 
 	ngOnInit(): void {
-		this.route.data.pipe(takeUntil(this.destroy$)).subscribe(data => {
-			this.favoriteMovies = data['favoriteMovies'];
-			this.favoriteMovies.forEach(movie => {
-				this.movieService.setToFavoriteMoviesSubject(movie)
-			})
+		this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+			this.favoriteMovies = data;
 		});
 	}
 	updateFavoriteMovies(){
@@ -35,8 +32,11 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 		});
 	}
 	deleteFromFavorites(movie: Movie) {
-		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
-			this.updateFavoriteMovies();
+		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+			if(response){
+				this.favoriteMovies	= this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
+				this.movieService.updateFavoriteMoviesSubject(this.favoriteMovies);
+			}
 		})
 	 }
 }

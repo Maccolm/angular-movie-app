@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
 import { ActivatedRoute } from '@angular/router';
 
@@ -18,14 +18,13 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
   
   public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
-  constructor(private movieService: MovieService, private route: ActivatedRoute) {
+  constructor(private movieService: MovieService) {
 	super()
   }
 
   ngOnInit() {
-	this.route.data.pipe(takeUntil(this.destroy$)).subscribe(data =>{
-		this.watchList = data['watchList'];
-		this.watchList.forEach(movie => {this.movieService.setToWatchListSubject$(movie)})
+	this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(data =>{
+		this.watchList = data;
 	})
 	
 }
@@ -35,8 +34,11 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
 	  })
  	}
   deleteFromWatchList(movie: Movie) {
-    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe(() => {
-		this.updateWatchList();
+    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+		if(response){
+			this.watchList = this.watchList.filter(m => m.id !== movie.id)
+			this.movieService.updateWatchListSubject(this.watchList)
+		}
 	 });
   }
 }

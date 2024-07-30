@@ -12,11 +12,10 @@ export class favoriteMoviesResolver implements Resolve<Movie[]> {
   constructor(private movieService: MovieService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Movie[]> {
-    return this.movieService.getFavoriteMovies().pipe(
-      tap((movies) => {
-        this.fv = movies;
-        this.movieService.updateFavoriteMoviesSubject(this.fv);
-      })
-    );
+	  return this.movieService.getFavoriteMovies().pipe(
+		  tap((movies) => {
+			  this.fv = movies;
+		  })
+	  );
   }
 }

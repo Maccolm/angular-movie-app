@@ -15,6 +15,18 @@
 					<p><span class="rating">Popularity</span>: {{movie.popularity}}</p>
 					<p><span class="rating">Budget:</span> {{movie.budget | budgetNumberFormat}}$</p>
 					<p><span class="rating">Country:</span> "{{this.countries}}"</p>
+					<div class="buttons">
+						@if(isInFavorite){
+							<p-button label="In Favorites" class="btn-list" icon="pi pi-heart-fill" iconPos="right" severity="success" [disabled]="true"/>
+						} @else {
+							<p-button (onClick)="addToFavorites()" label="Add To Favorites" [loading]="loadingFavorites"/>
+						}
+						@if(isInWatchList){
+							<p-button label="In Watch List" class="btn-list" icon="pi pi-heart-fill" iconPos="right" severity="success" [disabled]="true"/>
+						} @else {
+							<p-button (onClick)="addToWatchList()" label="Add To Watch List" [loading]="loadingWatchList"/>
+						}
+					</div>
 					<div class="companies-wrapper">
 						<h3>Production Companies:</h3>
 						@for(company of movie.production_companies; track movie.production_companies){

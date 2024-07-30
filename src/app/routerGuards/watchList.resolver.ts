@@ -15,7 +15,6 @@ export class watchListMoviesResolver implements Resolve<Movie[]> {
     return this.movieService.getWatchList().pipe(
       tap((movies) => {
         this.watchList = movies;
-        this.movieService.updateWatchListSubject(this.watchList);
       })
     );
   }
