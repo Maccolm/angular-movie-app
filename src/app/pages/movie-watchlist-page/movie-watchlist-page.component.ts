@@ -28,11 +28,6 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
 	})
 	
 }
-	updateWatchList(){
-	 this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies =>{
-		 this.watchList = movies;
-	  })
- 	}
   deleteFromWatchList(movie: Movie) {
     this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 		if(response){

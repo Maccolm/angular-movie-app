@@ -26,11 +26,6 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 			this.favoriteMovies = data;
 		});
 	}
-	updateFavoriteMovies() {
-		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-			this.favoriteMovies = movies;
-		});
-	}
 	deleteFromFavorites(movie: Movie) {
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			if (response) {
