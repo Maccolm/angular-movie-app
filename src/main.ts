@@ -8,13 +8,15 @@ import { importProvidersFrom } from '@angular/core';
 import { routes } from './app/app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(BrowserAnimationsModule),
     provideHttpClient(),
-    provideStore()
+    provideStore(),
+    provideEffects()
 ]
 };
 
