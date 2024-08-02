@@ -7,7 +7,7 @@ import { ClearObservable } from '../../directives/clearObservable';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-movie-watchList-page',
+  selector: 'app-movie-watchlist-page',
   standalone: true,
   templateUrl: './movie-watchList-page.component.html',
   styleUrl: './movie-watchList-page.component.scss',

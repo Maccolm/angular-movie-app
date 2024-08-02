@@ -1,10 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieHeaderComponent } from "../../components/header-movie/header-movie.component";
 import { MovieService } from '../../services/movie.service';
-import { Subscription, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { Movie } from '../../models/movie.models';
 import { ClearObservable } from '../../directives/clearObservable';
+import { loadMovies } from '../../store/actions';
+import { Store } from '@ngrx/store';
+import { selectMovies } from '../../store/selectors';
 
 @Component({
 	selector: 'app-movie-popular-page',
@@ -14,18 +17,18 @@ import { ClearObservable } from '../../directives/clearObservable';
 	imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MoviePopularPageComponent extends ClearObservable implements OnInit {
-	popularMovies: Movie[] = [];
+	popularMovies: Movie[] | null = [];
 
-	constructor(private movieService: MovieService) {
+	constructor(private movieService: MovieService, private store: Store) {
 		super();
 	}
 
 	ngOnInit(): void {
-		this.movieService.getPopularMovies().pipe(takeUntil(this.destroy$)).subscribe(
-			movies => {
-				this.popularMovies = movies.results
-			}
-		)
+		this.store.dispatch(loadMovies({category: 'popular'}));
+
+		this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.popularMovies = movies;
+		})
 	}
 }
 

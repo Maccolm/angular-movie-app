@@ -5,6 +5,7 @@ export interface MovieState {
 	favoriteMovies: Movie[] | null;
 	watchList: Movie[] | null;
 	selectedMovies: Movie | null;
+	error?: any;
 };
 export const initialState: MovieState = {
 	movies: null,

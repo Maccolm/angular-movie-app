@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
 import { takeUntil } from 'rxjs';
 import { ClearObservable } from './directives/clearObservable';
+import { Store, StoreModule } from '@ngrx/store';
 
 @Component({
   selector: 'app-root ',
@@ -22,30 +23,32 @@ import { ClearObservable } from './directives/clearObservable';
     MovieAsideMenuComponent,
     MovieSidebarComponent,
     MovieHeaderComponent,
+	 StoreModule
   ],
 })
 export class AppComponent extends ClearObservable implements OnInit {
-  constructor(private movieService: MovieService, private authService: AuthService) {
+  constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
 	super()
   }
 
   ngOnInit(): void {
-	this.authService.authenticateAndGetAccountId().subscribe(
-      data => {
-			const { accountId, sessionId } = data;
-        this.authService.setAccountId(accountId);
-		  this.authService.setSessionId(sessionId)
-		  console.log(data);
+	  this.authService.authenticateAndGetAccountId().subscribe(
+		  data => {
+			  const { accountId, sessionId } = data;
+			  this.authService.setAccountId(accountId);
+			  this.authService.setSessionId(sessionId)
+			  console.log(data);
+			  
+			  if (data !== null) {
+				  this.loadFavoriteMovies()
+				  this.loadWatchList()
+				}
+			},
+			error => {
+				console.error('Authentication failed:', error);
+			}
+		);
 
-		  if (data !== null) {
-			  this.loadFavoriteMovies()
-			  this.loadWatchList()
-		  }
-      },
-      error => {
-        console.error('Authentication failed:', error);
-      }
-    );
 	}
 	loadFavoriteMovies(){
 		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {

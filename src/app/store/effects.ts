@@ -5,32 +5,34 @@
     import { catchError, map, mergeMap } from 'rxjs/operators';
     import { of } from 'rxjs';
     
-    @Injectable()
-    export class ProspectEffects {
-    
-      loadMovies$ = createEffect(() =>
-			this.actions$.pipe(
-				ofType(loadMovies),
-				mergeMap(() =>{
-					return this.movieService.getPopularMovies().pipe(
-						map(movies => 
-							loadMoviesSuccess({
-								movies: movies.results,
-							})
-						),
-						catchError(error =>
-							of(
-								loadMoviesFailure({
-									error,
-								})
-							)
-						)
-					)
-				})
-			)
-		)
-    constructor(
-        private actions$: Actions,
-        private movieService: MovieService
-        ) {}
-    }
+	 @Injectable()
+	 export class MovieEffects {
+		loadMovies$ = createEffect(() =>
+		  this.actions$.pipe(
+			 ofType(loadMovies),
+			 mergeMap((action) => {
+				const { category } = action;
+				return this.movieService.getMoviesByCategory(category).pipe(
+				  map(movies => {
+					 return loadMoviesSuccess({
+						movies: movies.results,
+					 });
+				  }),
+				  catchError(error => {
+					 return of(
+						loadMoviesFailure({
+						  error,
+						})
+					 );
+				  })
+				)
+			 })
+		  )
+		);
+	 
+		constructor(
+		  private actions$: Actions,
+		  private movieService: MovieService
+		) {}
+	 }
+	 

@@ -19,7 +19,7 @@ export class MovieTopRatePageComponent extends ClearObservable implements OnInit
 	}
 
 	ngOnInit(): void {
-		this.movieService.getTopRateMovies().pipe(takeUntil(this.destroy$)).subscribe((movies) => {
+		this.movieService.getMoviesByCategory('top_rated').pipe(takeUntil(this.destroy$)).subscribe((movies) => {
 			this.topRated = movies.results;
 		});
 	}

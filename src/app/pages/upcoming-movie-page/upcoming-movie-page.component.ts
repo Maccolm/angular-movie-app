@@ -19,7 +19,7 @@ export class MovieUpcomingPageComponent extends ClearObservable implements OnIni
 	super();
   }
   ngOnInit(): void {
-   this.movieService.getUpcomingMovies().pipe(takeUntil(this.destroy$)).subscribe((movies) => {
+   this.movieService.getMoviesByCategory('upcoming').pipe(takeUntil(this.destroy$)).subscribe((movies) => {
 		this.upcoming = movies.results;
 	});
   }

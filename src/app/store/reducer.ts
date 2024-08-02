@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store'
-import * as MovieActions from './actions'
 import { initialState } from './state'
+import { loadMoviesFailure, loadMoviesSuccess } from './actions';
 
 export const MovieReducer = createReducer(
 	initialState,
 
-	on(MovieActions.loadMoviesSuccess, (state, { movies }) => {
+	on(loadMoviesSuccess, (state, { movies }) => {
 		return {
 			...state,
 			movies: movies,
 		};
 	}),
-	on(MovieActions.loadMoviesFailure, (state, { error }) => {
+	on(loadMoviesFailure, (state, { error }) => {
 		return {
 			...state,
 			movies: null,

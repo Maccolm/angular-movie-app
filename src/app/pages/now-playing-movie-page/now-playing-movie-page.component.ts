@@ -20,7 +20,7 @@ export class MovieNowPlayingPageComponent extends ClearObservable implements OnI
 	}
 
 	ngOnInit(): void {
-		this.movieService.getNowPlayingMovies().pipe(takeUntil(this.destroy$)).subscribe((movies) => {
+		this.movieService.getMoviesByCategory('now_playing').pipe(takeUntil(this.destroy$)).subscribe((movies) => {
 			this.nowPlaying = movies.results;
 		});
 	}
