@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
 	providers: [
 		provideRouter(routes),
 		provideHttpClient(),
-		provideStore({ MovieState: MovieReducer }),
+		provideStore({ movieState: MovieReducer }),
 		provideEffects([MovieEffects]),
 		provideStoreDevtools({ maxAge: 25, logOnly: false }),
 	],

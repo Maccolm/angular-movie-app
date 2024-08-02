@@ -12,7 +12,7 @@ export class MovieAsideMenuComponent {
   links = [
     {
       name: 'Now playing',
-      url: 'now-playing',
+      url: 'now_playing',
       icon: 'pi pi-play-circle',
       color: 'color: rgb(89, 133, 92)',
     },
@@ -24,7 +24,7 @@ export class MovieAsideMenuComponent {
     },
     {
       name: 'Top rate',
-      url: 'top-rate',
+      url: 'top_rated',
       icon: 'pi pi-star-fill',
       color: 'color: rgb(255, 140, 68)',
     },

@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { MovieHeaderComponent } from '../../components/header-movie/header-movie.component';
-import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
-import { Subscription, takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { Store } from '@ngrx/store';
+import { selectMovies } from '../../store/selectors';
+import { takeUntil } from 'rxjs';
 @Component({
 	selector: 'app-movie-now-playing-page',
 	standalone: true,
@@ -13,16 +14,16 @@ import { ClearObservable } from '../../directives/clearObservable';
 	imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MovieNowPlayingPageComponent extends ClearObservable implements OnInit {
-	public nowPlaying: Movie[] = [];
+	public nowPlaying: Movie[] | null = [];
 
-	constructor(private movieService: MovieService) {
+	constructor(private store: Store) {
 		super()
 	}
 
 	ngOnInit(): void {
-		this.movieService.getMoviesByCategory('now_playing').pipe(takeUntil(this.destroy$)).subscribe((movies) => {
-			this.nowPlaying = movies.results;
-		});
+		this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.nowPlaying = movies;
+		})
 	}
 
 }

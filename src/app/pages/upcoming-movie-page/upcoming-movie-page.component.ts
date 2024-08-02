@@ -4,6 +4,8 @@ import { MovieHeaderComponent } from "../../components/header-movie/header-movie
 import { MovieService } from '../../services/movie.service';
 import { Subscription, takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { Store } from '@ngrx/store';
+import { selectMovies } from '../../store/selectors';
 
 @Component({
   selector: 'app-movie-upcoming-page',
@@ -13,15 +15,15 @@ import { ClearObservable } from '../../directives/clearObservable';
   imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MovieUpcomingPageComponent extends ClearObservable implements OnInit {
-  public upcoming: any[] = [];
+  public upcoming: any[] | null = [];
 
-  constructor(private movieService: MovieService) {
+  constructor(private store: Store) {
 	super();
   }
   ngOnInit(): void {
-   this.movieService.getMoviesByCategory('upcoming').pipe(takeUntil(this.destroy$)).subscribe((movies) => {
-		this.upcoming = movies.results;
-	});
+	this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+		this.upcoming = movies;
+	})
   }
  
 }
