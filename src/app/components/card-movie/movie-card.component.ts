@@ -8,6 +8,8 @@ import { MovieService } from '../../services/movie.service';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { Store } from '@ngrx/store';
+import { isInFavorite, isInWatchList } from '../../store/selectors';
 
 @Component({
 	selector: 'app-movie-card',
@@ -32,18 +34,18 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	public displayDialog: boolean = false;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 
-	constructor(private movieService: MovieService, private router: Router) {
+	constructor(private movieService: MovieService, private router: Router, private store: Store) {
 		super()
 	}
 
 	ngOnInit(): void {
 		this.movie = this.data;
-		this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(favorites => {
-			this.isInFavorite = Boolean(favorites.find(m => m.id === this.movie.id))
+		this.store.select(isInFavorite(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
+			this.isInFavorite = isFavorite
 		});
-		this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(watchList => {
-			this.isInWatchList = Boolean(watchList.find(m => m.id === this.movie.id))
-		});
+		this.store.select(isInWatchList(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
+			this.isInWatchList = isWatchList;
+		})
 	}
 	addToFavorites() {
 		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {

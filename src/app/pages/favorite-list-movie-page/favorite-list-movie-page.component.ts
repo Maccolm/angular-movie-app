@@ -5,6 +5,8 @@ import { Movie } from '../../models/movie.models';
 import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectFavoriteMovies } from '../../store/selectors';
 
 @Component({
 	selector: 'app-movie-favorite-list-page',
@@ -14,23 +16,22 @@ import { ActivatedRoute } from '@angular/router';
 	imports: [MovieCardComponent]
 })
 export class MovieFavoriteListPageComponent extends ClearObservable implements OnInit {
-	favoriteMovies: Movie[] = [];
+	favoriteMovies: Movie[] | null = [];
 	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
 
-	constructor(private movieService: MovieService) {
+	constructor(private movieService: MovieService, private store: Store) {
 		super();
 	}
 
 	ngOnInit(): void {
-		this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(data => {
-			this.favoriteMovies = data;
-		});
+		this.store.select(selectFavoriteMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.favoriteMovies = movies;
+		})
 	}
 	deleteFromFavorites(movie: Movie) {
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
-			if (response) {
+			if (response && this.favoriteMovies) {
 				this.favoriteMovies = this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
-				this.movieService.updateFavoriteMoviesSubject(this.favoriteMovies);
 			}
 		})
 	}

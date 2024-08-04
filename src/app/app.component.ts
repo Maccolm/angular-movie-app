@@ -6,7 +6,6 @@ import { MovieSidebarComponent } from './components/sidebar/sidebar.component';
 import { MovieHeaderComponent } from './components/header-movie/header-movie.component';
 import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
-import { takeUntil } from 'rxjs';
 import { ClearObservable } from './directives/clearObservable';
 import { Store, StoreModule } from '@ngrx/store';
 
@@ -37,33 +36,11 @@ export class AppComponent extends ClearObservable implements OnInit {
 			  const { accountId, sessionId } = data;
 			  this.authService.setAccountId(accountId);
 			  this.authService.setSessionId(sessionId)
-			  console.log(data);
-			  
-			  if (data !== null) {
-				  this.loadFavoriteMovies()
-				  this.loadWatchList()
-				}
 			},
 			error => {
 				console.error('Authentication failed:', error);
 			}
 		);
+	}
 
-	}
-	loadFavoriteMovies(){
-		this.movieService.getFavoriteMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-			const favoriteMovies = movies
-			favoriteMovies.forEach(movie => {
-				this.movieService.setToFavoriteMoviesSubject(movie);
-			});
-		});
-	}
-	loadWatchList() {
-		this.movieService.getWatchList().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-			const watchList = movies
-			watchList.forEach(movie => {
-				this.movieService.setToWatchListSubject$(movie);
-			});
-		});
-	}
 }
