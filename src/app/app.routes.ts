@@ -7,6 +7,7 @@ import { MoviePopularPageComponent } from './pages/popular-movie-page/popular-mo
 import { MovieTopRatePageComponent } from './pages/top-rate-movie-page/top-rate-movie-page.component';
 import { MovieUpcomingPageComponent } from './pages/upcoming-movie-page/upcoming-movie-page.component';
 import { movieListResolver } from './routerGuards/movieList.resolver';
+import { selectedListResolver } from './routerGuards/selectedList.resolver';
 
 
 export const routes: Routes = [
@@ -15,7 +16,7 @@ export const routes: Routes = [
 	{path: 'popular', component: MoviePopularPageComponent, resolve: {data: movieListResolver}},
 	{path: 'top_rated', component: MovieTopRatePageComponent, resolve: {data: movieListResolver}},
 	{path: 'upcoming', component: MovieUpcomingPageComponent, resolve: {data: movieListResolver}},
-	{path: 'favorites', component: MovieFavoriteListPageComponent, resolve: {data: movieListResolver}},
-	{path: 'watch-list', component: MovieWatchListPageComponent, resolve: {data: movieListResolver}},
+	{path: 'favorites', component: MovieFavoriteListPageComponent, resolve: {data: selectedListResolver}},
+	{path: 'watch-list', component: MovieWatchListPageComponent, resolve: {data: selectedListResolver}},
 	{path: 'movie/:id', component: MovieDescriptionComponent},
 ];

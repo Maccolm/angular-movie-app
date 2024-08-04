@@ -33,6 +33,8 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	public movie: any;
 	public displayDialog: boolean = false;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
+	loadingFavorites: Boolean = false;
+	loadingWatchList: Boolean = false;
 
 	constructor(private movieService: MovieService, private router: Router, private store: Store) {
 		super()
@@ -48,17 +50,19 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 		})
 	}
 	addToFavorites() {
+		this.loadingFavorites = true;
 		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
       console.log('added to fv', response);
       this.isInFavorite = true;
-		this.movieService.setToFavoriteMoviesSubject(this.movie)
+		this.loadingFavorites = false;
     });
 	}
 	addToWatchList() {
+		this.loadingWatchList = true;
 		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
       console.log('added to watchList', response);
       this.isInWatchList = true;
-		this.movieService.setToWatchListSubject$(this.movie)
+		this.loadingWatchList = false;
     });
 	}
 	navigateWithData() {

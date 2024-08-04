@@ -8,6 +8,8 @@ import { NumberDurationFormatPipe } from "../../pipes/numberDurationFormat/numbe
 import { BudgetNumberFormatPipe } from '../../pipes/budgetNumberFormat/budget-number-format.pipe';
 import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { Store } from '@ngrx/store';
+import { isInFavorite, isInWatchList } from '../../store/selectors';
 
 @Component({
 	selector: 'app-movie-description-page',
@@ -31,7 +33,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 
-	constructor(private movieService: MovieService, private route: ActivatedRoute) {
+	constructor(private movieService: MovieService, private route: ActivatedRoute, private store: Store) {
 		super()
 	}
 
@@ -45,12 +47,12 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 					this.genres = this.movie.genres.map((genre: { name: string; }) => genre.name).join(', ');
 					this.countries = this.movie.production_countries.map((country: { name: string; }) => country.name).join(', ');
 
-					this.movieService.favoriteMovies$.pipe(takeUntil(this.destroy$)).subscribe(favorites => {
-						this.isInFavorite = Boolean(favorites.find(m => m.id === this.movie.id))
-					});
-					this.movieService.watchList$.pipe(takeUntil(this.destroy$)).subscribe(watchList => {
-						this.isInWatchList = Boolean(watchList.find(m => m.id === this.movie.id))
-					});
+					this.store.select(isInFavorite(movieId)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
+						this.isInFavorite = isFavorite;
+					})
+					this.store.select(isInWatchList(movieId)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
+						this.isInWatchList = isWatchList;
+					})
 				})
 			}
 		});
@@ -60,7 +62,6 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			console.log('added to fv', response);
 			this.isInFavorite = true;
-			this.movieService.setToFavoriteMoviesSubject(this.movie);
 			this.loadingFavorites = false;
 		});
 	}
@@ -69,7 +70,6 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			console.log('added to fv', response);
 			this.isInWatchList = true;
-			this.movieService.setToWatchListSubject$(this.movie);
 			this.loadingWatchList = false;
 		});
 	}

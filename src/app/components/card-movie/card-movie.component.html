@@ -17,14 +17,14 @@
 		<div class="movie__social">
 			<ul>
 				@if(isInFavorite){
-					<li  class='active' >In<i><span class="pi pi-heart-fill"></span></i></li>
+					<p-button label="In" class='btn-list active' icon="pi pi-heart-fill" iconPos="right"/>
 				} @else {
-					<li (click)="addToFavorites()" class="btn-list">Add to<i><span class="pi pi-heart-fill"></span></i></li>
+					<p-button label="Add to" (click)="addToFavorites()" class="btn-list" [loading]="loadingFavorites" icon="pi pi-heart-fill" iconPos="right"/>
 				}
 				@if(isInWatchList){
-					<li class="active">In<i><span class="pi pi-bookmark-fill"></span></i></li>
+					<p-button label="In" class="btn-list active" icon="pi pi-bookmark-fill " iconPos="right"/>
 				} @else {
-					<li (click)="addToWatchList()" class="btn-list">Add to<i><span class="pi pi-bookmark-fill"></span></i></li>
+					<p-button label="Add to" (click)="addToWatchList()" class="btn-list" [loading]="loadingWatchList" icon="pi pi-bookmark-fill" iconPos="right"/>
 				}
 			</ul>
 		</div>
