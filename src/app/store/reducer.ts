@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store'
 import { initialState } from './state'
-import { loadFavoriteMoviesFailure, loadFavoriteMoviesSuccess, loadMoviesFailure, loadMoviesSuccess, loadWatchListFailure, loadWatchListSuccess } from './actions';
+import { loadFavoriteMoviesFailure, loadFavoriteMoviesSuccess, loadMoviesFailure, loadMoviesSuccess, loadWatchListFailure, loadWatchListSuccess, removeMovieFromFavorite, removeMovieFromWatchList, setMovieToFavorite, setMovieToWatchList } from './actions';
 
 export const MovieReducer = createReducer(
 	initialState,
@@ -45,6 +45,31 @@ export const MovieReducer = createReducer(
 			...state,
 			watchList: null,
 			error: error,
+		}
+	}),
+	on(setMovieToFavorite, (state, { movie }) => {
+		return {
+			...state,
+			favoriteMovies: state.favoriteMovies ? [...state.favoriteMovies, movie] : [movie]
+		}
+	}),
+	on(removeMovieFromFavorite, (state, { movieId }) => {
+		return {
+			...state,
+			favoriteMovies: state.favoriteMovies ? [...state.favoriteMovies.filter(movie => movie.id !== movieId)] : []
+		}
+	}),
+
+	on(setMovieToWatchList, (state, { movie }) => {
+		return {
+			...state,
+			watchList: state.watchList ? [...state.watchList, movie] : [movie]
+		}
+	}),
+	on(removeMovieFromWatchList, (state, { movieId }) => {
+		return {
+			...state,
+			watchList: state.watchList ? [...state.watchList.filter(movie => movie.id !== movieId)] : []
 		}
 	})
 )

@@ -7,6 +7,7 @@ import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { selectWatchList } from '../../store/selectors';
 import { ButtonModule } from 'primeng/button';
+import { removeMovieFromWatchList } from '../../store/actions';
 
 @Component({
   selector: 'app-movie-watchlist-page',
@@ -34,7 +35,8 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
 	this.isLoading = true;
     this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 		if(response && this.watchList){
-			this.watchList = this.watchList.filter(m => m.id !== movie.id)
+			this.watchList = this.watchList.filter(m => m.id !== movie.id);
+			this.store.dispatch(removeMovieFromWatchList({ movieId: movie.id }))
 		}
 		this.isLoading = false;
 	 });

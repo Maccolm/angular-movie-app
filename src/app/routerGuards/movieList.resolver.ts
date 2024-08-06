@@ -14,8 +14,6 @@ export class movieListResolver implements Resolve<boolean> {
 		if(category) {
 			this.store.dispatch(loadMovies({category}))
 		}
-		this.store.dispatch(loadFavoriteMovies())
-		this.store.dispatch(loadWatchList())
 		return true;
   }
 }

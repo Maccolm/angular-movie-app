@@ -30,3 +30,17 @@ export const loadWatchListSuccess = createAction('[Movie] Load Watch List Succes
 export const loadWatchListFailure = createAction('[Movie] Load Watch List Failure',
 	props<{ error: any }>()
 )
+
+export const setMovieToFavorite = createAction('[Movie] Set Movie To Favorite',
+	props<{ movie: Movie }>()
+)
+export const removeMovieFromFavorite = createAction('[Movie] Remove Movie From Favorite',
+	props<{ movieId: number }>()
+)
+
+export const setMovieToWatchList = createAction('[Movie] Set Movie To Watch List',
+	props<{ movie: Movie }>()
+) 
+export const removeMovieFromWatchList = createAction('[Movie] Remove Movie From Watch List',
+	props<{ movieId: number }>()
+)

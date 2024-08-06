@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
 import { ClearObservable } from './directives/clearObservable';
 import { Store, StoreModule } from '@ngrx/store';
+import { loadFavoriteMovies, loadWatchList } from './store/actions';
 
 @Component({
   selector: 'app-root ',
@@ -35,12 +36,13 @@ export class AppComponent extends ClearObservable implements OnInit {
 		  data => {
 			  const { accountId, sessionId } = data;
 			  this.authService.setAccountId(accountId);
-			  this.authService.setSessionId(sessionId)
+			  this.authService.setSessionId(sessionId);
 			},
 			error => {
 				console.error('Authentication failed:', error);
 			}
 		);
+		this.store.dispatch(loadFavoriteMovies());
+		this.store.dispatch(loadWatchList());
 	}
-
 }

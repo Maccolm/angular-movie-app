@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { selectFavoriteMovies } from '../../store/selectors';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
+import { removeMovieFromFavorite } from '../../store/actions';
 
 @Component({
 	selector: 'app-movie-favorite-list-page',
@@ -22,7 +23,7 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 	isLoading = false;
 
 	constructor(private movieService: MovieService, private store: Store) {
-		super();
+		super();	
 	}
 
 	ngOnInit(): void {
@@ -35,6 +36,7 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			if (response && this.favoriteMovies) {
 				this.favoriteMovies = this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
+				this.store.dispatch(removeMovieFromFavorite({ movieId: movie.id }))
 			}
 			this.isLoading = false;
 		})

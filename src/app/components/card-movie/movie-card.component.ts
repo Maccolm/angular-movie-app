@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
+import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 
 @Component({
 	selector: 'app-movie-card',
@@ -52,18 +53,24 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	addToFavorites() {
 		this.loadingFavorites = true;
 		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
-      console.log('added to fv', response);
-      this.isInFavorite = true;
-		this.loadingFavorites = false;
-    });
+			if(response) {
+				console.log('added to fv', response);
+				this.isInFavorite = true;
+				this.store.dispatch(setMovieToFavorite({movie: this.movie}));
+				this.loadingFavorites = false;
+			}
+		});
 	}
 	addToWatchList() {
 		this.loadingWatchList = true;
 		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
-      console.log('added to watchList', response);
-      this.isInWatchList = true;
-		this.loadingWatchList = false;
-    });
+			if(response) {
+				console.log('added to watchList', response);
+				this.store.dispatch(setMovieToWatchList({ movie: this.movie }));
+				this.isInWatchList = true;
+				this.loadingWatchList = false; 
+			}
+		});
 	}
 	navigateWithData() {
 		const id = this.movie.id;

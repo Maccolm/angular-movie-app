@@ -16,7 +16,7 @@ export const routes: Routes = [
 	{path: 'popular', component: MoviePopularPageComponent, resolve: {data: movieListResolver}},
 	{path: 'top_rated', component: MovieTopRatePageComponent, resolve: {data: movieListResolver}},
 	{path: 'upcoming', component: MovieUpcomingPageComponent, resolve: {data: movieListResolver}},
-	{path: 'favorites', component: MovieFavoriteListPageComponent, resolve: {data: selectedListResolver}},
-	{path: 'watch-list', component: MovieWatchListPageComponent, resolve: {data: selectedListResolver}},
+	{path: 'favorites', component: MovieFavoriteListPageComponent},
+	{path: 'watch-list', component: MovieWatchListPageComponent},
 	{path: 'movie/:id', component: MovieDescriptionComponent},
 ];
