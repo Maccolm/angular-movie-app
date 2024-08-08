@@ -73,3 +73,5 @@ export const MovieReducer = createReducer(
 		}
 	})
 )
+
+export { initialState };

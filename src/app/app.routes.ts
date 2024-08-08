@@ -7,7 +7,6 @@ import { MoviePopularPageComponent } from './pages/popular-movie-page/popular-mo
 import { MovieTopRatePageComponent } from './pages/top-rate-movie-page/top-rate-movie-page.component';
 import { MovieUpcomingPageComponent } from './pages/upcoming-movie-page/upcoming-movie-page.component';
 import { movieListResolver } from './routerGuards/movieList.resolver';
-import { selectedListResolver } from './routerGuards/selectedList.resolver';
 
 
 export const routes: Routes = [
