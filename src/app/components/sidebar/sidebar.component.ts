@@ -21,9 +21,9 @@ export class MovieSidebarComponent {
   sidebarVisible: boolean = false;
 
   links = [
-    { name: 'Now playing', url: 'now-playing' },
+    { name: 'Now playing', url: 'now_playing' },
     { name: 'Popular', url: 'popular' },
-    { name: 'Top Rate', url: 'top-rate' },
+    { name: 'Top Rate', url: 'top_rated' },
     { name: 'Upcoming', url: 'upcoming' },
   ];
 }

@@ -4,6 +4,8 @@ import { MovieHeaderComponent } from '../../components/header-movie/header-movie
 import { MovieService } from '../../services/movie.service';
 import { Subscription, takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
+import { Store } from '@ngrx/store';
+import { selectMovies } from '../../store/selectors';
 @Component({
 	selector: 'app-movie-top-rate-page',
 	standalone: true,
@@ -12,15 +14,15 @@ import { ClearObservable } from '../../directives/clearObservable';
 	imports: [MovieCardComponent, MovieHeaderComponent],
 })
 export class MovieTopRatePageComponent extends ClearObservable implements OnInit {
-	public topRated: any[] = [];
+	public topRated: any[] | null = [];
 
-	constructor(private movieService: MovieService) {
+	constructor(private store: Store) {
 		super();
 	}
 
 	ngOnInit(): void {
-		this.movieService.getTopRateMovies().pipe(takeUntil(this.destroy$)).subscribe((movies) => {
-			this.topRated = movies.results;
-		});
+		this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.topRated = movies;
+		})
 	}
 }

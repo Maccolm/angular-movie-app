@@ -116,23 +116,22 @@ ul {
 				display: flex;
 				gap: 12px;
 				padding-left: 7px;
-				li {
+				.btn-list > button {
 					cursor: pointer;
 					font-size: 16px;
 					font-weight: 600;
 					letter-spacing: 0;
 					color: rgba(0, 0, 0, 0.7);
 					transition: color 0.3s;
-					span {
-						display: inline-block;
-						margin: 0 7px;
-					}
 					&:hover {
 						color: rgba(0, 0, 0, 0.9);
 						transition: color 0.3s;
 					}
-					i .pi {
+					 .pi {
 						font-size: 22px;
+						&::before{
+							padding-right: 7px;
+						}
 					}
 				}
 			}
@@ -173,7 +172,9 @@ ul {
 }
 .active{
 	span{
-		color: rgb(215, 142, 5) !important;
+		&:before{
+			color: rgb(215, 142, 5) !important;
+		}
 	}
 }
 //p-card-component===============================================
@@ -194,9 +195,7 @@ ul {
 }
 .p-button {
 	font-size: 16px;
-	padding: 10px;
-	border-radius: 7px;
-	transition: background-color 0.3s ease-out 0s;
+	transition: all 0.3s ease-out 0s;
 }
 .p-card .p-card-content {
 	padding: 1.25rem 0 0 0;
@@ -213,4 +212,10 @@ ul {
 }
 .pi {
 	font-size: 20px;
+}
+
+.btn-list > button{
+	background-color: transparent;
+	border: none;
+	padding: 0;
 }
