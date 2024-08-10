@@ -80,7 +80,7 @@ export class MovieService {
 		};
 		return this.httpClient.post<Movie>(url, body);
 	}
-	deleteFromWatchList(movie: Movie) {
+	removeFromWatchList(movie: Movie) {
 		const url = `${this.baseUrl}/account/${this.accountId}/watchlist${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',

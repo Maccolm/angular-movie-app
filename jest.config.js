@@ -1,4 +1,7 @@
 module.exports = {
+	moduleNameMapper: {
+		'\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+	 },
 	preset: 'jest-preset-angular',
 	setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
 	testEnvironment: 'jsdom',

@@ -33,7 +33,7 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
 }
   deleteFromWatchList(movie: Movie) {
 	this.isLoading = true;
-    this.movieService.deleteFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+    this.movieService.removeFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 		if(response && this.watchList){
 			this.watchList = this.watchList.filter(m => m.id !== movie.id);
 			this.store.dispatch(removeMovieFromWatchList({ movieId: movie.id }))

@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieCardComponent } from "../../components/card-movie/movie-card.component";
 import { MovieHeaderComponent } from "../../components/header-movie/header-movie.component";
-import { MovieService } from '../../services/movie.service';
-import { Subscription, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { selectMovies } from '../../store/selectors';
@@ -25,5 +24,4 @@ export class MovieUpcomingPageComponent extends ClearObservable implements OnIni
 		this.upcoming = movies;
 	})
   }
- 
 }
