@@ -18,7 +18,7 @@ import { removeMovieFromWatchList } from '../../store/actions';
 })
 export class MovieWatchListPageComponent extends ClearObservable implements OnInit  {
   watchList: Movie[] | null = [];
-  isLoading = false;
+  isLoading: {[key: number]: boolean} = {};
   
   public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
@@ -32,13 +32,13 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
 	})	
 }
   deleteFromWatchList(movie: Movie) {
-	this.isLoading = true;
+	this.isLoading[movie.id] = true;
     this.movieService.removeFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 		if(response && this.watchList){
 			this.watchList = this.watchList.filter(m => m.id !== movie.id);
 			this.store.dispatch(removeMovieFromWatchList({ movieId: movie.id }))
 		}
-		this.isLoading = false;
+		this.isLoading[movie.id] = false;
 	 });
   }
 }

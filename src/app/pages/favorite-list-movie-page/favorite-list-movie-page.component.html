@@ -7,7 +7,7 @@
 					[data]="movie"
 					style="display: block; max-width: 430px; width: 100%;">
 				</app-movie-card>
-				<p-button  class="list__button" (click)="deleteFromFavorites(movie)" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" [loading]="isLoading"/>
+				<p-button  class="list__button" (click)="deleteFromFavorites(movie)" icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" [loading]="isLoading[movie.id]"/>
 			</div>
 		} @empty {
 			{{emptyFavoriteList}}

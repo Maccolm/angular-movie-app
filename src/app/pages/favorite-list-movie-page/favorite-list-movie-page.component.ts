@@ -20,7 +20,7 @@ import { removeMovieFromFavorite } from '../../store/actions';
 export class MovieFavoriteListPageComponent extends ClearObservable implements OnInit {
 	favoriteMovies: Movie[] | null = [];
 	public emptyFavoriteList: string = 'Your list is empty. Add some movies to favorite...';
-	isLoading = false;
+	isLoading: {[key: number]: boolean}= {};
 
 	constructor(private movieService: MovieService, private store: Store) {
 		super();	
@@ -32,13 +32,13 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 		})
 	}
 	deleteFromFavorites(movie: Movie) {
-		this.isLoading = true;
+		this.isLoading[movie.id] = true;
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			if (response && this.favoriteMovies) {
 				this.favoriteMovies = this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
 				this.store.dispatch(removeMovieFromFavorite({ movieId: movie.id }))
 			}
-			this.isLoading = false;
+			this.isLoading[movie.id] = false;
 		})
 	}
 }
