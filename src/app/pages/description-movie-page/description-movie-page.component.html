@@ -7,12 +7,20 @@
 					<h1>{{ movie.title }}</h1>
 					<p><span class="rating">Genres:</span> "{{this.genres}}"</p>
 					<p-divider/>
-					<p><span class="rating">Released</span>: {{movie.release_date}}</p>
+					<p><span class="rating">Released:</span> {{movie.release_date}}</p>
 					<p><span class="rating">Duration:</span> {{movie.runtime | numberDurationFormat}}</p>
 					<p> <span class="rating">Original language:</span> "{{this.originalLanguages}}"</p>
 					<p-divider/>
 					<p><span class="rating">Rating:</span> {{movie.vote_average}}</p>
-					<p><span class="rating">Popularity</span>: {{movie.popularity}}</p>
+					<div class="rating__body">
+						<div class="rating__active" [style.width.%] ="ratingPercentage"></div>
+						<div class="rating__items">
+							@for(star of ratingStars; track ratingStars;) { 
+								<input type="radio" class="rating__item" [value]='star' name="rating">
+							}
+						</div>
+					</div>
+					<p><span class="rating">Popularity:</span> {{movie.popularity}}</p>
 					<p><span class="rating">Budget:</span> {{movie.budget | budgetNumberFormat}}$</p>
 					<p><span class="rating">Country:</span> "{{this.countries}}"</p>
 					<div class="buttons">
@@ -27,6 +35,7 @@
 							<p-button (onClick)="addToWatchList()" label="Add To Watch List" [loading]="loadingWatchList"/>
 						}
 					</div>
+
 					<div class="companies-wrapper">
 						<h3>Production Companies:</h3>
 						@for(company of movie.production_companies; track movie.production_companies){

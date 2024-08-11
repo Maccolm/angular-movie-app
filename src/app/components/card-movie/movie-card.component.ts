@@ -36,6 +36,8 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
+	ratingPercentage: number = 0;
+	ratingStars: number[] = [1,2,3,4,5]
 
 	constructor(private movieService: MovieService, private router: Router, private store: Store) {
 		super()
@@ -49,6 +51,7 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 		this.store.select(isInWatchList(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
 			this.isInWatchList = isWatchList;
 		})
+		this.initRating(this.movie.vote_average);
 	}
 	addToFavorites() {
 		this.loadingFavorites = true;
@@ -75,6 +78,9 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	navigateWithData() {
 		const id = this.movie.id;
 		this.router.navigate(['/movie', id]);
+	}
+	initRating(rating: number){
+		this.ratingPercentage = rating / 0.1;
 	}
 }
 

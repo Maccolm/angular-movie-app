@@ -11,7 +11,6 @@
 	<div class="movie__desc">
 		<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
 		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="navigateWithData()" severity="info" ></p-button>
-		<p class="rating">Rating: {{ data.vote_average }}</p>
 	</div>
 	<ng-template pTemplate="footer">
 		<div class="movie__social">
@@ -28,10 +27,20 @@
 				}
 			</ul>
 		</div>
+		<div class="rating__wrapper">
+			<p class="rating">Rating: {{ data.vote_average }}</p>
+			<div class="rating__body">
+				<div class="rating__active" [style.width.%] ="ratingPercentage"></div>
+				<div class="rating__items">
+					@for(star of ratingStars; track ratingStars;) { 
+						<input type="radio" class="rating__item" [value]='star' name="rating">
+					}
+				</div>
+			</div>
+		</div>
 	</ng-template>
 	<div class="blur__back">
 		<img class="bg-img" [src]="IMAGINE_PATH + data.backdrop_path" alt="{{data.title}}">
 		<div class="gradient-overlay"></div>
 	</div>
 </p-card>
-

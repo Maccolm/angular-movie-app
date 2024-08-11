@@ -106,7 +106,7 @@ ul {
 		}
 		.movie__social {
 			padding-left: 15px;
-			padding-bottom: 20px;
+			align-self: center;
 			@media screen and (max-width: 435px) {
 				padding-top: 15px;
 			}
@@ -165,11 +165,6 @@ ul {
 	background: linear-gradient(to top, #e5e6e6 45%, transparent 100%);
 	z-index: 1;
 }
-.rating {
-	padding-top: 15px;
-	color: #545454;
-	font-weight: 600;
-}
 .active{
 	span{
 		&:before{
@@ -208,7 +203,6 @@ ul {
 }
 .movie__card .p-card .movie__social {
 	padding-left: 0;
-	padding-top: 12px;
 }
 .pi {
 	font-size: 20px;
@@ -218,4 +212,66 @@ ul {
 	background-color: transparent;
 	border: none;
 	padding: 0;
+}
+//Rating======================================================================
+
+.rating {
+	padding-left: 7px;
+	display: flex;
+	align-items: flex-end;
+	line-height: 1;
+	&__wrapper{
+		padding-left: 7px;
+	}
+	&__body {
+		position: relative;
+		&:before {
+			font-size: 28px;
+			content: "★★★★★";
+			display: block;
+		}
+	}
+	&__active {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		&:before {
+			font-size: 28px;
+			content: "★★★★★";
+		 	height: 100%;
+			width: 100%;
+			top: 0;
+			left: 0;
+			color:rgb(220, 117, 52);
+		 }
+	}
+	&__items {
+		 display: flex;
+		 position: absolute;
+		 height: 100%;
+		 width: 100%;
+		 top: 0;
+		 left: 0;
+	}
+	&__item {
+		cursor: pointer;
+		flex: 0 0 20%;
+		opacity: 0;
+		height: 100%;
+	}
+	&__value {
+		font-size: 50%;
+		padding: 0 0 0 10px;
+		line-height: 1;
+		color: #545454;
+		font-weight: 600;
+	}
+}
+.p-card-footer{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap-reverse;
 }

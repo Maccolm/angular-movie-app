@@ -32,6 +32,8 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	public companies!: string[];
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
+	ratingPercentage: number = 0;
+	ratingStars: number[] = [1,2,3,4,5,6,7,8,9,10];
 
 	constructor(private movieService: MovieService, private route: ActivatedRoute, private store: Store) {
 		super()
@@ -46,6 +48,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 					this.originalLanguages = this.movie.spoken_languages.map((language: { english_name: string; }) => language.english_name).join(', ');
 					this.genres = this.movie.genres.map((genre: { name: string; }) => genre.name).join(', ');
 					this.countries = this.movie.production_countries.map((country: { name: string; }) => country.name).join(', ');
+					this.initRating(movie.vote_average);
 
 					this.store.select(isInFavorite(movieId)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
 						this.isInFavorite = isFavorite;
@@ -76,5 +79,8 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 				this.loadingWatchList = false;
 			}
 		});
+	}
+	initRating(rating: number){
+		this.ratingPercentage = rating / 0.1;
 	}
 }
