@@ -26,18 +26,18 @@ export class MovieService {
 
 	constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
-	getMoviesByCategory(category: string): Observable<ApiMovieModel> {
-		return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/${category}${this.apiKey}`);
+	getMoviesByCategory(category: string, page: number = 1): Observable<ApiMovieModel> {
+		return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/${category}?page=${page}&${this.apiKey}`);
 	}
 	getMovieById(id: number): Observable<DetailsMovie> {
-		return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}${this.apiKey}`);
+		return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}?${this.apiKey}`);
 	}
 
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
 		this.accountId = this.auth.getPublicAccountId();
 		this.sessionId = this.auth.getSessionId();
-		const url = `${this.baseUrl}/account/${this.accountId}/favorite/movies${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/favorite/movies?${this.apiKey}&session_id=${this.sessionId}`;
 		return this.httpClient.get<{ results: Movie[] }>(url).pipe(
 			map((response) => response.results),
 			catchError(this.handleError)
@@ -45,7 +45,7 @@ export class MovieService {
 	}
 
 	setToFavoriteMovies(movie: Movie) {
-		const url = `${this.baseUrl}/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/favorite?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
 			media_id: movie.id,
@@ -55,7 +55,7 @@ export class MovieService {
 		return this.httpClient.post<Movie>(url, body);
 	}
 	removeFromFavoriteMovies(movie: Movie): Observable<Movie> {
-		const url = `${this.baseUrl}/account/${this.accountId}/favorite${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/favorite?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
 			media_id: movie.id,
@@ -65,14 +65,14 @@ export class MovieService {
 	}
 	//watchList functions==================================================
 	getWatchList(): Observable<Movie[]> {
-		const url = `${this.baseUrl}/account/${this.accountId}/watchlist/movies${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/watchlist/movies?${this.apiKey}&session_id=${this.sessionId}`;
 		return this.httpClient.get<{ results: Movie[] }>(url).pipe(
 			map((response) => response.results),
 			catchError(this.handleError)
 		);
 	}
 	setToWatchList(movie: Movie) {
-		const url = `${this.baseUrl}/account/${this.accountId}/watchlist${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/watchlist?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
 			media_id: movie.id,
@@ -81,7 +81,7 @@ export class MovieService {
 		return this.httpClient.post<Movie>(url, body);
 	}
 	removeFromWatchList(movie: Movie) {
-		const url = `${this.baseUrl}/account/${this.accountId}/watchlist${this.apiKey}&session_id=${this.sessionId}`;
+		const url = `${this.baseUrl}/account/${this.accountId}/watchlist?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
 			media_id: movie.id,

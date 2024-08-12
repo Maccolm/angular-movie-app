@@ -1,3 +1,10 @@
+<p-dataView   
+[value]="topRated" 
+[rows]="1" 
+[paginator]="true" 
+(onPage)="changeOnPage($event)"
+>
+<ng-template pTemplate="list" let-products>
 <div class="movie-list">
 	@for (movie of topRated; track movie){
 		<app-movie-card 
@@ -6,3 +13,5 @@
 		</app-movie-card>
 	}
 </div>
+</ng-template>
+</p-dataView>

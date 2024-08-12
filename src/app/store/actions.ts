@@ -2,7 +2,7 @@ import { createAction, props } from "@ngrx/store";
 import { Movie } from "../models/movie.models";
 
 export const loadMovies = createAction('[Movie] Load Movies',
-	props<{ category: string }>()
+	props<{ category: string, page?: number; }>()
 );
 
 export const loadMoviesSuccess = createAction('[Movie] Load Movies Success',

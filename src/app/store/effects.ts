@@ -21,8 +21,8 @@ export class MovieEffects {
     this.actions$.pipe(
       ofType(loadMovies),
       mergeMap((action) => {
-        const { category } = action;
-        return this.movieService.getMoviesByCategory(category).pipe(
+        const { category, page } = action;
+        return this.movieService.getMoviesByCategory(category, page).pipe(
           map((movies) => {
             return loadMoviesSuccess({
               movies: movies.results,

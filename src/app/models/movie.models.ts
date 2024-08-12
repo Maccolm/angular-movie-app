@@ -1,6 +1,7 @@
 export interface ApiMovieModel {
 	page: number;
 	results: Movie[];
+	total_pages?: number;
 }
 export interface Movie {
   adult?: boolean;

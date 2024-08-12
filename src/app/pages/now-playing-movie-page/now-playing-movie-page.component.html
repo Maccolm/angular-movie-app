@@ -1,4 +1,11 @@
-<div class="movie-list">
+<p-dataView   
+[value]="nowPlaying" 
+[rows]="1" 
+[paginator]="true" 
+(onPage)="changeOnPage($event)"
+>
+<ng-template pTemplate="list" let-products>
+	<div class="movie-list">
   @for (movie of nowPlaying; track movie){
   <app-movie-card
     [data]="movie"
@@ -6,4 +13,6 @@
   >
   </app-movie-card>
   }
-</div>
+	</div>
+</ng-template>
+</p-dataView>

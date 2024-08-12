@@ -47,6 +47,7 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	}
 
 	ngOnInit(): void {
+		
 		this.movie = this.data;
 		this.store.select(isInFavorite(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
 			this.isInFavorite = isFavorite
@@ -55,7 +56,9 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 			this.isInWatchList = isWatchList;
 		})
 		this.initRating(this.movie.vote_average);
-		this.dataLoaded = true;
+		if(this.movie){
+			this.dataLoaded = true;
+		}
 	}
 	addToFavorites() {
 		this.loadingFavorites = true;
