@@ -25,5 +25,4 @@ export class MovieNowPlayingPageComponent extends ClearObservable implements OnI
 			this.nowPlaying = movies;
 		})
 	}
-
 }

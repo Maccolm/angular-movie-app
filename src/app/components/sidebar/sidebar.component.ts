@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
-import { MovieAsideMenuComponent } from "../aside-menu/aside-menu.component";
+import { MovieAsideMenuComponent } from '../aside-menu/aside-menu.component';
 import { RouterLink, RouterModule } from '@angular/router';
-
 @Component({
   selector: 'app-movie-sidebar',
   standalone: true,
@@ -15,7 +14,7 @@ import { RouterLink, RouterModule } from '@angular/router';
     MovieAsideMenuComponent,
     RouterLink,
     RouterModule,
-  ],
+	],
 })
 export class MovieSidebarComponent {
   sidebarVisible: boolean = false;
