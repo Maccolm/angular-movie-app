@@ -32,7 +32,9 @@ export class MovieService {
 	getMovieById(id: number): Observable<DetailsMovie> {
 		return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}?${this.apiKey}`);
 	}
-
+	searchMovie(query: string){
+		return this.httpClient.get<any>(`${this.baseUrl}/search/movie?query=${query}&${this.apiKey}`)
+	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
 		this.accountId = this.auth.getPublicAccountId();

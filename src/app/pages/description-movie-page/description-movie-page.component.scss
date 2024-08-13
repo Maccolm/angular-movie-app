@@ -1,13 +1,14 @@
 h1{
 	font-size: clamp(1rem, -0.078rem + 5.39vw, 5.313rem);
 	letter-spacing: -1px;
-	margin: 0;
 	line-height: 0.9;
-	margin-bottom: 2rem;
+	padding: 2rem;
+	margin: 0;
 }
 .movie__header{
 	display: flex;
 	justify-content: start;
+	align-items: flex-start;
 	gap: 25px;
 	padding: 1.25rem;
 	padding-bottom: 0;
@@ -24,7 +25,8 @@ h1{
 	width: 100%;
 }
 .companies-wrapper{
-	margin-top: auto;
+	margin-top: 20px;
+	padding: 0 1.25rem;
 	display: flex;
 	column-gap: 20px;
 	flex-wrap: wrap;
@@ -60,7 +62,7 @@ h1{
 	}
 }
 .rating{
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	font-weight: 600;
 }
 
@@ -68,7 +70,7 @@ h1{
 	width: -webkit-fill-available;
 	max-width: 500px;
 	display: block;
-	object-fit: cover;
+	object-fit: contain;
 }
 .blur__back{
 	display: flex;
@@ -84,7 +86,7 @@ h1{
 	padding: 0;
 }
 .buttons{
-	padding-top: 20px;
+	padding: 20px 0;
 	display: flex;
 	gap: 20px;
 	flex-wrap: wrap;

@@ -15,4 +15,39 @@
 			<p>Watch list</p>
 		</a>
 	</nav>
+	<div class="actions">
+		<p-button 
+			(onClick)="openOverplay($event)"
+			[text]="true" 
+			rounded="true" 
+			icon="pi pi-search" 
+			label="Search" 
+			class="btn-search"/> 
+		<p-overlayPanel #op  [style]="{ width: '100%' }">
+			<div class="search__container">
+				<form action="">
+					<input pInputText id="search" #searchInput [formControl]="searchControl" autocomplete="off"/>
+					<p-button [rounded]="true" [text]="true" icon="{{isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-search'}}" class="btn-input"/>
+				</form>
+			</div>
+			<ul class="search__results">
+				@for(movie of moviesFromSearch | slice:0:5; track moviesFromSearch){
+					<li class="search__item" (click)="navigateWithData(movie.id, $event)">
+						<p><span class="search__item-title">{{movie.title}}</span>, {{movie.release_date | extractYearFromDate}}, <span class="search__item-rating" [ngClass]="getMovieRating(movie.vote_average)"> {{movie.vote_average}}</span></p>
+					</li>
+				}
+			</ul>
+			@if(numberMoviesFromSearch){
+				<div class="search__item search__item-total">
+					<p>Show all results ({{numberMoviesFromSearch}} more matches)</p>
+				</div>
+			}
+			@if (!isFindMovie && searchControl.value?.trim().length > 0) {
+				<div class="search__item search__item-total">
+					<p>{{moviesNotFound}}</p>
+				</div>
+			}
+		</p-overlayPanel>
+
+	</div>
 </div>
