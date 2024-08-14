@@ -36,7 +36,7 @@ export class MovieFavoriteListPageComponent extends ClearObservable implements O
 		this.movieService.removeFromFavoriteMovies(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			if (response && this.favoriteMovies) {
 				this.favoriteMovies = this.favoriteMovies.filter(favMovie => favMovie.id !== movie.id);
-				this.store.dispatch(removeMovieFromFavorite({ movieId: movie.id }))
+				this.store.dispatch(removeMovieFromFavorite({ movieId: movie.id }));
 			}
 			this.isLoading[movie.id] = false;
 		})

@@ -37,7 +37,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	ratingStars: number[] = [1,2,3,4,5,6,7,8,9,10];
 
 	constructor(private movieService: MovieService, private route: ActivatedRoute, private store: Store) {
-		super()
+		super();
 	}
 
 	ngOnInit(): void {

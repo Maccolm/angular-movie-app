@@ -27,10 +27,10 @@ export class MoviePopularPageComponent extends ClearObservable implements OnInit
 			this.popularMovies = movies || [];
 		})
 	}
-	changeOnPage(event: any){
-		window.scrollTo({top: 0, behavior: 'smooth'})
-		const newPage = event.first + 1
-		this.store.dispatch(loadMovies({category: 'popular', page: newPage}))
+	changeOnPage(event: any) {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		const newPage = event.first + 1;
+		this.store.dispatch(loadMovies({ category: 'popular', page: newPage }));
 	}
 }
 

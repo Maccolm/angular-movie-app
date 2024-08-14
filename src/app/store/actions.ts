@@ -54,3 +54,4 @@ export const loadMoviesFromSearchFailure = createAction('[Search] Load Movies Fa
 export const loadMoviesFromSearchSuccess = createAction('[Search] Load Movies Success',
 	props<{ searchedMovies: ApiMovieModel, query: string }>()
 )
+export const clearMoviesState = createAction('[Movies] Clear Movies State');

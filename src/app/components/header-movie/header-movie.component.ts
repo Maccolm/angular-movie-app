@@ -13,7 +13,7 @@ import { Movie } from '../../models/movie.models';
 import { CommonModule } from '@angular/common';
 import { ExtractYearFromDatePipe } from '../../pipes/extract-year-from-date.pipe';
 import { Router } from '@angular/router';
-import { loadMoviesFromSearch } from '../../store/actions';
+import { clearMoviesState, loadMoviesFromSearch } from '../../store/actions';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -87,6 +87,7 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 	}
 	navigateWithAllSearchResults(query: string){
 		if(query && query.trim().length > 0){
+			this.store.dispatch(clearMoviesState());
 			this.store.dispatch(loadMoviesFromSearch({query: query.trim()}));
 			this.router.navigate(['search_results']);
 			this.overlayPanel.hide();

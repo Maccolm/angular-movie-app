@@ -23,7 +23,7 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
   public emptyWatchList: string = 'Your list is empty. Add some movies to watch list...';
 
   constructor(private movieService: MovieService, private store: Store) {
-	super()
+	super();
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ export class MovieWatchListPageComponent extends ClearObservable implements OnIn
     this.movieService.removeFromWatchList(movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 		if(response && this.watchList){
 			this.watchList = this.watchList.filter(m => m.id !== movie.id);
-			this.store.dispatch(removeMovieFromWatchList({ movieId: movie.id }))
+			this.store.dispatch(removeMovieFromWatchList({ movieId: movie.id }));
 		}
 		this.isLoading[movie.id] = false;
 	 });

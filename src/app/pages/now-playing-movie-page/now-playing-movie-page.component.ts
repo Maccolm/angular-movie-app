@@ -20,7 +20,7 @@ export class MovieNowPlayingPageComponent extends ClearObservable implements OnI
 	public nowPlaying: Movie[] = [];
 
 	constructor(private store: Store) {
-		super()
+		super();
 	}
 
 	ngOnInit(): void {
@@ -28,9 +28,9 @@ export class MovieNowPlayingPageComponent extends ClearObservable implements OnI
 			this.nowPlaying = movies || [];
 		})
 	}
-	changeOnPage(event: any){
-		window.scrollTo({top: 0, behavior: 'smooth'})
-		const newPage = event.first + 1
-		this.store.dispatch(loadMovies({category: 'popular', page: newPage}))
+	changeOnPage(event: any) {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+		const newPage = event.first + 1;
+		this.store.dispatch(loadMovies({ category: 'popular', page: newPage }));
 	}
 }
