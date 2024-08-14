@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs';
 import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
+import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 
 @Component({
 	selector: 'app-movie-description-page',
@@ -66,6 +67,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 			if(response) {
 				console.log('added to fv', response);
 				this.isInFavorite = true;
+				this.store.dispatch(setMovieToFavorite({movie: this.movie}));
 				this.loadingFavorites = false;
 			}
 		});
@@ -74,9 +76,10 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 		this.loadingWatchList = true;
 		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
 			if(response) {
-				console.log('added to fv', response);
+				console.log('added to watchList', response);
+				this.store.dispatch(setMovieToWatchList({ movie: this.movie }));
 				this.isInWatchList = true;
-				this.loadingWatchList = false;
+				this.loadingWatchList = false; 
 			}
 		});
 	}

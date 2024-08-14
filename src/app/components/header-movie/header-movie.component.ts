@@ -7,13 +7,14 @@ import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient } from '@angular/common/http';
 import { ClearObservable } from '../../directives/clearObservable';
-import { debounceTime, of, switchMap, tap } from 'rxjs';
+import { debounceTime, of, switchMap, takeUntil, tap } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
 import { CommonModule } from '@angular/common';
 import { ExtractYearFromDatePipe } from '../../pipes/extract-year-from-date.pipe';
 import { Router } from '@angular/router';
-import { query } from '@angular/animations';
+import { loadMoviesFromSearch } from '../../store/actions';
+import { Store } from '@ngrx/store';
 
 @Component({
 	selector: 'app-movie-header',
@@ -27,7 +28,7 @@ import { query } from '@angular/animations';
 		ReactiveFormsModule,
 		ButtonModule,
 		CommonModule,
-		ExtractYearFromDatePipe
+		ExtractYearFromDatePipe,
 	],
 	templateUrl: './header-movie.component.html',
 	styleUrl: './header-movie.component.scss',
@@ -42,7 +43,7 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 	isFindMovie: boolean = true;
 	moviesNotFound: string = "We couldn't find anything. You may need to change your search query!";
 
-	constructor(private http: HttpClient, private movieService: MovieService, private router: Router) {
+	constructor(private http: HttpClient, private movieService: MovieService, private router: Router, private store: Store) {
 		super();
 	}
 	ngOnInit() {
@@ -53,7 +54,7 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 			debounceTime(300),
 			switchMap((query) =>
 				this.movieService.searchMovie(query),
-			)).subscribe((movies) => {
+			)).pipe(takeUntil(this.destroy$)).subscribe((movies) => {
 				if (movies) {
 					this.isLoading = false;
 					this.moviesFromSearch = movies.results;
@@ -83,5 +84,12 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 		setTimeout(() => {
 			this.overlayPanel.toggle(event);
 		}, 300);
+	}
+	navigateWithAllSearchResults(query: string){
+		if(query && query.trim().length > 0){
+			this.store.dispatch(loadMoviesFromSearch({query: query.trim()}));
+			this.router.navigate(['search_results']);
+			this.overlayPanel.hide();
+		}
 	}
 }

@@ -37,9 +37,9 @@
 					</li>
 				}
 			</ul>
-			@if(numberMoviesFromSearch){
+			@if(numberMoviesFromSearch > 5){
 				<div class="search__item search__item-total">
-					<p>Show all results ({{numberMoviesFromSearch}} more matches)</p>
+					<a (click)="navigateWithAllSearchResults(searchControl.value)">Show all results ({{numberMoviesFromSearch - 5}} more matches)</a>
 				</div>
 			}
 			@if (!isFindMovie && searchControl.value?.trim().length > 0) {

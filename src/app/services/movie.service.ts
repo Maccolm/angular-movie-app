@@ -32,8 +32,8 @@ export class MovieService {
 	getMovieById(id: number): Observable<DetailsMovie> {
 		return this.httpClient.get<DetailsMovie>(`${this.apiUrl}/${id}?${this.apiKey}`);
 	}
-	searchMovie(query: string){
-		return this.httpClient.get<any>(`${this.baseUrl}/search/movie?query=${query}&${this.apiKey}`)
+	searchMovie(query: string, page: number = 1){
+		return this.httpClient.get<any>(`${this.baseUrl}/search/movie?query=${query}&page=${page}&${this.apiKey}`)
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
@@ -50,7 +50,7 @@ export class MovieService {
 		const url = `${this.baseUrl}/account/${this.accountId}/favorite?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
-			media_id: movie.id,
+			media_id: movie.	id,
 			favorite: true,
 		};
 		catchError(this.handleError)

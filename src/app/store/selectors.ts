@@ -17,3 +17,5 @@ export const isInFavorite = (movieId: number) => createSelector(selectFavoriteMo
 export const isInWatchList = (movieId: number) => createSelector( selectWatchList, 
 	(watchList: Movie[] | null) => !!watchList?.find(movie => movie.id === movieId)
 )
+export const selectSearchQuery = createSelector(selectState, state => state.query);
+export const selectSearchedMovies = createSelector(selectState, state => state.searchedMovies);
