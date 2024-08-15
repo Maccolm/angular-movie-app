@@ -42,15 +42,7 @@ export class SearchResultsPageComponent extends ClearObservable implements OnIni
 			this.totalPages = data?.total_pages || 0;
 			this.currentPage = data?.page || 0;
 		});
-		this.store.select(selectSearchQuery).pipe(takeUntil(this.destroy$)).subscribe(query => {
-			if (query &&  query !== this.searchQuery) {
-				this.searchQuery = query;
-				this.currentPage = 1;
-				localStorage.setItem('currentPage', this.currentPage.toString());
-				localStorage.setItem('searchQuery', this.searchQuery);
-				this.store.dispatch(loadMoviesFromSearch({ query: this.searchQuery, page: this.currentPage}));
-			}
-		});
+		
 
 		this.router.events.pipe(takeUntil(this.destroy$)).subscribe(event => {
 			if (event instanceof NavigationStart && event.url !== this.router.url) {
