@@ -1,0 +1,17 @@
+<div class="wrapper">
+	<div class="header">
+		<h1 class="header__title">Welcome to movie service <br> "Litis"</h1>
+	</div>
+	<div class="movie__card">
+		@for(link of links; track link) {
+			<a [routerLink]="link.url" class="movie__item">
+				<div class="movie__icon" [class]="link.icon" [style]="link.color"></div>
+				<div class="movie__category">{{link.name}}</div>
+			</a>
+		}
+	</div>
+	<div class="blur__back">
+		<img class="bg-img" [src]="IMAGINE_PATH" alt="{{imgTitle}}">
+		<div class="gradient-overlay"></div>
+	</div>
+</div>

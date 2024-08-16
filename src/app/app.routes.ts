@@ -3,7 +3,7 @@ import { movieListResolver } from './routerGuards/movieList.resolver';
 
 
 export const routes: Routes = [
-	// {path: '', component: , resolve: {data: movieListResolver}},
+	{path: '', loadComponent: () => import('./pages/start-page/start-page.component').then(m => m.StartPageComponent)},
 	{path: 'now_playing', loadComponent: () => import('./pages/now-playing-movie-page/now-playing-movie-page.component').then(m => m.MovieNowPlayingPageComponent), resolve: {data: movieListResolver}},
 	{path: 'popular', loadComponent: () => import('./pages/popular-movie-page/popular-movie-page.component').then(m => m.MoviePopularPageComponent), resolve: {data: movieListResolver}},
 	{path: 'top_rated', loadComponent: () => import('./pages/top-rate-movie-page/top-rate-movie-page.component').then(m => m.MovieTopRatePageComponent), resolve: {data: movieListResolver}},
