@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SortingComponent } from "../sorting/sorting.component";
 
 @Component({
   selector: 'app-movie-aside-menu',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, SortingComponent],
   templateUrl: './aside-menu.component.html',
   styleUrl: './aside-menu.component.scss',
 })

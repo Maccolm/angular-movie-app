@@ -12,7 +12,7 @@ import { removeMovieFromWatchList } from '../../store/actions';
 @Component({
   selector: 'app-movie-watchlist-page',
   standalone: true,
-  templateUrl: './movie-watchList-page.component.html',
+  templateUrl: './movie-watchlist-page.component.html',
   styleUrl: './movie-watchlist-page.component.scss',
   imports: [ButtonModule, MovieCardComponent],
 })
