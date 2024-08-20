@@ -1,23 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { MovieHeaderComponent } from './header-movie.component';
+import { RouterModule } from '@angular/router';
 
 describe('MovieHeaderComponent', () => {
-  let component: MovieHeaderComponent;
-  let fixture: ComponentFixture<MovieHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MovieHeaderComponent]
+      imports: [MovieHeaderComponent, RouterModule.forRoot([])],
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MovieHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
+	});
+	
+	it('should create', () => {
+	  const fixture = TestBed.createComponent(MovieHeaderComponent);
+		 const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

@@ -11,6 +11,7 @@ import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
 	selector: 'app-movie-card',
@@ -21,6 +22,7 @@ import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 		CardModule,
 		LimitedSymbolsPipe,
 		ButtonModule,
+		SkeletonModule
 	],
 	templateUrl: './card-movie.component.html',
 	styleUrl: './card-movie.component.scss',
@@ -36,19 +38,27 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
+	ratingPercentage: number = 0;
+	ratingStars: number[] = [1,2,3,4,5]
+	dataLoaded: boolean = false;
 
 	constructor(private movieService: MovieService, private router: Router, private store: Store) {
-		super()
+		super();
 	}
 
 	ngOnInit(): void {
+		
 		this.movie = this.data;
 		this.store.select(isInFavorite(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
-			this.isInFavorite = isFavorite
+			this.isInFavorite = isFavorite;
 		});
 		this.store.select(isInWatchList(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
 			this.isInWatchList = isWatchList;
 		})
+		this.initRating(this.movie.vote_average);
+		if(this.movie){
+			this.dataLoaded = true;
+		}
 	}
 	addToFavorites() {
 		this.loadingFavorites = true;
@@ -75,6 +85,9 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	navigateWithData() {
 		const id = this.movie.id;
 		this.router.navigate(['/movie', id]);
+	}
+	initRating(rating: number){
+		this.ratingPercentage = rating / 0.1;
 	}
 }
 

@@ -10,6 +10,7 @@ import { ClearObservable } from './directives/clearObservable';
 import { Store, StoreModule } from '@ngrx/store';
 import { loadFavoriteMovies, loadWatchList } from './store/actions';
 
+
 @Component({
   selector: 'app-root ',
   standalone: true,
@@ -23,7 +24,7 @@ import { loadFavoriteMovies, loadWatchList } from './store/actions';
     MovieAsideMenuComponent,
     MovieSidebarComponent,
     MovieHeaderComponent,
-	 StoreModule
+	 StoreModule,
   ],
 })
 export class AppComponent extends ClearObservable implements OnInit {

@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, catchError, map, Observable, switchMap, throwError } from "rxjs";
+import { catchError, map, Observable, switchMap, throwError } from "rxjs";
 import { environment } from "../../environments/environment";
-import { SessionResponse, tokenResponse } from "../models/auth.models";
 
 @Injectable({
 	providedIn: 'root'

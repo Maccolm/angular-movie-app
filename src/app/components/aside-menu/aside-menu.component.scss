@@ -1,5 +1,5 @@
 @import "../../../../nullstyle/nullstyle.scss";
-$activeGreyColor: rgb(167, 167, 167);
+$activeGreyColor: #2b2c2dfc;
 .aside-menu{
 	&__container{
 		top: 0;
@@ -39,8 +39,10 @@ $activeGreyColor: rgb(167, 167, 167);
 		}
 		&.active-link {
 			background-color: rgb(216, 216, 216);
-			color: white; 
 			font-weight: 600;
+			a{
+				color: black; 
+			}
 	}
 	}
 }
@@ -48,7 +50,7 @@ $activeGreyColor: rgb(167, 167, 167);
 	font-size: 30px;
 }
 @media screen and (max-width: 989px) {
-	.aside-menu__item p {
+	.aside-menu__item p, .aside-menu__item-interactions{
 		padding: 0 0px 10px 5px;
 		display: none
   }

@@ -1,23 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { MovieAsideMenuComponent } from './aside-menu.component';
+import { RouterModule } from '@angular/router';
 
 describe('MovieAsideMenuComponent', () => {
-  let component: MovieAsideMenuComponent;
-  let fixture: ComponentFixture<MovieAsideMenuComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MovieAsideMenuComponent]
-    })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(MovieAsideMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      imports: [MovieAsideMenuComponent, RouterModule.forRoot([])],
+    }).compileComponents();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
+    const fixture = TestBed.createComponent(MovieAsideMenuComponent);
+    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

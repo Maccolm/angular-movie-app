@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { provideEffects } from '@ngrx/effects';
 import { MovieReducer } from './store/reducer';
 import { MovieEffects } from './store/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
 		provideStore({ movieState: MovieReducer }),
 		provideEffects([MovieEffects]),
 		provideStoreDevtools({ maxAge: 25, logOnly: false }),
+		importProvidersFrom(BrowserAnimationsModule) 
 	],
 };

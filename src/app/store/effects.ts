@@ -6,13 +6,16 @@ import {
   loadFavoriteMoviesSuccess,
   loadMovies,
   loadMoviesFailure,
+  loadMoviesFromSearch,
+  loadMoviesFromSearchFailure,
+  loadMoviesFromSearchSuccess,
   loadMoviesSuccess,
   loadWatchList,
   loadWatchListFailure,
   loadWatchListSuccess,
 } from './actions';
 import { MovieService } from '../services/movie.service';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable()
@@ -21,8 +24,8 @@ export class MovieEffects {
     this.actions$.pipe(
       ofType(loadMovies),
       mergeMap((action) => {
-        const { category } = action;
-        return this.movieService.getMoviesByCategory(category).pipe(
+        const { category, page } = action;
+        return this.movieService.getMoviesByCategory(category, page).pipe(
           map((movies) => {
             return loadMoviesSuccess({
               movies: movies.results,
@@ -65,6 +68,17 @@ export class MovieEffects {
       })
     )
   );
+
+  loadMoviesFromSearch$ = createEffect(() => this.actions$.pipe(
+	ofType(loadMoviesFromSearch),
+	switchMap((action) => {
+		const { query, page } = action;
+		return this.movieService.searchMovie( query, page ).pipe(
+			map(searchedMovies => loadMoviesFromSearchSuccess({searchedMovies, query})),
+			catchError(error => of(loadMoviesFailure({ error })))
+		)
+	})
+  ))
 
   constructor(private actions$: Actions, private movieService: MovieService) {}
 }

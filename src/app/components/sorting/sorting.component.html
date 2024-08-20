@@ -1,0 +1,13 @@
+<p-panelMenu [model]="items" class="panel-menu">
+	<ng-template pTemplate="item" let-item>
+		<ng-container>
+			<span class="panel-menu__item">
+				<span [class]="item.icon"></span>
+				<span>{{item.label}}</span>
+				@if(item.items){
+					<i class="pi pi-angle-down" [ngClass]="{'rotated' : item.expanded}"></i>
+				}
+			</span>
+		</ng-container>
+	</ng-template>
+</p-panelMenu>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { loadFavoriteMovies, loadMovies, loadWatchList } from '../store/actions';
+import { loadMovies } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',

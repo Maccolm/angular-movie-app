@@ -1,0 +1,27 @@
+<h1>Results from Search: "{{searchQuery}}"</h1>
+<div class="movie-list">
+	@for(movie of moviesFromSearch; track moviesFromSearch) {
+		<app-movie-card [data]="movie" style="display: block; max-width: 430px; width: 100%">
+		</app-movie-card>
+	}
+</div>
+@if(currentPage && totalPages) {
+	<div class="pagination">
+		@if(totalPages < 9) {
+			@for(page of getPages(totalPages); track totalPages) {
+				<button (click)="onPageChange(page)" [disabled]="currentPage === page" class="pagination__button">{{page}}</button>
+			}
+		} @else {
+			<button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button"><i class="pi pi-angle-left"></i></button>
+			@for(page of getVisiblePages(); track totalPages) {
+				@if(page > 0) {
+					<button (click)="onPageChange(page)" [disabled]="page === currentPage" class="pagination__button">{{page}}</button>
+				}
+				@if(page === -1) {
+					<span class="pagination__ellipsis">...</span>
+				}
+			}
+			<button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button"><i class="pi pi-angle-right"></i></button>
+		}
+	</div>
+}

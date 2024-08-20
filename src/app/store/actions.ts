@@ -1,8 +1,8 @@
 import { createAction, props } from "@ngrx/store";
-import { Movie } from "../models/movie.models";
+import { ApiMovieModel, Movie } from "../models/movie.models";
 
 export const loadMovies = createAction('[Movie] Load Movies',
-	props<{ category: string }>()
+	props<{ category: string, page?: number; }>()
 );
 
 export const loadMoviesSuccess = createAction('[Movie] Load Movies Success',
@@ -44,3 +44,14 @@ export const setMovieToWatchList = createAction('[Movie] Set Movie To Watch List
 export const removeMovieFromWatchList = createAction('[Movie] Remove Movie From Watch List',
 	props<{ movieId: number }>()
 )
+
+export const loadMoviesFromSearch = createAction('[Search] Load Movies', 
+	props<{ query: string, page?: number }>()
+)
+export const loadMoviesFromSearchFailure = createAction('[Search] Load Movies Failure',
+	props<{ error: any }>()
+)
+export const loadMoviesFromSearchSuccess = createAction('[Search] Load Movies Success',
+	props<{ searchedMovies: ApiMovieModel, query: string }>()
+)
+export const clearMoviesState = createAction('[Movies] Clear Movies State');
