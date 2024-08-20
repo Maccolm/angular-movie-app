@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { MovieService } from '../../services/movie.service';
 import { MenuItem } from 'primeng/api';
+import { ClearObservable } from '../../directives/clearObservable';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sorting',
   standalone: true,
-  imports: [PanelMenuModule],
+  imports: [PanelMenuModule, CommonModule],
   templateUrl: './sorting.component.html',
   styleUrl: './sorting.component.scss'
 })
-export class SortingComponent implements OnInit{
+export class SortingComponent extends ClearObservable implements OnInit{
 	items!: MenuItem[];
-	constructor(private movieService: MovieService) {}
+	constructor(private router: Router) {
+		super();
+	}
 	ngOnInit(): void {
 		this.items = [
 			{
@@ -21,30 +25,42 @@ export class SortingComponent implements OnInit{
 				items: [
 					{
 						label: "Rating",
+						icon: 'pi pi-check',
+						command: () => {
+							const method = 'vote_average.desc';
+							this.router.navigate(['sorting', {data: method}])
+						}
+					},
+					{
+						label: "Popularity",
 						icon: 'pi pi-sort-amount-down',
 						command: () => {
-							console.log('sort by rating');
+							const method = 'popularity.desc';
+							this.router.navigate(['sorting', {data: method}])
 						}
 					},
 					{
 						label: "Name  \"A-Z\"",
 						icon: "pi pi-sort-alpha-down",
 						command: () => {
-							console.log('sort by title ascending');
+							const method = 'title.asc';
+							this.router.navigate(['sorting', {data: method}])
 						}
 					},
 					{
 						label: "Name \"Z-A\"",
 						icon: "pi pi-sort-alpha-up",
 						command: () => {
-							console.log('sort by title descending');
+							const method = 'title.desc';
+							this.router.navigate(['sorting', {data: method}])
 						}
 					},
 					{
 						label: "Date",
 						icon: "pi pi-calendar",
 						command: () => {
-							console.log('sort by title descending');
+							const method = 'primary_release_date.desc';
+							this.router.navigate(['sorting', {data: method}])
 						}
 					},
 				]

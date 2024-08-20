@@ -5,7 +5,7 @@
 				<span [class]="item.icon"></span>
 				<span>{{item.label}}</span>
 				@if(item.items){
-					<i class="pi pi-angle-down"></i>
+					<i class="pi pi-angle-down" [ngClass]="{'rotated' : item.expanded}"></i>
 				}
 			</span>
 		</ng-container>

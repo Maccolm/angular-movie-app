@@ -43,14 +43,14 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	dataLoaded: boolean = false;
 
 	constructor(private movieService: MovieService, private router: Router, private store: Store) {
-		super()
+		super();
 	}
 
 	ngOnInit(): void {
 		
 		this.movie = this.data;
 		this.store.select(isInFavorite(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
-			this.isInFavorite = isFavorite
+			this.isInFavorite = isFavorite;
 		});
 		this.store.select(isInWatchList(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
 			this.isInWatchList = isWatchList;

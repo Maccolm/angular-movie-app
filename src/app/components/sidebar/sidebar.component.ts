@@ -3,6 +3,8 @@ import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { MovieAsideMenuComponent } from '../aside-menu/aside-menu.component';
 import { RouterLink, RouterModule } from '@angular/router';
+import { SortingComponent } from '../sorting/sorting.component';
+import { SearchResultsPageComponent } from "../../pages/search-results-page/search-results-page.component";
 @Component({
   selector: 'app-movie-sidebar',
   standalone: true,
@@ -14,7 +16,9 @@ import { RouterLink, RouterModule } from '@angular/router';
     MovieAsideMenuComponent,
     RouterLink,
     RouterModule,
-	],
+    SortingComponent,
+    SearchResultsPageComponent
+],
 })
 export class MovieSidebarComponent {
   sidebarVisible: boolean = false;

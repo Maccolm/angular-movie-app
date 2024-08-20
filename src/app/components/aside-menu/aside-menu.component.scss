@@ -50,7 +50,7 @@ $activeGreyColor: #2b2c2dfc;
 	font-size: 30px;
 }
 @media screen and (max-width: 989px) {
-	.aside-menu__item p {
+	.aside-menu__item p, .aside-menu__item-interactions{
 		padding: 0 0px 10px 5px;
 		display: none
   }
