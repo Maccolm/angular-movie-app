@@ -26,7 +26,7 @@
 		<p-overlayPanel #op  [style]="{ width: '100%' }">
 			<div class="search__container">
 				<form action="">
-					<input pInputText id="search" #searchInput [formControl]="searchControl" autocomplete="off"/>
+					<input pInputText id="search" #searchInput [formControl]="searchControl" autocomplete="on"/>
 					<p-button [rounded]="true" [text]="true" icon="{{isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-search'}}" class="btn-input"/>
 				</form>
 			</div>

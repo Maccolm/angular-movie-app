@@ -11,11 +11,13 @@ import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
+import { CarouselModule } from 'primeng/carousel';
+import { CarouselComponent } from "../../components/carousel/carousel.component";
 
 @Component({
 	selector: 'app-movie-description-page',
 	standalone: true,
-	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule],
+	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent],
 	templateUrl: './description-movie-page.component.html',
 	styleUrl: './description-movie-page.component.scss',
 })
@@ -25,12 +27,14 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	@Input() isInFavorite: boolean = false;
 
 	public movie: any;
+	public movieId!: number;
 	public displayDialog: boolean = false;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 	public originalLanguages!: string;
 	public genres!: string;
 	public countries!: string;
 	public companies!: string[];
+	public website!: string;
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 	ratingPercentage: number = 0;
@@ -42,19 +46,20 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 
 	ngOnInit(): void {
 		this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-			const movieId = +params.get('id')!;
-			if (movieId) {
-				this.movieService.getMovieById(movieId).pipe(takeUntil(this.destroy$)).subscribe(movie => {
+			 this.movieId = +params.get('id')!;
+			if (this.movieId) {
+				this.movieService.getMovieById(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(movie => {
 					this.movie = movie;
 					this.originalLanguages = this.movie.spoken_languages.map((language: { english_name: string; }) => language.english_name).join(', ');
 					this.genres = this.movie.genres.map((genre: { name: string; }) => genre.name).join(', ');
 					this.countries = this.movie.production_countries.map((country: { name: string; }) => country.name).join(', ');
+					this.website = this.movie.homepage;
 					this.initRating(movie.vote_average);
 
-					this.store.select(isInFavorite(movieId)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
+					this.store.select(isInFavorite(this.movieId)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
 						this.isInFavorite = isFavorite;
 					})
-					this.store.select(isInWatchList(movieId)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
+					this.store.select(isInWatchList(this.movieId)).pipe(takeUntil(this.destroy$)).subscribe(isWatchList => {
 						this.isInWatchList = isWatchList;
 					})
 				})
