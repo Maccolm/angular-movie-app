@@ -1,0 +1,12 @@
+<p-carousel
+[value]="images"
+[numVisible]="2.5"
+[numScroll]="2" 
+[responsiveOptions]="responsiveOptions"
+>
+	<ng-template let-image pTemplate="item">
+		<div class="carousel__item">
+			<img [src]="image" alt="Media_picture" class="carousel__img">
+		</div>
+	</ng-template>
+</p-carousel>

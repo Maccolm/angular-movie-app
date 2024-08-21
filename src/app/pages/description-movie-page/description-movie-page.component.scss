@@ -61,6 +61,22 @@ h1{
 		height: auto;
 	}
 }
+.movie__url{
+	color: #545454;
+	font-size: 18px;
+	font-family: 'Montserrat';
+	transition: color 0.3s ease-out;
+	font-weight: 500;
+	text-decoration: none;
+	&:hover{
+		color: #1b1a1a;
+		text-decoration: underline;
+
+	}
+}
+.media__title{
+	font-size: 20px;
+}
 .rating{
 	margin-bottom: 10px;
 	font-weight: 600;

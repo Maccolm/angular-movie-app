@@ -1,0 +1,33 @@
+@media (max-width: 1334px) {
+	::ng-deep .p-carousel-indicators{
+		display: none;
+	}
+}
+.carousel {
+	&__item{
+		margin-right: 5px;
+	}
+	&__img {
+		max-width: 700px;
+		width: 100%;
+	}
+ }
+ @media screen and (max-width: 748px){
+		::ng-deep .p-carousel .p-carousel-content .p-carousel-prev{
+			position: absolute;
+			height: 28px;
+			width: 28px;
+			bottom: 0;
+		}
+		::ng-deep .p-carousel .p-carousel-content .p-carousel-next{
+			position: absolute;
+			height: 28px;
+			width: 28px;
+			bottom: 0;
+			right: 0;
+		}
+		::ng-deep .p-carousel-container{
+			padding-bottom: 40px;
+			position: relative;
+		}
+}

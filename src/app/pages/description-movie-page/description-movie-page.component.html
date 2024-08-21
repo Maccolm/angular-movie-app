@@ -6,6 +6,9 @@
 				<img [src]="IMAGINE_PATH + movie.poster_path" alt="{{ movie.title }}" class="locandina">
 				<div class="header__aside">
 					<p><span class="rating">Genres:</span> "{{this.genres}}"</p>
+					@if(website){
+						<a [href]="website" class="movie__url" target="_blank">Website page</a>
+					}
 					<p-divider/>
 					<p><span class="rating">Released:</span> {{movie.release_date}}</p>
 					<p><span class="rating">Duration:</span> {{movie.runtime | numberDurationFormat}}</p>
@@ -51,6 +54,14 @@
 			</div>
 			</ng-template>
 		<div class="movie__desc movie__desc-detail">
+			<div class="media">
+				<h4 class="media__title">Media</h4>
+				<div class="media__carousel">
+					<app-carousel 
+					[id]="movieId"
+					></app-carousel>
+				</div>
+			</div>
 			<h3>Description</h3>
 			<p class="text">{{ movie.overview }}</p>
 		</div>
