@@ -40,11 +40,11 @@ export class AuthService {
   }
 
   // Validate the request token with the user's credentials
-  private validateRequestToken(requestToken: string): Observable<void> {
-		const url = `${this.apiUrl}/authentication/token/validate_with_login?api_key=${this.apiKey}`;
+  private validateRequestToken(username: string, password: string, requestToken: string): Observable<void> {
+		const url = `${this.validateUrl}?api_key=${this.apiKey}`;
 		const body = {
-			 username: this.username,
-			 password: this.password,
+			 username: username,
+			 password: password,
 			 request_token: requestToken
 		};
 		return this.http.post<any>(url, body).pipe(
@@ -73,9 +73,9 @@ export class AuthService {
   }
 
   // Public method to get accountId
-  public authenticateAndGetAccountId(): Observable<{ accountId: number, sessionId: string}> {
+  public authenticateAndGetAccountId(username: string, password: string): Observable<{ accountId: number, sessionId: string}> {
 		return this.getRequestToken().pipe(
-			 switchMap(requestToken => this.validateRequestToken(requestToken).pipe(
+			 switchMap(requestToken => this.validateRequestToken(username, password, requestToken).pipe(
 				  switchMap(() => this.createSession(requestToken)),
 				  switchMap(sessionId => this.getAccountId(sessionId).pipe(
 					map(accountId => ({ accountId, sessionId }))

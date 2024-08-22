@@ -1,0 +1,104 @@
+$activeGreyColor: rgb(167, 167, 167);
+body{
+	font-family: 'Montserrat';
+}
+::ng-deep.action__btns > button{
+	color: #f2f2f2;
+	font-size: 16px;
+	&:hover{
+		background-color: $activeGreyColor;
+	}
+	&:focus{
+		background-color: $activeGreyColor;
+	}
+	> .p-button-icon{
+		font-size: 18px;
+	}
+	@media (max-width: 735px) {
+		> .p-button-label {
+			display: none;
+		}
+		> .p-button-icon{
+			font-size: 20px;
+		}
+		padding: 5px;
+	}
+ }
+::ng-deep .login-btn > button, .form__button{
+	background: none;
+	border: none;
+	border-radius: 2rem;
+	min-width: 110px;
+	&:active{
+		background-color: #5d5c5c;
+	}
+	@media (max-width: 735px){
+		min-width: 30px;
+	}
+ }
+ .form {
+	&__section {
+		label{
+			display: inline-block;
+			font-weight: 600;
+			color: #000;
+			margin-bottom: 0.3rem;
+		}
+		input{
+			padding: 0.5rem;
+			border-radius: 1.3rem;
+			width: 100%;
+			border: 1px solid #5d5c5c;
+		}
+		margin: 0 0 1rem 0;
+	}
+	&__button {
+		font-family: 'Montserrat';
+		display: block;
+		margin: 0 0 0 0.5rem;
+		background-color: #d8d8d8;
+		color: #000;
+		padding: 10px;
+		font-size: 16px;
+		cursor: pointer;
+		transition: all 0.2s ease-out;
+		&:hover{
+			background-color: $activeGreyColor;
+			color: #f2f2f2;
+		}
+		&:active{
+			background-color: #4a4a4a;
+			color: #f2f2f2;
+		}
+		&-register{
+			background-color: #c3cfe8;
+			&:hover{
+				background-color: #98b0e2;
+			}
+			&:active{
+				background-color: #667caa;
+				color: #f2f2f2;
+			}
+		}
+		&:disabled{
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+	&__btns{
+		display: flex;
+		justify-content: end;
+	}
+ }
+ ::ng-deep .form__button-log > button{
+	@extend .form__button;
+	span{
+		font-weight: 400;
+		font-family: 'Montserrat';
+	}
+ }
+.error-message{
+	color: red;
+	margin-bottom: 8px;
+	font-size: 14px;
+}

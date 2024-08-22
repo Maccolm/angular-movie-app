@@ -15,14 +15,14 @@
 			<p>Watch list</p>
 		</a>
 	</nav>
-	<div class="actions">
+	<div class="action">
 		<p-button 
 			(onClick)="openOverplay($event)"
 			[text]="true" 
 			rounded="true" 
 			icon="pi pi-search" 
 			label="Search" 
-			class="btn-search"/> 
+			class="action__btns btn-search"/> 
 		<p-overlayPanel #op  [style]="{ width: '100%' }">
 			<div class="search__container">
 				<form action="">
@@ -48,6 +48,8 @@
 				</div>
 			}
 		</p-overlayPanel>
-
+		<div class="log-reg">
+			<app-login-registration></app-login-registration>
+		</div>
 	</div>
 </div>

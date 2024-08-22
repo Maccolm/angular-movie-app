@@ -15,6 +15,7 @@ import { ExtractYearFromDatePipe } from '../../pipes/extract-year-from-date.pipe
 import { Router } from '@angular/router';
 import { clearMoviesState, loadMoviesFromSearch } from '../../store/actions';
 import { Store } from '@ngrx/store';
+import { LoginRegistrationComponent } from '../login-registration/login-registration.component';
 
 @Component({
 	selector: 'app-movie-header',
@@ -29,6 +30,7 @@ import { Store } from '@ngrx/store';
 		ButtonModule,
 		CommonModule,
 		ExtractYearFromDatePipe,
+		LoginRegistrationComponent
 	],
 	templateUrl: './header-movie.component.html',
 	styleUrl: './header-movie.component.scss',

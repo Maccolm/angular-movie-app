@@ -1,0 +1,30 @@
+
+<p-button 
+label="Log In"
+iconPos="right"
+icon="pi pi-sign-in"
+class="action__btns login-btn"
+(onClick)="showForm()"
+/>
+<p-toast/>
+<p-dialog header="Log In" [modal]="true" [(visible)]="visible" [draggable]="false">
+	<form [formGroup]="logInForm" (ngSubmit)="onSubmitLogIn()">
+		<div class="form__section">
+			<label for="email">Email</label>
+			<input type="text" id="email" pInputText formControlName="email">
+		</div>
+		<div class="form__section">
+			<label for="password">Password</label>
+			<input type="password" id="password" pInputText formControlName="password">
+		</div>
+		@if(errorMessage) {
+			<div class="error-message">
+				<small>{{errorMessage}}</small>
+			</div>
+		}
+		<div class="form__btns">
+			<button type="button" class="form__button form__button-register">Register</button>
+			<p-button type="submit" [disabled]="logInForm.invalid" class="form__button-log" [loading]="loading" [label]="loading ? '' : 'Log in'"/>
+		</div>
+	</form>
+</p-dialog>

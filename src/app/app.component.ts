@@ -27,23 +27,22 @@ import { loadFavoriteMovies, loadWatchList } from './store/actions';
 	 StoreModule,
   ],
 })
-export class AppComponent extends ClearObservable implements OnInit {
+export class AppComponent extends ClearObservable  {
   constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
 	super()
   }
 
-  ngOnInit(): void {
-	  this.authService.authenticateAndGetAccountId().subscribe(
-		  data => {
-			  const { accountId, sessionId } = data;
-			  this.authService.setAccountId(accountId);
-			  this.authService.setSessionId(sessionId);
-			},
-			error => {
-				console.error('Authentication failed:', error);
-			}
-		);
-		this.store.dispatch(loadFavoriteMovies());
-		this.store.dispatch(loadWatchList());
-	}
+//   ngOnInit(): void {
+// 	  this.authService.authenticateAndGetAccountId().subscribe( data => {
+// 			  const { accountId, sessionId } = data;
+// 			  this.authService.setAccountId(accountId);
+// 			  this.authService.setSessionId(sessionId);
+// 			},
+// 			error => {
+// 				console.error('Authentication failed:', error);
+// 			}
+// 		);
+// 		this.store.dispatch(loadFavoriteMovies());
+// 		this.store.dispatch(loadWatchList());
+// 	}
 }
