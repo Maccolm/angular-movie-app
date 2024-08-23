@@ -38,7 +38,8 @@
 			severity="info"></p-button>
 	</div>
 	<ng-template pTemplate="footer">
-		<div class="movie__social">
+		@if(isLoggedIn){
+			<div class="movie__social">
 			<ul>
 				@if(isInFavorite){
 				<p-button label="In" class='btn-list active' icon="pi pi-heart-fill" iconPos="right" />
@@ -53,7 +54,8 @@
 					icon="pi pi-bookmark-fill" iconPos="right" />
 				}
 			</ul>
-		</div>
+			</div>
+		}
 		<div class="rating__wrapper">
 			<p class="rating">Rating: {{ data.vote_average }}</p>
 			<div class="rating__body">
@@ -72,3 +74,4 @@
 	</div>
 </p-card>
 }
+<p-toast></p-toast>

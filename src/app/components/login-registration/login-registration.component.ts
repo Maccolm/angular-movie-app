@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -7,6 +7,9 @@ import { Store } from '@ngrx/store';
 import { loadFavoriteMovies, loadWatchList } from '../../store/actions';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ClearObservable } from '../../directives/clearObservable';
+import { takeUntil } from 'rxjs';
 
 
 @Component({
@@ -15,17 +18,24 @@ import { ToastModule } from 'primeng/toast';
 	imports: [ButtonModule, DialogModule, ReactiveFormsModule, ToastModule],
 	templateUrl: './login-registration.component.html',
 	styleUrl: './login-registration.component.scss',
-	providers: [MessageService]
+	providers: [MessageService, DialogService]
 })
-export class LoginRegistrationComponent implements OnInit {
+export class LoginRegistrationComponent extends ClearObservable implements OnInit {
+	@Input() isRegisterButton: boolean = true;
 	visible: boolean = false;
 	errorMessage: string = '';
 	logInForm: FormGroup = new FormGroup({});
 	loading: boolean = false;
+	isLoggedIn: boolean = false;
 
-	constructor(private authService: AuthService, private store: Store, private messageService: MessageService) { }
+	constructor(private authService: AuthService, private store: Store, private messageService: MessageService) { 
+		super();
+	}
 
 	ngOnInit(): void {
+		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+			this.isLoggedIn = isLoggedIn;
+		})
 		this.logInForm = new FormGroup({
 			email: new FormControl('VitaliiShapovalov', [Validators.required]),
 			password: new FormControl('cN.hwyTvag3s.8m', Validators.required)
@@ -36,6 +46,9 @@ export class LoginRegistrationComponent implements OnInit {
 			this.loading = true;
 			const enteredEmail = this.logInForm.value['email'];
 			const enteredPassword = this.logInForm.value['password'];
+
+			window.localStorage.setItem('login', enteredEmail);
+			window.localStorage.setItem('password', enteredPassword);
 
 			this.authService.authenticateAndGetAccountId(enteredEmail, enteredPassword).subscribe({
 				next: ({ accountId, sessionId }) => {
@@ -48,7 +61,7 @@ export class LoginRegistrationComponent implements OnInit {
 					this.loading = false;
 					setTimeout(()=>{
 						this.visible = false;
-					},1000)
+					},500)
 					this.messageService.add({ severity: 'success',summary: 'Login Successful', detail: 'You have successfully logged in', life: 3000 });
 				},
 				error: (error) => {
@@ -64,5 +77,9 @@ export class LoginRegistrationComponent implements OnInit {
 	}
 	showForm() {
 		this.visible = true;
+	}
+	logOut(){
+		this.authService.logOut();
+		this.messageService.add({ severity: 'info', summary: 'Logout Successful', detail: 'You have successfully logged out.', life: 3000 });
 	}
 }

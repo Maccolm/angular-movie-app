@@ -1,10 +1,17 @@
 
-<p-button 
-label="Log In"
-iconPos="right"
-icon="pi pi-sign-in"
-class="action__btns login-btn"
-(onClick)="showForm()"
+@if(isRegisterButton){
+	<p-button
+		label="Register"
+		class="action__btns login-btn register"
+	/>
+}
+<p-button
+	[label]="isLoggedIn ? 'Log Out' : 'Log In'"
+	iconPos="right"
+	[icon]="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'"
+	class="action__btns login-btn"
+	[class]="isLoggedIn ? 'log-out': ''"
+	(onClick)="isLoggedIn ? logOut() : showForm()"
 />
 <p-toast/>
 <p-dialog header="Log In" [modal]="true" [(visible)]="visible" [draggable]="false">

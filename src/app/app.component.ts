@@ -12,37 +12,41 @@ import { loadFavoriteMovies, loadWatchList } from './store/actions';
 
 
 @Component({
-  selector: 'app-root ',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  imports: [
-    RouterOutlet,
-    MovieListComponent,
-    RouterModule,
-    RouterLink,
-    MovieAsideMenuComponent,
-    MovieSidebarComponent,
-    MovieHeaderComponent,
-	 StoreModule,
-  ],
+	selector: 'app-root ',
+	standalone: true,
+	templateUrl: './app.component.html',
+	styleUrl: './app.component.scss',
+	imports: [
+		RouterOutlet,
+		MovieListComponent,
+		RouterModule,
+		RouterLink,
+		MovieAsideMenuComponent,
+		MovieSidebarComponent,
+		MovieHeaderComponent,
+		StoreModule,
+	],
 })
-export class AppComponent extends ClearObservable  {
-  constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
-	super()
-  }
+export class AppComponent extends ClearObservable implements OnInit {
+	constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
+		super()
+	}
 
-//   ngOnInit(): void {
-// 	  this.authService.authenticateAndGetAccountId().subscribe( data => {
-// 			  const { accountId, sessionId } = data;
-// 			  this.authService.setAccountId(accountId);
-// 			  this.authService.setSessionId(sessionId);
-// 			},
-// 			error => {
-// 				console.error('Authentication failed:', error);
-// 			}
-// 		);
-// 		this.store.dispatch(loadFavoriteMovies());
-// 		this.store.dispatch(loadWatchList());
-// 	}
+	ngOnInit(): void {
+		const login = window.localStorage.getItem('login');
+		const password = window.localStorage.getItem('password');
+		if (login && password) {
+			this.authService.authenticateAndGetAccountId(login, password).subscribe(data => {
+				const { accountId, sessionId } = data;
+				this.authService.setAccountId(accountId);
+				this.authService.setSessionId(sessionId);
+			},
+				error => {
+					console.error('Authentication failed:', error);
+				}
+			);
+			this.store.dispatch(loadFavoriteMovies());
+			this.store.dispatch(loadWatchList());
+		}
+	}
 }

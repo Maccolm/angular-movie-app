@@ -12,6 +12,9 @@ import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 import { SkeletonModule } from 'primeng/skeleton';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	selector: 'app-movie-card',
@@ -22,11 +25,13 @@ import { SkeletonModule } from 'primeng/skeleton';
 		CardModule,
 		LimitedSymbolsPipe,
 		ButtonModule,
-		SkeletonModule
+		SkeletonModule,
+		ToastModule
 	],
 	templateUrl: './card-movie.component.html',
 	styleUrl: './card-movie.component.scss',
 	encapsulation: ViewEncapsulation.None,
+	providers: [MessageService]
 })
 export class MovieCardComponent extends ClearObservable implements OnInit {
 	@Input() data: any;
@@ -39,15 +44,15 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 	ratingPercentage: number = 0;
-	ratingStars: number[] = [1,2,3,4,5]
+	ratingStars: number[] = [1,2,3,4,5];
 	dataLoaded: boolean = false;
+	isLoggedIn: boolean = false;
 
-	constructor(private movieService: MovieService, private router: Router, private store: Store) {
+	constructor(private movieService: MovieService, private router: Router, private store: Store, private messageService: MessageService, private authService: AuthService) {
 		super();
 	}
 
 	ngOnInit(): void {
-		
 		this.movie = this.data;
 		this.store.select(isInFavorite(this.movie.id)).pipe(takeUntil(this.destroy$)).subscribe(isFavorite => {
 			this.isInFavorite = isFavorite;
@@ -59,6 +64,9 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 		if(this.movie){
 			this.dataLoaded = true;
 		}
+		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+			this.isLoggedIn = isLoggedIn;
+		})
 	}
 	addToFavorites() {
 		this.loadingFavorites = true;
@@ -68,6 +76,7 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 				this.isInFavorite = true;
 				this.store.dispatch(setMovieToFavorite({movie: this.movie}));
 				this.loadingFavorites = false;
+				this.messageService.add({ severity: 'success',summary: 'Movie added', detail: 'You have successfully added the movie to favorite', life: 3000 });
 			}
 		});
 	}
@@ -79,6 +88,7 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 				this.store.dispatch(setMovieToWatchList({ movie: this.movie }));
 				this.isInWatchList = true;
 				this.loadingWatchList = false; 
+				this.messageService.add({ severity: 'success',summary: 'Movie added', detail: 'You have successfully added the movie to watch list', life: 3000 });
 			}
 		});
 	}
