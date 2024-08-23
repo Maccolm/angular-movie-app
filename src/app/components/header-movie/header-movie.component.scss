@@ -34,6 +34,7 @@ $activeGreyColor: rgb(167, 167, 167);
 		line-height: 2;
 		color: #f2f2f2;
 		transition: all 0.3s ease-out 0s;
+		cursor: pointer;
 		&:hover{
 			color: rgb(215, 142, 5);
 			background-color: $activeGreyColor;
@@ -217,6 +218,29 @@ a{
 			> a {
 				display: block;
 			}
+		}
+	}
+ }
+ ::ng-deep .p-confirm-popup-footer > button{
+	font-size: 14px;
+	i{
+		font-size: 14px;
+		padding-right: 3px;
+	}
+ }
+ ::ng-deep .p-confirm-popup-content {
+	.ng-star-inserted{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 2rem;
+		i{
+			font-size: 4rem;
+			color: #ee4f4f;
+		}
+		.pi-question-custom{
+			color: #3B82F6;;
 		}
 	}
  }

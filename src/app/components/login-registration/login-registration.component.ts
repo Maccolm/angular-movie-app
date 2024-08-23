@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ClearObservable } from '../../directives/clearObservable';
 import { takeUntil } from 'rxjs';
+import { MovieHeaderComponent } from '../header-movie/header-movie.component';
 
 
 @Component({
@@ -21,14 +22,13 @@ import { takeUntil } from 'rxjs';
 	providers: [MessageService, DialogService]
 })
 export class LoginRegistrationComponent extends ClearObservable implements OnInit {
-	@Input() isRegisterButton: boolean = true;
 	visible: boolean = false;
 	errorMessage: string = '';
 	logInForm: FormGroup = new FormGroup({});
 	loading: boolean = false;
 	isLoggedIn: boolean = false;
 
-	constructor(private authService: AuthService, private store: Store, private messageService: MessageService) { 
+	constructor(private authService: AuthService, private store: Store, private messageService: MessageService, private headerComponent: MovieHeaderComponent) { 
 		super();
 	}
 
@@ -39,6 +39,9 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		this.logInForm = new FormGroup({
 			email: new FormControl('VitaliiShapovalov', [Validators.required]),
 			password: new FormControl('cN.hwyTvag3s.8m', Validators.required)
+		})
+		this.headerComponent.showLoginForm$.pipe(takeUntil(this.destroy$)).subscribe(show => {
+			this.visible = show;
 		})
 	}
 	onSubmitLogIn() {
@@ -74,12 +77,5 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		} else {
 			this.errorMessage = 'Please fill in all required fields.'
 		}
-	}
-	showForm() {
-		this.visible = true;
-	}
-	logOut(){
-		this.authService.logOut();
-		this.messageService.add({ severity: 'info', summary: 'Logout Successful', detail: 'You have successfully logged out.', life: 3000 });
 	}
 }

@@ -25,7 +25,7 @@
 <p-card class="movie__card">
 	<ng-template pTemplate="header">
 		<div class="movie__header">
-			<a [href]="data.link" target="_blank">
+			<a (click)="navigateWithData()" class="movie__link">
 				<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 			</a>
 			<h1>{{ data.title }}</h1>

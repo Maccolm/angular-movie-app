@@ -28,7 +28,7 @@ import { loadFavoriteMovies, loadWatchList } from './store/actions';
 	],
 })
 export class AppComponent extends ClearObservable implements OnInit {
-	constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
+	constructor(private authService: AuthService, private store: Store) {
 		super()
 	}
 
