@@ -39,6 +39,9 @@ body{
  }
  ::ng-deep .login-btn.log-out > button {
 	min-width: 117px;
+	@media (max-width: 735px){
+		min-width: 30px;
+	}
  }
  .form {
 	&__section {

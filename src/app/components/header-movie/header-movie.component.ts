@@ -1,11 +1,10 @@
-import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
-import { HttpClient } from '@angular/common/http';
 import { ClearObservable } from '../../directives/clearObservable';
 import { BehaviorSubject, debounceTime, Observable, of, switchMap, takeUntil, tap } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
@@ -106,6 +105,13 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 			this.store.dispatch(loadMoviesFromSearch({query: query.trim()}));
 			this.router.navigate(['search_results']);
 			this.overlayPanel.hide();
+		}
+	}
+	onEnterPress(event: KeyboardEvent){
+		if(this.searchControl.value?.trim().length > 0){
+			this.navigateWithAllSearchResults(this.searchControl.value)
+		} else {
+			event.preventDefault();
 		}
 	}
 	tryAccessWithoutAuthorization(event: Event){

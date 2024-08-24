@@ -1,6 +1,6 @@
 <div class="wrapper">
 	<div class="header">
-		<h1 class="header__title">Welcome to movie service <br> "Litis"</h1>
+		<h1 class="header__title">Welcome to movie service "Litis"</h1>
 	</div>
 	<div class="movie__card">
 		@for(link of links; track link) {
@@ -10,8 +10,30 @@
 			</a>
 		}
 	</div>
+	<div class="carousel__wrapper">
+		<h2 class="carousel__title">Top movies for a week</h2>
+		<p-carousel
+			[value]="movies"
+			[numVisible]="7"
+			[circular] = "true"
+			autoplayInterval="4000"
+			[responsiveOptions]="responsiveOptions"
+		>
+			<ng-template let-movie pTemplate="item">
+				<div class="trending__item">
+					<div class="trending__img">
+						<a (click)="navigateWithData(movie.id)">
+							<img [src]="BACKDROP_PATH + movie.poster_path" alt="backdrop_img">
+						</a>
+					</div>
+					<div class="trending__title">
+						<p>{{movie.title}}</p>
+					</div>
+				</div>
+			</ng-template>
+		</p-carousel>
+	</div>
 	<div class="blur__back">
 		<img class="bg-img" [src]="IMAGINE_PATH" alt="{{imgTitle}}">
-		<div class="gradient-overlay"></div>
 	</div>
 </div>

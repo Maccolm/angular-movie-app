@@ -45,7 +45,7 @@
 			class="action__btns btn-search"/> 
 		<p-overlayPanel #op  [style]="{ width: '100%' }">
 			<div class="search__container">
-				<form action="">
+				<form action="" (ngSubmit)="onEnterPress($event)">
 					<input pInputText id="search" #searchInput [formControl]="searchControl" autocomplete="on"/>
 					<p-button [rounded]="true" [text]="true" icon="{{isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-search'}}" class="btn-input"/>
 				</form>
@@ -87,8 +87,8 @@
 				class="action__btns login-btn"
 				[class]="isLoggedIn ? 'log-out': ''"
 				(onClick)="isLoggedIn ? logOut($event) : showForm()"
-/>
-<app-login-registration></app-login-registration>
+			/>
+			<app-login-registration></app-login-registration>
 		</div>
 	</div>
 </div>
