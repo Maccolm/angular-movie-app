@@ -10,6 +10,7 @@
 			</a>
 		}
 	</div>
+	@if(movies){
 	<div class="carousel__wrapper">
 		<h2 class="carousel__title">Top movies for a week</h2>
 		<p-carousel
@@ -33,6 +34,7 @@
 			</ng-template>
 		</p-carousel>
 	</div>
+}
 	<div class="blur__back">
 		<img class="bg-img" [src]="IMAGINE_PATH" alt="{{imgTitle}}">
 	</div>

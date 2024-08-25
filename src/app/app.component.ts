@@ -8,7 +8,8 @@ import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
 import { ClearObservable } from './directives/clearObservable';
 import { Store, StoreModule } from '@ngrx/store';
-import { loadFavoriteMovies, loadWatchList } from './store/actions';
+import { loadFavoriteMovies, loadTrendingMovies, loadWatchList } from './store/actions';
+import { takeUntil } from 'rxjs';
 
 
 @Component({
@@ -33,10 +34,11 @@ export class AppComponent extends ClearObservable implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.store.dispatch(loadTrendingMovies());
 		const login = window.localStorage.getItem('login');
 		const password = window.localStorage.getItem('password');
 		if (login && password) {
-			this.authService.authenticateAndGetAccountId(login, password).subscribe(data => {
+			this.authService.authenticateAndGetAccountId(login, password).pipe(takeUntil(this.destroy$)).subscribe(data => {
 				const { accountId, sessionId } = data;
 				this.authService.setAccountId(accountId);
 				this.authService.setSessionId(sessionId);

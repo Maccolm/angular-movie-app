@@ -1,30 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { ClearObservable } from '../../directives/clearObservable';
-import { MovieService } from '../../services/movie.service';
 import { takeUntil } from 'rxjs';
 import { Movie } from '../../models/movie.models';
+import { Store } from '@ngrx/store';
+import { selectTrendingMovies } from '../../store/selectors';
 
 @Component({
   selector: 'app-start-page',
   standalone: true,
   imports: [RouterModule, CarouselModule],
   templateUrl: './start-page.component.html',
-  styleUrl: './start-page.component.scss'
+  styleUrl: './start-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartPageComponent extends ClearObservable implements OnInit{
 	IMAGINE_PATH = '../../../assets/img/background/poster_bg.jpeg';
 	BACKDROP_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 	imgTitle = 'Background';
-	movies: Movie[] = [];
+	movies: Movie[] | undefined;
 	responsiveOptions: any[] | undefined;
-	constructor(private movieService: MovieService, private router: Router){
+	constructor(private store: Store, private router: Router){
 		super();
 	}
 	ngOnInit(): void {
-		this.movieService.getTrendingMovies().pipe(takeUntil(this.destroy$)).subscribe(movies => {
-			this.movies = movies.results;
+		this.store.select(selectTrendingMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.movies = movies?.results;
 		})
 		this.responsiveOptions = [
 			{

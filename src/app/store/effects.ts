@@ -7,9 +7,11 @@ import {
   loadMovies,
   loadMoviesFailure,
   loadMoviesFromSearch,
-  loadMoviesFromSearchFailure,
   loadMoviesFromSearchSuccess,
   loadMoviesSuccess,
+  loadTrendingMovies,
+  loadTrendingMoviesFailure,
+  loadTrendingMoviesSuccess,
   loadWatchList,
   loadWatchListFailure,
   loadWatchListSuccess,
@@ -76,6 +78,16 @@ export class MovieEffects {
 		return this.movieService.searchMovie( query, page ).pipe(
 			map(searchedMovies => loadMoviesFromSearchSuccess({searchedMovies, query})),
 			catchError(error => of(loadMoviesFailure({ error })))
+		)
+	})
+  ));
+
+  loadTrendingMovies$ = createEffect(() => this.actions$.pipe(
+	ofType(loadTrendingMovies),
+	switchMap(() =>{
+		return this.movieService.getTrendingMovies().pipe(
+			map((trendingMovies) => loadTrendingMoviesSuccess({ trendingMovies })),
+			catchError((error) => of(loadTrendingMoviesFailure({ error })))
 		)
 	})
   ))
