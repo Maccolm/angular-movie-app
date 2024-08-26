@@ -15,9 +15,8 @@ $activeGreyColor: rgb(167, 167, 167);
 	height: 100%;
 	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
-	gap: 10rem;
 	@media  screen and (max-width: 835px) {
 		justify-content: center;
 		gap: 30px;

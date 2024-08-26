@@ -5,7 +5,7 @@ import { AuthService } from './services/auth.service';
 import { Store, StoreModule } from '@ngrx/store';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { loadFavoriteMovies, loadWatchList } from './store/actions';
+import { loadFavoriteMovies, loadTrendingMovies, loadWatchList } from './store/actions';
 import { MovieService } from './services/movie.service';
 
 const mockAuthService = {
@@ -45,32 +45,60 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-//   it('should call authenticateAndGetAccountId and dispatch actions on init', () => {
-//     const mockAccountData = { accountId: '123', sessionId: 'abc' };
-//     (mockAuthService.authenticateAndGetAccountId as jest.Mock).mockReturnValue(
-//       of(mockAccountData)
-//     );
+ it('should dispatch loadTrendingMovies on init', () => {
+	 component.ngOnInit();
+	 expect(mockStore.dispatch).toHaveBeenCalledWith(loadTrendingMovies());	 
+	});
 
-//     component.ngOnInit();
+  it('should call authenticateAndGetAccountId and dispatch loadFavorites and watchlist on successful login', () => {
+	 Object.defineProperty(window, 'localStorage', {
+		value: {
+			getItem: jest.fn((key) => {
+				if (key === 'login') return 'testLogin';
+				if (key === 'password') return 'testPassword';
+				return null;
+			}),
+			setItem: jest.fn(),
+			clear: jest.fn(),
+		},
+		writable: true,
+	 })
+	
+	 const mockAccountData = { accountId: '123', sessionId: 'abc' };
+	 (mockAuthService.authenticateAndGetAccountId as jest.Mock).mockReturnValue(of(mockAccountData));
 
-//     expect(mockAuthService.authenticateAndGetAccountId).toHaveBeenCalled();
-//     expect(mockAuthService.setAccountId).toHaveBeenCalledWith('123');
-//     expect(mockAuthService.setSessionId).toHaveBeenCalledWith('abc');
-//     expect(mockStore.dispatch).toHaveBeenCalledWith(loadFavoriteMovies());
-//     expect(mockStore.dispatch).toHaveBeenCalledWith(loadWatchList());
-//   });
+	 component.ngOnInit();
 
-//   it('should handle authentication failure', () => {
-//     const error = new Error('Authentication failed');
-//     (mockAuthService.authenticateAndGetAccountId as jest.Mock).mockReturnValue(
-//       throwError(() => error)
-//     );
-//     console.error = jest.fn();
-//     component.ngOnInit();
+    expect(mockAuthService.authenticateAndGetAccountId).toHaveBeenCalledWith('testLogin', 'testPassword');
+    expect(mockAuthService.setAccountId).toHaveBeenCalledWith('123');
+    expect(mockAuthService.setSessionId).toHaveBeenCalledWith('abc');
+    expect(mockStore.dispatch).toHaveBeenCalledWith(loadFavoriteMovies());
+    expect(mockStore.dispatch).toHaveBeenCalledWith(loadWatchList());
+  });
 
-//     expect(mockAuthService.authenticateAndGetAccountId).toHaveBeenCalled();
-//     expect(console.error).toHaveBeenCalledWith('Authentication failed:', error);
-//     expect(mockStore.dispatch).toHaveBeenCalledWith(loadFavoriteMovies());
-//     expect(mockStore.dispatch).toHaveBeenCalledWith(loadWatchList());
-//   });
+  it('should handle authentication failure', () => {
+	Object.defineProperty(window, 'localStorage', {
+		value: {
+			getItem: jest.fn((key) => {
+				if (key === 'login') return 'testLogin';
+				if (key === 'password') return 'testPassword';
+				return null;
+			}),
+			setItem: jest.fn(),
+			clear: jest.fn(),
+		},
+		writable: true,
+	 })
+    const error = new Error('Authentication failed');
+    (mockAuthService.authenticateAndGetAccountId as jest.Mock).mockReturnValue(
+      throwError(() => error)
+    );
+    console.error = jest.fn();
+    component.ngOnInit();
+
+    expect(mockAuthService.authenticateAndGetAccountId).toHaveBeenCalledWith('testLogin', 'testPassword');
+    expect(console.error).toHaveBeenCalledWith('Authentication failed:', error);
+    expect(mockStore.dispatch).toHaveBeenCalledWith(loadFavoriteMovies());
+    expect(mockStore.dispatch).toHaveBeenCalledWith(loadWatchList());
+  });
 });
