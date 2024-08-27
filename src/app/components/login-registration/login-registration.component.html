@@ -16,8 +16,75 @@
 			</div>
 		}
 		<div class="form__btns">
-			<button type="button" class="form__button form__button-register">Register</button>
+			<button type="button" (click)="showRegistrationForm()" class="form__button form__button-register">Register</button>
 			<p-button type="submit" [disabled]="logInForm.invalid" class="form__button-log" [loading]="loading" [label]="loading ? '' : 'Log in'"/>
+		</div>
+	</form>
+</p-dialog>
+<p-toast/>
+<p-dialog header="Registration a New User" [modal]="true" [(visible)]="isRegistrationVisible" [draggable]="false">
+	<form [formGroup]="registrationForm" (ngSubmit)="onSubmitRegistration()">
+		<div class="form__section">
+			<label for="name">Name</label>
+			<input type="text" id="name" pInputText formControlName="name">
+			@if(registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched){
+				<div class="error-message">
+					@if(registrationForm.get('name')?.hasError('required')){
+							<small>Name is required</small>						
+						}
+					@if(registrationForm.get('name')?.hasError('minlength')){
+							<small>Name must be at least 2 characters long.</small>						
+						}
+					@if(registrationForm.get('name')?.hasError('maxlength')){
+							<small>Name cannot be more than 50 characters long.</small>						
+						}
+					@if(registrationForm.get('name')?.hasError('pattern')){
+							<small>Name can only contain letters and spaces.</small>						
+						}
+				</div>
+			}
+		</div>
+		<div class="form__section">
+			<label for="email">Email</label>
+			<input type="text" id="email" pInputText formControlName="email">
+			@if(registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched){
+				<div class="error-message">
+					@if(registrationForm.get('email')?.hasError('required')){
+						<small>Email is required</small>
+					}
+					@if(registrationForm.get('email')?.hasError('email')){
+						<small>Please enter a valid email address</small>
+					}
+				</div>
+			}
+		</div>
+		<div class="form__section password-section">
+			<label for="password">Password</label>
+			<p-password [toggleMask]="true" id="password" pInputText formControlName="password">
+				<input #passwordInput type="password">
+				<ng-template pTemplate="header">
+					<h4>Pick a password</h4>
+				</ng-template>
+				<ng-template pTemplate="footer">
+					<p-divider/>
+					<p>Suggestions</p>
+					<ul class="password-list">
+						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasLowerCase')}">At least one lowercase</li>
+						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasUpperCase')}">At least one uppercase</li>
+						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasNumeric')}">At least one numeric</li>
+						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('minlength')}">Minimum 8 characters</li>
+					</ul>
+				</ng-template>
+			</p-password>
+			@if(registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched) {
+				<div class="error-message">
+					<small>Password is required</small>
+				</div>
+			}
+		</div>
+		<div class="form__btns">
+			<p-button type="button" (onClick)="showLogInForm()" class="form__button-log" label='Log in'/>
+			<button type="button" [disabled]="registrationForm.invalid" class="form__button form__button-register">Register</button>
 		</div>
 	</form>
 </p-dialog>

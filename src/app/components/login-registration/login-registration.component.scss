@@ -53,6 +53,7 @@ body{
 		}
 		input{
 			padding: 0.5rem;
+			padding-left: 1rem;
 			border-radius: 1.3rem;
 			width: 100%;
 			border: 1px solid #5d5c5c;
@@ -112,4 +113,33 @@ body{
 	color: red;
 	margin-bottom: 8px;
 	font-size: 14px;
+}
+::ng-deep .p-password{
+	display: block;
+	input{
+		padding: 0.5rem;
+		padding-left: 1rem;
+		border-radius: 1.3rem;
+		width: 100%;
+		border: 1px solid #5d5c5c;
+		transition: all 0.3s ease 0s;
+		&:focus{
+			display: block;
+			margin-bottom: 280px;
+		}
+		@media (max-height: 733px) {
+			&:focus{
+				margin-bottom: 0;
+				display: inline-block;
+			}
+		}
+	}
+}
+::ng-deep .p-dialog-content{
+	@media (max-height: 733px) {
+		overflow-y: visible;
+	}
+}
+.green{
+	color: green;
 }

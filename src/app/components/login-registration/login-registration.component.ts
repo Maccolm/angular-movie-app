@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { AuthService } from '../../services/auth.service';
@@ -11,22 +11,29 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ClearObservable } from '../../directives/clearObservable';
 import { takeUntil } from 'rxjs';
 import { MovieHeaderComponent } from '../header-movie/header-movie.component';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
 	selector: 'app-login-registration',
 	standalone: true,
-	imports: [ButtonModule, DialogModule, ReactiveFormsModule, ToastModule],
+	imports: [ButtonModule, DialogModule, ReactiveFormsModule, ToastModule, PasswordModule, DividerModule, CommonModule],
 	templateUrl: './login-registration.component.html',
 	styleUrl: './login-registration.component.scss',
 	providers: [MessageService, DialogService]
 })
 export class LoginRegistrationComponent extends ClearObservable implements OnInit {
 	visible: boolean = false;
+	isRegistrationVisible = false;
 	errorMessage: string = '';
 	logInForm: FormGroup = new FormGroup({});
+	registrationForm: FormGroup = new FormGroup({});
 	loading: boolean = false;
 	isLoggedIn: boolean = false;
+	isInputFocused: boolean = false;
+	@ViewChild('passwordInput', { static: false }) passwordInput!: ElementRef;
 
 	constructor(private authService: AuthService, private store: Store, private messageService: MessageService, private headerComponent: MovieHeaderComponent) { 
 		super();
@@ -35,14 +42,25 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 	ngOnInit(): void {
 		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
 			this.isLoggedIn = isLoggedIn;
-		})
+		});
 		this.logInForm = new FormGroup({
 			email: new FormControl('VitaliiShapovalov', [Validators.required]),
 			password: new FormControl('cN.hwyTvag3s.8m', Validators.required)
+		});
+		this.registrationForm = new FormGroup({
+			email: new FormControl('', [Validators.required, Validators.email]),
+			name: new FormControl('', 
+				[
+					Validators.required,
+					Validators.minLength(2),
+					Validators.maxLength(50),
+					Validators.pattern(/^[a-zA-Z\s]*$/)
+				]),
+			password: new FormControl('', [Validators.required, this.passwordStrengthValidator])
 		})
 		this.headerComponent.showLoginForm$.pipe(takeUntil(this.destroy$)).subscribe(show => {
 			this.visible = show;
-		})
+		});
 	}
 	onSubmitLogIn() {
 		if (this.logInForm.valid) {
@@ -77,5 +95,39 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		} else {
 			this.errorMessage = 'Please fill in all required fields.'
 		}
+	}
+	showRegistrationForm(){
+		this.visible = false;
+		this.isRegistrationVisible = true;
+	}
+	showLogInForm(){
+		this.visible = true;
+		this.isRegistrationVisible = false;
+	}
+	onSubmitRegistration(){
+
+	}
+	passwordStrengthValidator(control: FormGroup): ValidationErrors | null{
+		const value = control.value || '';
+		const hasUpperCase = /[A-Z]+/.test(value);
+		const hasLowerCase = /[a-z]+/.test(value);
+		const hasNumeric = /[0-9]+/.test(value);
+		const minlength = 8;
+
+		const errors: ValidationErrors = {};
+
+		if(value.length < minlength){
+			errors['minlength'] = true;
+		}
+		if(!hasUpperCase) {
+			errors['hasUpperCase'] = true;
+		}
+		if(!hasLowerCase) {
+			errors['hasLowerCase'] = true;
+		}
+		if(!hasNumeric) {
+			errors['hasNumeric'] = true;
+		}
+		return Object.keys(errors).length > 0 ? errors : null;
 	}
 }
