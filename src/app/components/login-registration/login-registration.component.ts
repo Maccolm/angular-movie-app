@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { AuthService } from '../../services/auth.service';
@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 	providers: [MessageService, DialogService]
 })
 export class LoginRegistrationComponent extends ClearObservable implements OnInit {
+	googleIconPath: string = '../../assets/img/google-icon.jpg'; 
 	visible: boolean = false;
 	isRegistrationVisible = false;
 	errorMessage: string = '';
@@ -44,8 +45,8 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 			this.isLoggedIn = isLoggedIn;
 		});
 		this.logInForm = new FormGroup({
-			email: new FormControl('VitaliiShapovalov', [Validators.required]),
-			password: new FormControl('cN.hwyTvag3s.8m', Validators.required)
+			email: new FormControl('', [Validators.required]),
+			password: new FormControl('', Validators.required)
 		});
 		this.registrationForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
@@ -56,11 +57,13 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 					Validators.maxLength(50),
 					Validators.pattern(/^[a-zA-Z\s]*$/)
 				]),
-			password: new FormControl('', [Validators.required, this.passwordStrengthValidator])
-		})
+			password: new FormControl('', [Validators.required, this.passwordStrengthValidator]),
+			confirmPassword: new FormControl('', Validators.required)
+		},{validators: this.passwordMatchValidator})
 		this.headerComponent.showLoginForm$.pipe(takeUntil(this.destroy$)).subscribe(show => {
 			this.visible = show;
 		});
+		
 	}
 	onSubmitLogIn() {
 		if (this.logInForm.valid) {
@@ -70,28 +73,33 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 
 			window.localStorage.setItem('login', enteredEmail);
 			window.localStorage.setItem('password', enteredPassword);
-
-			this.authService.authenticateAndGetAccountId(enteredEmail, enteredPassword).subscribe({
-				next: ({ accountId, sessionId }) => {
-					console.log('Login successful:', { accountId, sessionId });
-					this.authService.setAccountId(accountId);
-					this.authService.setSessionId(sessionId);
-					this.store.dispatch(loadFavoriteMovies());
-					this.store.dispatch(loadWatchList());
-					this.errorMessage = '';
-					this.loading = false;
-					setTimeout(()=>{
-						this.visible = false;
-					},500)
-					this.messageService.add({ severity: 'success',summary: 'Login Successful', detail: 'You have successfully logged in', life: 3000 });
-				},
-				error: (error) => {
-					console.error('Login failed:', error);
-					this.errorMessage = 'Invalid email or password. Please try again.';
-					this.loading = false;
-					this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
-				}
-			});
+			this.authService.login(enteredEmail, enteredPassword).then(() => {
+				this.authService.authenticateAndGetAccountId().pipe(takeUntil(this.destroy$)).subscribe({
+					next: ({ accountId, sessionId }) => {
+						console.log('Login successful:', { accountId, sessionId });
+						this.authService.setAccountId(accountId);
+						this.authService.setSessionId(sessionId);
+						this.store.dispatch(loadFavoriteMovies());
+						this.store.dispatch(loadWatchList());
+						this.errorMessage = '';
+						this.loading = false;
+						setTimeout(()=>{
+							this.visible = false;
+						},500)
+						this.messageService.add({ severity: 'success',summary: 'Login Successful', detail: 'You have successfully logged in', life: 3000 });
+					},
+					error: (error) => {
+						console.error('Login failed:', error);
+						this.errorMessage = 'Invalid email or password. Please try again.';
+						this.loading = false;
+						this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
+					}
+				});
+			}).catch(() => {
+				this.errorMessage = 'Please fill in all required fields.'
+				this.loading = false;
+            this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password for Firebase. Please try again.', life: 3000 });
+			})
 		} else {
 			this.errorMessage = 'Please fill in all required fields.'
 		}
@@ -105,7 +113,16 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		this.isRegistrationVisible = false;
 	}
 	onSubmitRegistration(){
-
+		if(this.registrationForm.valid) {
+			const enteredEmail = this.registrationForm.value['email'];
+			const enteredPassword = this.registrationForm.value['password'];
+			this.authService.register(enteredEmail, enteredPassword).then(() =>{
+				this.messageService.add({ severity: 'success', summary: 'Registration Successful', detail: 'You have successfully registered', life: 3000 });
+				this.showLogInForm();
+			}).catch(error => {
+				this.errorMessage = `Registration failed: ${error.message}`
+			})
+		}
 	}
 	passwordStrengthValidator(control: FormGroup): ValidationErrors | null{
 		const value = control.value || '';
@@ -129,5 +146,11 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 			errors['hasNumeric'] = true;
 		}
 		return Object.keys(errors).length > 0 ? errors : null;
+	}
+	passwordMatchValidator(control: AbstractControl): ValidationErrors | null{
+		const password = control.get('password')?.value;
+		const confirmPassword = control.get('confirmPassword')?.value;
+
+		return password === confirmPassword ? null : {'mismatch': true}
 	}
 }

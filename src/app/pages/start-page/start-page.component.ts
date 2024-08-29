@@ -13,7 +13,7 @@ import { selectTrendingMovies } from '../../store/selectors';
   imports: [RouterModule, CarouselModule],
   templateUrl: './start-page.component.html',
   styleUrl: './start-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+//   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartPageComponent extends ClearObservable implements OnInit{
 	IMAGINE_PATH = '../../../assets/img/background/poster_bg.jpeg';

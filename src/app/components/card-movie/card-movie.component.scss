@@ -56,18 +56,20 @@ ul {
 				padding: 15px;
 			}
 			h1 {
-				color: black;
-				font-weight: 400;
+				color: white;
+				font-weight: 500;
 				@media screen and (max-width: 435px) {
 					font-size: 18px;
 					font-weight: 500;
 				}
-				-webkit-text-stroke: 0.3px rgb(72, 72, 72);
+				-webkit-text-stroke: 0.3px rgb(0, 0, 0);
+
 			}
 			h4 {
-				color: #323131;
+				color: #fff;
 				font-weight: 500;
 				line-height: 2;
+				-webkit-text-stroke: 0.3px rgb(0, 0, 0);
 			}
 			.minutes {
 				display: inline-block;

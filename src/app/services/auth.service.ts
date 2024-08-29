@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
 
 @Injectable({
 	providedIn: 'root',
@@ -21,7 +22,8 @@ export class AuthService {
 	
 
 
-	constructor(private http: HttpClient, private router: Router) { }
+	constructor(private http: HttpClient, private router: Router, private auth: Auth) { 
+	}
 	setAccountId(accountId: number): void {
 		window.localStorage.setItem('account_id', accountId.toString());
 	}
@@ -78,9 +80,9 @@ export class AuthService {
   }
 
   // Public method to get accountId
-  public authenticateAndGetAccountId(username: string, password: string): Observable<{ accountId: number, sessionId: string}> {
+  public authenticateAndGetAccountId(): Observable<{ accountId: number, sessionId: string}> {
 		return this.getRequestToken().pipe(
-			 switchMap(requestToken => this.validateRequestToken(username, password, requestToken).pipe(
+			 switchMap(requestToken => this.validateRequestToken(this.username, this.password, requestToken).pipe(
 				  switchMap(() => this.createSession(requestToken)),
 				  switchMap(sessionId => this.getAccountId(sessionId).pipe(
 					map(accountId => ({ accountId, sessionId })),
@@ -104,6 +106,22 @@ export class AuthService {
 	localStorage.clear();
 	this.router.navigate(['/']);
 	this.loggedInSubject.next(false);
+  }
+  //FireBase===========================================================================
+  register(email: string, password: string) {
+	return createUserWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
+		console.log('User is registered:', userCredential.user);
+	})
+  }
+  login(email: string, password: string) {
+	return signInWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
+		console.log('User logged in:', userCredential.user);
+		this.loggedInSubject.next(true);
+	}).catch((error) =>{
+		console.error('Error logging in:', error);
+      this.loggedInSubject.next(false);
+		throw error;
+	})
   }
 }
 
