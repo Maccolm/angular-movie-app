@@ -1,10 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, map, Observable, switchMap, throwError } from "rxjs";
+import { BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError } from "rxjs";
 import { environment } from "../../environments/environment";
+import { Router } from "@angular/router";
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class AuthService {
 	private readonly tokenUrl = 'https://api.themoviedb.org/3/authentication/token/new';
@@ -14,9 +18,14 @@ export class AuthService {
 	private apiKey = '81c0dd880c00cce619f4569514eade3b';
 	private username = 'VitaliiShapovalov';
 	private password = 'cN.hwyTvag3s.8m';
-	private readonly tokenBearer = environment.apiToken
+	private readonly tokenBearer = environment.apiToken;
+	private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn())
+	isLoggedIn$ = this.loggedInSubject.asObservable();
+	
 
-	constructor(private http: HttpClient) { }
+
+	constructor(private http: HttpClient, private router: Router, private auth: Auth) { 
+	}
 	setAccountId(accountId: number): void {
 		window.localStorage.setItem('account_id', accountId.toString());
 	}
@@ -40,11 +49,11 @@ export class AuthService {
   }
 
   // Validate the request token with the user's credentials
-  private validateRequestToken(requestToken: string): Observable<void> {
-		const url = `${this.apiUrl}/authentication/token/validate_with_login?api_key=${this.apiKey}`;
+  private validateRequestToken(username: string, password: string, requestToken: string): Observable<void> {
+		const url = `${this.validateUrl}?api_key=${this.apiKey}`;
 		const body = {
-			 username: this.username,
-			 password: this.password,
+			 username: username,
+			 password: password,
 			 request_token: requestToken
 		};
 		return this.http.post<any>(url, body).pipe(
@@ -75,10 +84,13 @@ export class AuthService {
   // Public method to get accountId
   public authenticateAndGetAccountId(): Observable<{ accountId: number, sessionId: string}> {
 		return this.getRequestToken().pipe(
-			 switchMap(requestToken => this.validateRequestToken(requestToken).pipe(
+			 switchMap(requestToken => this.validateRequestToken(this.username, this.password, requestToken).pipe(
 				  switchMap(() => this.createSession(requestToken)),
 				  switchMap(sessionId => this.getAccountId(sessionId).pipe(
-					map(accountId => ({ accountId, sessionId }))
+					map(accountId => ({ accountId, sessionId })),
+					tap(() =>{
+						this.loggedInSubject.next(true);
+					})
 				  ))
 			 ))
 		);
@@ -88,6 +100,44 @@ export class AuthService {
 		console.error('An error occurred:', error);
 		return throwError(error);
   }
-
+  isLoggedIn(): boolean {
+	const sessionId = window.localStorage.getItem('session_id');
+	return !!sessionId;
+  }
+  logOut(): Promise<void>{
+	localStorage.clear();
+	this.router.navigate(['/']);
+	this.loggedInSubject.next(false);
+	return this.auth.signOut().then(() =>{
+		console.log('logged out');
+	})
+  }
+  //FireBase===========================================================================
+  register(email: string, password: string) {
+	return createUserWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
+		console.log('User is registered:', userCredential.user);
+	}).catch((error)=> {
+		console.log(error);
+		throw error;
+	})
+  }
+  login(email: string, password: string) {
+	return signInWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
+		console.log('User logged in:', userCredential.user);
+		this.loggedInSubject.next(true);
+	}).catch((error) =>{
+		console.error('Error logging in:', error);
+      this.loggedInSubject.next(false);
+		throw error;
+	})
+  }
+  loginWithGoogle(){
+	const provider = new GoogleAuthProvider();
+	return signInWithPopup(this.auth, provider).then(() =>{	
+		this.loggedInSubject.next(true);
+	}).catch((error) => {
+		console.error('Error within log in', error)
+	})
+}
 }
 

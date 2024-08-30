@@ -5,45 +5,48 @@ import { MovieAsideMenuComponent } from './components/aside-menu/aside-menu.comp
 import { MovieSidebarComponent } from './components/sidebar/sidebar.component';
 import { MovieHeaderComponent } from './components/header-movie/header-movie.component';
 import { AuthService } from './services/auth.service';
-import { MovieService } from './services/movie.service';
 import { ClearObservable } from './directives/clearObservable';
 import { Store, StoreModule } from '@ngrx/store';
-import { loadFavoriteMovies, loadWatchList } from './store/actions';
-
+import { loadFavoriteMovies, loadTrendingMovies, loadWatchList } from './store/actions';
+import { takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-root ',
-  standalone: true,
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  imports: [
-    RouterOutlet,
-    MovieListComponent,
-    RouterModule,
-    RouterLink,
-    MovieAsideMenuComponent,
-    MovieSidebarComponent,
-    MovieHeaderComponent,
-	 StoreModule,
-  ],
+	selector: 'app-root ',
+	standalone: true,
+	templateUrl: './app.component.html',
+	styleUrl: './app.component.scss',
+	imports: [
+		RouterOutlet,
+		MovieListComponent,
+		RouterModule,
+		RouterLink,
+		MovieAsideMenuComponent,
+		MovieSidebarComponent,
+		MovieHeaderComponent,
+		StoreModule,
+	],
 })
 export class AppComponent extends ClearObservable implements OnInit {
-  constructor(private movieService: MovieService, private authService: AuthService, private store: Store) {
-	super()
-  }
+	constructor(private authService: AuthService, private store: Store) {
+		super()
+	}
 
-  ngOnInit(): void {
-	  this.authService.authenticateAndGetAccountId().subscribe(
-		  data => {
-			  const { accountId, sessionId } = data;
-			  this.authService.setAccountId(accountId);
-			  this.authService.setSessionId(sessionId);
+	ngOnInit(): void {
+		this.store.dispatch(loadTrendingMovies());
+		const login = window.localStorage.getItem('login');
+		const password = window.localStorage.getItem('password');
+		if (login && password) {
+			this.authService.authenticateAndGetAccountId().pipe(takeUntil(this.destroy$)).subscribe(data => {
+				const { accountId, sessionId } = data;
+				this.authService.setAccountId(accountId);
+				this.authService.setSessionId(sessionId);
 			},
-			error => {
-				console.error('Authentication failed:', error);
-			}
-		);
-		this.store.dispatch(loadFavoriteMovies());
-		this.store.dispatch(loadWatchList());
+				error => {
+					console.error('Authentication failed:', error);
+				}
+			);
+			this.store.dispatch(loadFavoriteMovies());
+			this.store.dispatch(loadWatchList());
+		}
 	}
 }

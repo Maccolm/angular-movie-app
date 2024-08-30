@@ -6,26 +6,46 @@
 		</a>
 	</div>
 	<nav class="header__list">
-		<a routerLink="/favorites" class="favorites header__item">
-			<i class="pi pi-heart-fill"></i>
-			<p>Favorites</p>
-		</a>
-		<a routerLink="/watch-list" class="watch-list header__item">
-			<i class="pi pi-bookmark-fill"></i>
-			<p>Watch list</p>
-		</a>
+		@if(isLoggedIn){
+			<a routerLink="/favorites" class="favorites header__item">
+				<i class="pi pi-heart-fill"></i>
+				<p>Favorites</p>
+			</a>
+			<a routerLink="/watch-list" class="watch-list header__item">
+				<i class="pi pi-bookmark-fill"></i>
+				<p>Watch list</p>
+			</a>
+		} @else {
+			<p-toast />
+        <p-confirmPopup>
+			<ng-template pTemplate="content" let-message>
+				<div class="">
+					<i [class]="message.icon" class=""></i>
+					<p>{{ message.message }}</p>
+				</div>
+			</ng-template>
+		  </p-confirmPopup>
+			<a class="favorites header__item" (click)="tryAccessWithoutAuthorization($event)">
+				<i class="pi pi-heart-fill"></i>
+				<p>Favorites</p>
+			</a>
+			<a class="watch-list header__item" (click)="tryAccessWithoutAuthorization($event)">
+				<i class="pi pi-bookmark-fill"></i>
+				<p>Watch list</p>
+			</a>
+		}
 	</nav>
-	<div class="actions">
+	<div class="action">
 		<p-button 
 			(onClick)="openOverplay($event)"
 			[text]="true" 
 			rounded="true" 
 			icon="pi pi-search" 
 			label="Search" 
-			class="btn-search"/> 
+			class="action__btns btn-search"/> 
 		<p-overlayPanel #op  [style]="{ width: '100%' }">
 			<div class="search__container">
-				<form action="">
+				<form action="" (ngSubmit)="onEnterPress($event)">
 					<input pInputText id="search" #searchInput [formControl]="searchControl" autocomplete="on"/>
 					<p-button [rounded]="true" [text]="true" icon="{{isLoading ? 'pi pi-spinner pi-spin' : 'pi pi-search'}}" class="btn-input"/>
 				</form>
@@ -48,6 +68,27 @@
 				</div>
 			}
 		</p-overlayPanel>
-
+		<div class="log-reg">
+			@if(isLoggedIn){
+				<p-confirmPopup>
+					<ng-template pTemplate="content" let-message>
+						<div class="">
+							<i [class]="message.icon" class=""></i>
+							<p>{{ message.message }}</p>
+						</div>
+					</ng-template>
+				</p-confirmPopup>
+			}
+			<p-toast />
+			<p-button
+				[label]="isLoggedIn ? 'Log Out' : 'Log In'"
+				iconPos="right"
+				[icon]="isLoggedIn ? 'pi pi-sign-out' : 'pi pi-sign-in'"
+				class="action__btns login-btn"
+				[class]="isLoggedIn ? 'log-out': ''"
+				(onClick)="isLoggedIn ? logOut($event) : showForm()"
+			/>
+			<app-login-registration></app-login-registration>
+		</div>
 	</div>
 </div>

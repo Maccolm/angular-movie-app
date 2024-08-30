@@ -62,16 +62,14 @@ h1{
 	}
 }
 .movie__url{
+	font-style: italic;
 	color: #545454;
 	font-size: 18px;
 	font-family: 'Montserrat';
 	transition: color 0.3s ease-out;
 	font-weight: 500;
-	text-decoration: none;
 	&:hover{
 		color: #1b1a1a;
-		text-decoration: underline;
-
 	}
 }
 .media__title{

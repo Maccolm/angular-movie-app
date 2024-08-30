@@ -8,7 +8,7 @@
 	background-blend-mode: multiply;
 	z-index: 3;
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	justify-content: end;
 	@media screen and (max-width: 530px){
 		padding: 10px;
@@ -17,30 +17,31 @@
 .header {
 	justify-self: start;
 	&__title {
+		margin-top: 0;
 		margin-bottom: 1rem;
 		font-weight: 600;
 		letter-spacing: -5px;
+		line-height: 1;
 		word-spacing: 5px;
 		text-transform: uppercase;;
 		text-align: center;
-		font-size: clamp(1rem, -0.078rem + 4.9vw, 5.8rem);
+		font-size: clamp(1.625rem, 0.057rem + 5.84vw, 6.78rem);
 		@media screen and (max-width: 870px) {
 			letter-spacing: -1px;
 	}
   }
 }
 .movie__card {	
-	padding-top: 30px;
-	max-height: 500px;
+	margin-bottom: 7rem;
+	max-height: 300px;
 	height: 100%;
 	display: grid;
-	grid-template-columns: repeat(2, minmax(100px, 280px));
-	grid-template-rows: repeat(2, 160px);
+	grid-template-columns: repeat(auto-fill, minmax(100px, 280px));
 	gap: 20px;
 	justify-content: space-evenly;
 	align-items: center;
-	@media screen and (max-width: 530px) {
-		grid-template-rows: repeat(2, 122px);
+	@media screen and (max-width: 830px) {
+		grid-template-columns: repeat(2, minmax(100px, 280px));
 	}
 	@media screen and (max-width: 400px) {
 		font-size: 14px;
@@ -50,22 +51,22 @@
 	&__item{
 		text-decoration: none;
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		gap: 1rem;
 		background-color: #f2f2f2da;
 		position: relative;
-		max-width: 280px;
-		min-height: 122px;
-		max-height: 160px;
+		padding: 10px;
+		max-width: 250px;
+		min-height: 68px;
+		max-height: 120px;
 		width: 100%;
 		height: 100%;
 		border-radius: 10px;
 		transition: all 0.4s;
 		box-shadow: 0px 0px 120px -25px rgba(0, 0, 0, 0.5);
-		@media screen and (max-width: 435px) {
-			max-height: 100%;
+		@media screen and (max-width: 535px) {
+			flex-direction: column;
 		}
 		&:hover {
 			transform: scale(1.02);
@@ -109,12 +110,49 @@
 		width: 100%;
 	}
 }
-.blur__back .gradient-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: linear-gradient(to top, #fff 25%, transparent 100%);
-z-index: 2;
+//carousel====================================
+.carousel {
+	&__title {
+		font-weight: 600;
+		font-family: proximanova, Matterhorn, Helvetica, sans-serif;
+		text-transform: uppercase;
+		padding-left: 42px;
+		margin: 0;
+		text-align: left;
+		font-size: clamp(1rem, -0.078rem + 2.9vw, 2rem);
+		color: #000000;
+	}
+ }
+ .trending {
+	&__item {
+		margin-right: 5px;
+		background-color: #f2f2f2da;
+		border-radius: 10px;
+		max-width: 180px;
+		cursor: pointer;
+	}
+	&__img {
+		img{
+			width: 100%;
+		}
+	}
+	&__title {
+		margin: 0;
+		margin-top: auto;
+		font-family: proximanova, Matterhorn, Helvetica, sans-serif;
+		letter-spacing: 0.2px;
+		font-weight: 600;
+		text-align: center;
+		font-size: clamp(1rem, 0.909rem + 0.45vw, 1.25rem);
+		p{
+			margin: 5px;
+			padding-bottom: 5px;
+		}
+	}
+ }
+ @media screen and (max-width: 798px) {
+	 ::ng-deep .p-carousel-indicators{
+		display: none;
+ }
 }
+ 

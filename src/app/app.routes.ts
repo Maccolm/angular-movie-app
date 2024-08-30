@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { movieListResolver } from './routerGuards/movieList.resolver';
 
-
 export const routes: Routes = [
 	{path: '', loadComponent: () => import('./pages/start-page/start-page.component').then(m => m.StartPageComponent)},
 	{path: 'now_playing', loadComponent: () => import('./pages/now-playing-movie-page/now-playing-movie-page.component').then(m => m.MovieNowPlayingPageComponent), resolve: {data: movieListResolver}},

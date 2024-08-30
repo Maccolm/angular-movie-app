@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { MovieAsideMenuComponent } from '../aside-menu/aside-menu.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { SortingComponent } from '../sorting/sorting.component';
 import { SearchResultsPageComponent } from "../../pages/search-results-page/search-results-page.component";
+import { ClearObservable } from '../../directives/clearObservable';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-movie-sidebar',
   standalone: true,
@@ -17,12 +19,19 @@ import { SearchResultsPageComponent } from "../../pages/search-results-page/sear
     RouterLink,
     RouterModule,
     SortingComponent,
-    SearchResultsPageComponent
+    SearchResultsPageComponent,
 ],
+providers: [ConfirmationService]
 })
-export class MovieSidebarComponent {
+export class MovieSidebarComponent extends ClearObservable implements OnInit {
   sidebarVisible: boolean = false;
+  isClosedButtonBar: boolean = false;
+	constructor(){
+		super();
+	}
+	ngOnInit(): void {
 
+	}
   links = [
     { name: 'Now playing', url: 'now_playing' },
     { name: 'Popular', url: 'popular' },

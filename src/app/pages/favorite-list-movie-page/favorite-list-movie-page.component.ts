@@ -15,7 +15,7 @@ import { removeMovieFromFavorite } from '../../store/actions';
 	standalone: true,
 	templateUrl: './favorite-list-movie-page.component.html',
 	styleUrl: './favorite-list-movie-page.component.scss',
-	imports: [CommonModule, MovieCardComponent, ButtonModule]
+	imports: [CommonModule, MovieCardComponent, ButtonModule],
 })
 export class MovieFavoriteListPageComponent extends ClearObservable implements OnInit {
 	favoriteMovies: Movie[] | null = [];

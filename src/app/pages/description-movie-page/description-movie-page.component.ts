@@ -13,13 +13,18 @@ import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 import { CarouselModule } from 'primeng/carousel';
 import { CarouselComponent } from "../../components/carousel/carousel.component";
+import { AuthService } from '../../services/auth.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @Component({
 	selector: 'app-movie-description-page',
 	standalone: true,
-	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent],
+	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent, ToastModule, ConfirmPopupModule,],
 	templateUrl: './description-movie-page.component.html',
 	styleUrl: './description-movie-page.component.scss',
+	providers: [ConfirmationService, MessageService]
 })
 export class MovieDescriptionComponent extends ClearObservable implements OnInit {
 	@Input() data: any;
@@ -35,12 +40,18 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	public countries!: string;
 	public companies!: string[];
 	public website!: string;
+	public isLoggedIn: boolean = false;
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 	ratingPercentage: number = 0;
 	ratingStars: number[] = [1,2,3,4,5,6,7,8,9,10];
 
-	constructor(private movieService: MovieService, private route: ActivatedRoute, private store: Store) {
+	constructor(
+		private movieService: MovieService, 
+		private route: ActivatedRoute,
+		private store: Store,
+		private authService: AuthService,
+		private confirmationService: ConfirmationService) {
 		super();
 	}
 
@@ -65,28 +76,67 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 				})
 			}
 		});
+		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+			this.isLoggedIn = isLoggedIn;
+		})
 	}
-	addToFavorites() {
-		this.loadingFavorites = true;
-		this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
-			if(response) {
-				console.log('added to fv', response);
-				this.isInFavorite = true;
-				this.store.dispatch(setMovieToFavorite({movie: this.movie}));
-				this.loadingFavorites = false;
-			}
-		});
+	addToFavorites(event: Event) {
+		if(this.isLoggedIn){
+			this.loadingFavorites = true;
+			this.movieService.setToFavoriteMovies(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+				if(response) {
+					console.log('added to fv', response);
+					this.isInFavorite = true;
+					this.store.dispatch(setMovieToFavorite({movie: this.movie}));
+					this.loadingFavorites = false;
+				}
+			});
+		} else {			
+			this.confirmationService.confirm({
+				target: event.target as EventTarget,
+				message:'You have to be logged in to access this area',
+				icon: 'pi pi-exclamation-triangle',
+				rejectIcon: 'pi pi-times',
+				rejectLabel: 'Cancel',
+				rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+				acceptButtonStyleClass: 'p-button-sm',
+				accept: () => {
+					console.log('accepted');
+				},
+				reject: () => {
+					console.log('rejected');
+				}
+			})
+		}
 	}
-	addToWatchList() {
-		this.loadingWatchList = true;
-		this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
-			if(response) {
-				console.log('added to watchList', response);
-				this.store.dispatch(setMovieToWatchList({ movie: this.movie }));
-				this.isInWatchList = true;
-				this.loadingWatchList = false; 
-			}
-		});
+	addToWatchList(event: Event) {
+		if(this.isLoggedIn){
+			this.loadingWatchList = true;
+			this.movieService.setToWatchList(this.movie).pipe(takeUntil(this.destroy$)).subscribe((response) => {
+				if(response) {
+					console.log('added to watchList', response);
+					this.store.dispatch(setMovieToWatchList({ movie: this.movie }));
+					this.isInWatchList = true;
+					this.loadingWatchList = false; 
+				}
+			});
+		} else {
+			this.confirmationService.confirm({
+				target: event.target as EventTarget,
+				message:'You have to be logged in to access this area',
+				icon: 'pi pi-exclamation-triangle',
+				rejectIcon: 'pi pi-times',
+				rejectLabel: 'Cancel',
+				rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+				acceptButtonStyleClass: 'p-button-sm',
+				accept: () => {
+					console.log('accepted');
+				},
+				reject: () => {
+					console.log('rejected');
+				}
+			})
+		}
 	}
 	initRating(rating: number){
 		this.ratingPercentage = rating / 0.1;

@@ -25,7 +25,7 @@
 <p-card class="movie__card">
 	<ng-template pTemplate="header">
 		<div class="movie__header">
-			<a [href]="data.link" target="_blank">
+			<a (click)="navigateWithData()" class="movie__link">
 				<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 			</a>
 			<h1>{{ data.title }}</h1>
@@ -38,7 +38,8 @@
 			severity="info"></p-button>
 	</div>
 	<ng-template pTemplate="footer">
-		<div class="movie__social">
+		@if(isLoggedIn){
+			<div class="movie__social">
 			<ul>
 				@if(isInFavorite){
 				<p-button label="In" class='btn-list active' icon="pi pi-heart-fill" iconPos="right" />
@@ -53,7 +54,8 @@
 					icon="pi pi-bookmark-fill" iconPos="right" />
 				}
 			</ul>
-		</div>
+			</div>
+		}
 		<div class="rating__wrapper">
 			<p class="rating">Rating: {{ data.vote_average }}</p>
 			<div class="rating__body">
@@ -72,3 +74,4 @@
 	</div>
 </p-card>
 }
+<p-toast></p-toast>

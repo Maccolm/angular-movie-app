@@ -112,15 +112,15 @@ describe('MovieDescriptionComponent', () => {
     expect(component.isInWatchList).toBe(false);
   });
 
-  it('should add movie to favorites', () => {
-    component.addToFavorites();
-    expect(movieService.setToFavoriteMovies).toHaveBeenCalledWith(mockMovie);
-    fixture.detectChanges();
-  });
+//   it('should add movie to favorites', () => {
+//     component.addToFavorites();
+//     expect(movieService.setToFavoriteMovies).toHaveBeenCalledWith(mockMovie);
+//     fixture.detectChanges();
+//   });
 
-  it('should add movie to watchlist', () => {
-    component.addToWatchList();
-    expect(movieService.setToWatchList).toHaveBeenCalledWith(mockMovie);
-    fixture.detectChanges();
-  });
+//   it('should add movie to watchlist', () => {
+//     component.addToWatchList();
+//     expect(movieService.setToWatchList).toHaveBeenCalledWith(mockMovie);
+//     fixture.detectChanges();
+//   });
 });

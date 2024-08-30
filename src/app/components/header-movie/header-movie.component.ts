@@ -5,9 +5,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
-import { HttpClient } from '@angular/common/http';
 import { ClearObservable } from '../../directives/clearObservable';
-import { debounceTime, of, switchMap, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, debounceTime, Observable, of, switchMap, takeUntil, tap } from 'rxjs';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
 import { CommonModule } from '@angular/common';
@@ -15,6 +14,11 @@ import { ExtractYearFromDatePipe } from '../../pipes/extract-year-from-date.pipe
 import { Router } from '@angular/router';
 import { clearMoviesState, loadMoviesFromSearch } from '../../store/actions';
 import { Store } from '@ngrx/store';
+import { LoginRegistrationComponent } from '../login-registration/login-registration.component';
+import { AuthService } from '../../services/auth.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @Component({
 	selector: 'app-movie-header',
@@ -29,9 +33,13 @@ import { Store } from '@ngrx/store';
 		ButtonModule,
 		CommonModule,
 		ExtractYearFromDatePipe,
+		LoginRegistrationComponent,
+		ToastModule,
+		ConfirmPopupModule,
 	],
 	templateUrl: './header-movie.component.html',
 	styleUrl: './header-movie.component.scss',
+	providers: [ConfirmationService, MessageService]
 })
 export class MovieHeaderComponent extends ClearObservable implements OnInit {
 	searchControl = new FormControl();
@@ -42,8 +50,11 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 	numberMoviesFromSearch!: number;
 	isFindMovie: boolean = true;
 	moviesNotFound: string = "We couldn't find anything. You may need to change your search query!";
+	isLoggedIn: boolean = false;
+	loginFormSubject = new BehaviorSubject<boolean>(false);
+	showLoginForm$ = this.loginFormSubject as Observable<boolean>;
 
-	constructor(private http: HttpClient, private movieService: MovieService, private router: Router, private store: Store) {
+	constructor(private authService: AuthService, private movieService: MovieService, private router: Router, private store: Store, private confirmationService: ConfirmationService, private messageService: MessageService) {
 		super();
 	}
 	ngOnInit() {
@@ -62,6 +73,9 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 					this.isFindMovie = movies.total_results > 0;
 				}
 			});
+			this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+				this.isLoggedIn = isLoggedIn;
+			})
 	}
 	openOverplay(event: Event) {
 		this.overlayPanel.toggle(event);
@@ -92,5 +106,53 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 			this.router.navigate(['search_results']);
 			this.overlayPanel.hide();
 		}
+	}
+	onEnterPress(event: KeyboardEvent){
+		if(this.searchControl.value?.trim().length > 0){
+			this.navigateWithAllSearchResults(this.searchControl.value)
+		} else {
+			event.preventDefault();
+		}
+	}
+	tryAccessWithoutAuthorization(event: Event){
+		if(!this.isLoggedIn){
+			this.confirmationService.confirm({
+				target: event.target as EventTarget,
+				message: 'You need to be logged in to access this area. Do you want to login?',
+				icon: 'pi pi-exclamation-triangle',
+				rejectIcon:'pi pi-times mr-1',
+				rejectLabel: 'Cancel',
+				rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+				acceptButtonStyleClass: 'p-button-sm',
+				accept: () => {
+					this.loginFormSubject.next(true);
+				},
+				reject: () => {
+				}
+			})
+		}
+		this.loginFormSubject.next(false);
+	}
+	showForm() {
+		this.loginFormSubject.next(true);
+	}
+	logOut(event: Event){	
+		this.confirmationService.confirm({
+			target: event.target as EventTarget,
+			message: 'Do you want to log out?',
+			icon: 'pi pi-question pi-question-custom',
+			rejectIcon:'pi pi-times mr-1',
+			rejectLabel: 'Cancel',
+			rejectButtonStyleClass: 'p-button-outlined p-button-sm',
+			acceptButtonStyleClass: 'p-button-sm',
+			accept: () => {
+				this.loginFormSubject.next(true);
+				this.authService.logOut();
+				this.messageService.add({ severity: 'info', summary: 'Logout Successful', detail: 'You have successfully logged out.', life: 3000 });
+				this.loginFormSubject.next(false);
+			},
+			reject: () => {
+			}
+		})
 	}
 }
