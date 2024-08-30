@@ -17,7 +17,7 @@
 		}
 		<div class="form__section form__section-social">
 			<h4 class="form__label"> You can also login with:</h4>
-			<button type="button" class="form__button-icons">
+			<button type="button" class="form__button-icons" (click)="logInWithGoogle()">
 				 <img [src]="googleIconPath" alt="con">
 				 <p>Google</p>
 			</button>
@@ -64,6 +64,11 @@
 					}
 				</div>
 			}
+			@if(errorMessage){
+				<div class="error-message">
+					<small>{{errorMessage}}</small>
+				</div>
+			}
 		</div>
 		<div class="form__section password-section">
 			<label for="password">Password</label>
@@ -100,16 +105,9 @@
 				</div>
 			}
 		</div>
-		<div class="form__section form__section-social">
-			<h4 class="form__label"> You can also register with:</h4>
-			<button type="button" class="form__button-icons">
-				 <img [src]="googleIconPath" alt="con">
-				 <p>Google</p>
-			</button>
-		</div>
 		<div class="form__btns">
 			<p-button type="button" (onClick)="showLogInForm()" class="form__button-log" label='Log in'/>
-			<button type="button" (click)="onSubmitRegistration()" [disabled]="registrationForm.invalid" class="form__button form__button-register">Register</button>
+			<p-button type="button" (click)="onSubmitRegistration()" [disabled]="registrationForm.invalid" class="form__button-register" [loading]='registerLoading' [label]="registerLoading ? '' : 'Register'"/>
 		</div>
 	</form>
 </p-dialog>

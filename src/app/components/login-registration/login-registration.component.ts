@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -32,11 +32,16 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 	logInForm: FormGroup = new FormGroup({});
 	registrationForm: FormGroup = new FormGroup({});
 	loading: boolean = false;
+	registerLoading: boolean = false;
 	isLoggedIn: boolean = false;
 	isInputFocused: boolean = false;
 	@ViewChild('passwordInput', { static: false }) passwordInput!: ElementRef;
 
-	constructor(private authService: AuthService, private store: Store, private messageService: MessageService, private headerComponent: MovieHeaderComponent) { 
+	constructor(
+		private authService: AuthService, 
+		private store: Store, 
+		private messageService: MessageService, 
+		private headerComponent: MovieHeaderComponent) { 
 		super();
 	}
 
@@ -98,7 +103,7 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 			}).catch(() => {
 				this.errorMessage = 'Please fill in all required fields.'
 				this.loading = false;
-            this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password for Firebase. Please try again.', life: 3000 });
+            this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
 			})
 		} else {
 			this.errorMessage = 'Please fill in all required fields.'
@@ -116,11 +121,17 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		if(this.registrationForm.valid) {
 			const enteredEmail = this.registrationForm.value['email'];
 			const enteredPassword = this.registrationForm.value['password'];
+			this.registerLoading = true;
 			this.authService.register(enteredEmail, enteredPassword).then(() =>{
+				this.registerLoading = false;
 				this.messageService.add({ severity: 'success', summary: 'Registration Successful', detail: 'You have successfully registered', life: 3000 });
 				this.showLogInForm();
 			}).catch(error => {
+				this.registerLoading = false;
 				this.errorMessage = `Registration failed: ${error.message}`
+				if(error.code = 'auth/email-already-in-use') {
+					this.errorMessage = 'This email address already exists. Please use another email address'
+				}
 			})
 		}
 	}
@@ -152,5 +163,33 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 		const confirmPassword = control.get('confirmPassword')?.value;
 
 		return password === confirmPassword ? null : {'mismatch': true}
+	}
+	logInWithGoogle(){
+		this.authService.loginWithGoogle().then(() =>{
+			this.visible = false;this.authService.authenticateAndGetAccountId().pipe(takeUntil(this.destroy$)).subscribe({
+				next: ({ accountId, sessionId }) => {
+					console.log('Login successful:', { accountId, sessionId });
+					this.authService.setAccountId(accountId);
+					this.authService.setSessionId(sessionId);
+					this.store.dispatch(loadFavoriteMovies());
+					this.store.dispatch(loadWatchList());
+					this.errorMessage = '';
+					this.loading = false;
+					setTimeout(()=>{
+						this.visible = false;
+					},500)
+					this.messageService.add({ severity: 'success',summary: 'Login Successful', detail: 'You have successfully logged in', life: 3000 });
+				},
+				error: (error) => {
+					console.error('Login failed:', error);
+					this.errorMessage = 'Invalid email or password. Please try again.';
+					this.loading = false;
+					this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
+				}
+			});
+		}).catch((error)=>{
+			console.error('Error to log in', error)
+			this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'There was an error to log in.', life: 3000 });
+		})
 	}
 }

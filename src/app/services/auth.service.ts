@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError } from "rxjs";
 import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
 	providedIn: 'root',
@@ -102,15 +104,21 @@ export class AuthService {
 	const sessionId = window.localStorage.getItem('session_id');
 	return !!sessionId;
   }
-  logOut(){
+  logOut(): Promise<void>{
 	localStorage.clear();
 	this.router.navigate(['/']);
 	this.loggedInSubject.next(false);
+	return this.auth.signOut().then(() =>{
+		console.log('logged out');
+	})
   }
   //FireBase===========================================================================
   register(email: string, password: string) {
 	return createUserWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
 		console.log('User is registered:', userCredential.user);
+	}).catch((error)=> {
+		console.log(error);
+		throw error;
 	})
   }
   login(email: string, password: string) {
@@ -123,5 +131,13 @@ export class AuthService {
 		throw error;
 	})
   }
+  loginWithGoogle(){
+	const provider = new GoogleAuthProvider();
+	return signInWithPopup(this.auth, provider).then(() =>{	
+		this.loggedInSubject.next(true);
+	}).catch((error) => {
+		console.error('Error within log in', error)
+	})
+}
 }
 

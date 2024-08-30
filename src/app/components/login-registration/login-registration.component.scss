@@ -87,16 +87,6 @@ body{
 			background-color: #4a4a4a;
 			color: #f2f2f2;
 		}
-		&-register{
-			background-color: #c3cfe8;
-			&:hover{
-				background-color: #98b0e2;
-			}
-			&:active{
-				background-color: #667caa;
-				color: #f2f2f2;
-			}
-		}
 		&-icons{
 			display: flex;
 			align-items: center;
@@ -137,6 +127,30 @@ body{
 		display: flex;
 		justify-content: end;
 	}
+ }
+ ::ng-deep .form__button-register > button{
+		font-family: 'Montserrat';
+		display: block;
+		padding: 10px;
+		font-size: 16px;
+		border-radius: 2rem;
+		cursor: pointer;
+		transition: all 0.2s ease-out;
+		background-color: #c3cfe8;
+		border: none;
+		margin: 0 0 0 0.5rem;
+		min-width: 103px;
+		span{
+			color: #000;
+			font-weight: 400;
+		}
+		&:hover{
+			background-color: #98b0e2;
+		}
+		&:active{
+			background-color: #667caa;
+			color: #f2f2f2;
+		}
  }
  ::ng-deep .form__button-log > button{
 	@extend .form__button;

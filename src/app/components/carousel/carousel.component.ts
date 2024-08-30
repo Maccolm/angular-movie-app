@@ -24,7 +24,6 @@ export class CarouselComponent extends ClearObservable implements OnInit {
 			if(data && data.backdrops){
 				this.images = data.backdrops.map((backdrop:any) => this.IMAGINE_PATH + backdrop.file_path);
 			}
-			console.log(this.images);
 		})
 		this.responsiveOptions = [
 			{
