@@ -1,0 +1,25 @@
+[debug] [2024-08-30T12:50:15.413Z] ----------------------------------------------------------------------
+[debug] [2024-08-30T12:50:15.415Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Vital\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-08-30T12:50:15.415Z] CLI Version:   13.15.4
+[debug] [2024-08-30T12:50:15.415Z] Platform:      win32
+[debug] [2024-08-30T12:50:15.415Z] Node Version:  v20.12.2
+[debug] [2024-08-30T12:50:15.415Z] Time:          Fri Aug 30 2024 14:50:15 GMT+0200 (Central European Summer Time)
+[debug] [2024-08-30T12:50:15.415Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-08-30T12:50:15.459Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-08-30T12:50:15.460Z] > authorizing via signed-in user (vitaliishapovalov0@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Vital\Documents\IT\angular-course\angular-movie-app
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
