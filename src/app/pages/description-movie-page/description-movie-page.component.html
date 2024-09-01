@@ -26,12 +26,12 @@
 					<p><span class="rating">Popularity:</span> {{movie.popularity}}</p>
 					<p><span class="rating">Budget:</span> {{movie.budget | budgetNumberFormat}}$</p>
 					<p><span class="rating">Country:</span> "{{this.countries}}"</p>
+					<p-toast/>
+					<p-confirmPopup/>
 					<div class="buttons">
 						@if(isInFavorite){
 							<p-button label="In Favorites" class="btn-list" icon="pi pi-heart-fill" iconPos="right" severity="success" [disabled]="true"/>
 						} @else {
-							<p-toast/>
-							<p-confirmPopup/>
 							<p-button (onClick)="addToFavorites($event)" label="Add To Favorites" [loading]="loadingFavorites"/>
 						}
 						@if(isInWatchList){

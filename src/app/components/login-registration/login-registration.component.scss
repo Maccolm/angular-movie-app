@@ -197,9 +197,7 @@ body{
 	}
 }
 ::ng-deep .p-dialog-content{
-	@media (max-height: 733px) {
 		overflow-y: auto;
-	}
 }
 .green{
 	color: green;

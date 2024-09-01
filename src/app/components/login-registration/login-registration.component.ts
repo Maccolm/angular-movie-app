@@ -29,6 +29,7 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 	visible: boolean = false;
 	isRegistrationVisible = false;
 	errorMessage: string = '';
+	registerErrorMessage: string = '';
 	logInForm: FormGroup = new FormGroup({});
 	registrationForm: FormGroup = new FormGroup({});
 	loading: boolean = false;
@@ -130,7 +131,7 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 				this.registerLoading = false;
 				this.errorMessage = `Registration failed: ${error.message}`
 				if(error.code = 'auth/email-already-in-use') {
-					this.errorMessage = 'This email address already exists. Please use another email address'
+					this.registerErrorMessage = 'This email address already exists. Please use another email address'
 				}
 			})
 		}

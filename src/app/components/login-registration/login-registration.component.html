@@ -64,9 +64,9 @@
 					}
 				</div>
 			}
-			@if(errorMessage){
+			@if(registerErrorMessage){
 				<div class="error-message">
-					<small>{{errorMessage}}</small>
+					<small>{{registerErrorMessage}}</small>
 				</div>
 			}
 		</div>
@@ -74,19 +74,6 @@
 			<label for="password">Password</label>
 			<p-password [toggleMask]="true" id="password" pInputText formControlName="password">
 				<input #passwordInput type="password">
-				<ng-template pTemplate="header">
-					<h4>Pick a password</h4>
-				</ng-template>
-				<ng-template pTemplate="footer">
-					<p-divider/>
-					<p>Suggestions</p>
-					<ul class="password-list">
-						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasLowerCase')}">At least one lowercase</li>
-						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasUpperCase')}">At least one uppercase</li>
-						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasNumeric')}">At least one numeric</li>
-						<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('minlength')}">Minimum 8 characters</li>
-					</ul>
-				</ng-template>
 			</p-password>
 			<div class="form__section-confirm">
 				<label for="confirmPassword">Confirm password</label>
@@ -104,6 +91,13 @@
 					<small>Password is required</small>
 				</div>
 			}
+			<p>Suggestions</p>
+			<ul class="password-list">
+				<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasLowerCase')}">At least one lowercase</li>
+				<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasUpperCase')}">At least one uppercase</li>
+				<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('hasNumeric')}">At least one numeric</li>
+				<li class="password-item" [ngClass]="{'green' : !registrationForm.get('password')?.hasError('minlength')}">Minimum 8 characters</li>
+			</ul>
 		</div>
 		<div class="form__btns">
 			<p-button type="button" (onClick)="showLogInForm()" class="form__button-log" label='Log in'/>
