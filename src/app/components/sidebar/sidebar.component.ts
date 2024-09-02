@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { MovieAsideMenuComponent } from '../aside-menu/aside-menu.component';
@@ -23,15 +23,22 @@ import { ConfirmationService } from 'primeng/api';
 ],
 providers: [ConfirmationService]
 })
-export class MovieSidebarComponent extends ClearObservable implements OnInit {
-  sidebarVisible: boolean = false;
-  isClosedButtonBar: boolean = false;
+export class MovieSidebarComponent extends ClearObservable {
+	sidebarVisible: boolean = false;
+	isClosedButtonBar: boolean = false;
 	constructor(){
 		super();
 	}
-	ngOnInit(): void {
 
+	@HostListener('document:click', ['$event'])
+	onDocumentClick(event: MouseEvent) {
+		const isClickedInside = (event.target as HTMLElement).closest('.custom-sidebar');
+		const clickedButton = (event.target as HTMLElement).closest('.bar-button');
+		if (!isClickedInside && !clickedButton && this.sidebarVisible) {
+			this.sidebarVisible = false;
+		}
 	}
+
   links = [
     { name: 'Now playing', url: 'now_playing' },
     { name: 'Popular', url: 'popular' },

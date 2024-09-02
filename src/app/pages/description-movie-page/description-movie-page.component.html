@@ -58,11 +58,18 @@
 		<div class="movie__desc movie__desc-detail">
 			<div class="media">
 				<h4 class="media__title">Media</h4>
-				<div class="media__carousel">
-					<app-carousel 
-					[id]="movieId"
-					></app-carousel>
-				</div>
+				<p-tabView>
+					<p-tabPanel header="Pictures">
+						<div class="media__carousel">
+							<app-carousel 
+							[id]="movieId"
+							></app-carousel>
+						</div>
+					</p-tabPanel>
+					<p-tabPanel header="Videos">
+						
+					</p-tabPanel>
+				</p-tabView>
 			</div>
 			<h3>Description</h3>
 			<p class="text">{{ movie.overview }}</p>

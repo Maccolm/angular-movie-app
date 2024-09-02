@@ -31,3 +31,7 @@
 			position: relative;
 		}
 }
+::ng-deep .gallery-img{
+	max-width: 850px;
+	width: 100%;
+}

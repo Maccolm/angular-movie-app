@@ -5,8 +5,21 @@
 [responsiveOptions]="responsiveOptions"
 >
 	<ng-template let-image pTemplate="item">
-		<div class="carousel__item">
+		<div class="carousel__item" (click)="displayPicture = true;">
 			<img [src]="image" alt="Media_picture" class="carousel__img">
 		</div>
 	</ng-template>
 </p-carousel>
+<p-galleria 
+	[value]="images"
+	[(visible)]="displayPicture"
+	[circular]="true"
+	[fullScreen]="true"
+	[showItemNavigators]="true"
+	[showThumbnails]="false"
+	>
+	<ng-template let-item pTemplate="item">
+		<img [src]="item" alt="Media_picture" class="gallery-img">
+	</ng-template>
+
+</p-galleria>

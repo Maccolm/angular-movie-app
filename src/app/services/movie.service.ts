@@ -44,6 +44,9 @@ export class MovieService {
 	getMovieMedia(id: number){
 		return this.httpClient.get<any>(`${this.apiUrl}/${id}/images?${this.apiKey}`)
 	}
+	getVideosById(id: number){
+		return this.httpClient.get<any>(`${this.apiUrl}/${id}/videos?${this.apiKey}`)
+	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
 		this.accountId = this.auth.getPublicAccountId();

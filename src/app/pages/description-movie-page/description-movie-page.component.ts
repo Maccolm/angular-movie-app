@@ -17,11 +17,13 @@ import { AuthService } from '../../services/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { Video } from '../../models/movie.models';
+import { TabViewModule } from 'primeng/tabview';
 
 @Component({
 	selector: 'app-movie-description-page',
 	standalone: true,
-	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent, ToastModule, ConfirmPopupModule,],
+	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent, ToastModule, ConfirmPopupModule, TabViewModule],
 	templateUrl: './description-movie-page.component.html',
 	styleUrl: './description-movie-page.component.scss',
 	providers: [ConfirmationService, MessageService]
@@ -32,6 +34,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	@Input() isInFavorite: boolean = false;
 
 	public movie: any;
+	public videos: Video[] = [];
 	public movieId!: number;
 	public displayDialog: boolean = false;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
@@ -76,6 +79,9 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 				})
 			}
 		});
+		this.movieService.getVideosById(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(videos => {
+			this.videos = videos.results;
+		})
 		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
 			this.isLoggedIn = isLoggedIn;
 		})

@@ -3,11 +3,12 @@ import { CarouselModule } from 'primeng/carousel';
 import { MovieService } from '../../services/movie.service';
 import { ClearObservable } from '../../directives/clearObservable';
 import { takeUntil } from 'rxjs';
+import { GalleriaModule } from 'primeng/galleria';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [CarouselModule],
+  imports: [CarouselModule, GalleriaModule],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss'
 })
@@ -15,6 +16,7 @@ export class CarouselComponent extends ClearObservable implements OnInit {
 	@Input() id!: number;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
 	public images: string[] = [];
+	public displayPicture: boolean = false;
 	responsiveOptions: any[] | undefined;
 	constructor(private movieService: MovieService){
 		super();
