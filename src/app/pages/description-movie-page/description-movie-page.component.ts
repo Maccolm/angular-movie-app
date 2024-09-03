@@ -44,6 +44,8 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	public companies!: string[];
 	public website!: string;
 	public isLoggedIn: boolean = false;
+	public picturesCategory: string = 'pictures';
+	public videosCategory: string = 'videos';
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 	ratingPercentage: number = 0;

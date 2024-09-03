@@ -62,12 +62,17 @@
 					<p-tabPanel header="Pictures">
 						<div class="media__carousel">
 							<app-carousel 
-							[id]="movieId"
+								[id]="movieId"
+								[category]="picturesCategory"
 							></app-carousel>
 						</div>
 					</p-tabPanel>
 					<p-tabPanel header="Videos">
-						
+						<app-carousel
+							[id]="movieId"
+							[category]="videosCategory"
+						>
+						</app-carousel>
 					</p-tabPanel>
 				</p-tabView>
 			</div>
