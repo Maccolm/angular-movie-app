@@ -11,29 +11,11 @@
 		}
 	</div>
 	@if(movies){
-	<div class="carousel__wrapper">
-		<h2 class="carousel__title">Top movies for a week</h2>
-		<p-carousel
-			[value]="movies"
-			[numVisible]="7"
-			[circular] = "true"
-			autoplayInterval="4000"
-			[responsiveOptions]="responsiveOptions"
-		>
-			<ng-template let-movie pTemplate="item">
-				<div class="trending__item">
-					<div class="trending__img">
-						<a (click)="navigateWithData(movie.id)">
-							<img [src]="BACKDROP_PATH + movie.poster_path" alt="backdrop_img">
-						</a>
-					</div>
-					<div class="trending__title">
-						<p>{{movie.title}}</p>
-					</div>
-				</div>
-			</ng-template>
-		</p-carousel>
-	</div>
+		<app-carousel-movie-list 
+			[movies]="movies"
+			[autoplay]="4000"
+			[title]="carousel__title"
+		/>
 }
 	<div class="blur__back">
 		<img class="bg-img" [src]="IMAGINE_PATH" alt="{{imgTitle}}">

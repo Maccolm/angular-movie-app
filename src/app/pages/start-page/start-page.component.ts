@@ -1,19 +1,18 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { CarouselModule } from 'primeng/carousel';
+import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ClearObservable } from '../../directives/clearObservable';
 import { takeUntil } from 'rxjs';
 import { Movie } from '../../models/movie.models';
 import { Store } from '@ngrx/store';
 import { selectTrendingMovies } from '../../store/selectors';
+import { CarouselMovieListComponent } from '../../components/carousel-movie-list/carousel-movie-list.component';
 
 @Component({
   selector: 'app-start-page',
   standalone: true,
-  imports: [RouterModule, CarouselModule],
+  imports: [RouterModule, CarouselMovieListComponent],
   templateUrl: './start-page.component.html',
   styleUrl: './start-page.component.scss',
-//   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StartPageComponent extends ClearObservable implements OnInit{
 	IMAGINE_PATH = '../../../assets/img/background/poster_bg.jpeg';
@@ -21,42 +20,15 @@ export class StartPageComponent extends ClearObservable implements OnInit{
 	imgTitle = 'Background';
 	movies: Movie[] | undefined;
 	responsiveOptions: any[] | undefined;
-	constructor(private store: Store, private router: Router){
+	carousel__title: string = 'Top movies for a week'
+	constructor(private store: Store){
 		super();
 	}
 	ngOnInit(): void {
 		this.store.select(selectTrendingMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
 			this.movies = movies?.results;
 		})
-		this.responsiveOptions = [
-			{
-				breakpoint: "1210px",
-				numVisible: 5,
-				numScroll: 1
-			},
-			{
-				breakpoint: "798px",
-				numVisible: 3,
-				numScroll: 1
-			},
-			{
-				breakpoint: "554px",
-				numVisible: 2,
-				numScroll: 1
-
-			},
-			{
-				breakpoint: "424px",
-				numVisible: 1,
-				numScroll: 1
-			}
-		]
 	}
-	navigateWithData(movieId: number) {
-		const id = movieId;
-		this.router.navigate(['/movie', id]);
-	}
-	
 	links = [
 		{
 		  name: 'Now playing',

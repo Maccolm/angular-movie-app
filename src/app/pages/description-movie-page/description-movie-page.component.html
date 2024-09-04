@@ -82,6 +82,12 @@
 		<div class="blur__back blur__side">
 			<img class="bg-img" [src]="IMAGINE_PATH + movie.backdrop_path" alt="{{movie.title}}">
 		</div>
+		<div class="similar-movies-container">
+			<app-carousel-movie-list 
+				[movies]="similarMovies"
+				[title]="carousel__title"
+			/>
+		</div>
 	</p-card>
 }
 @if(!movie){
