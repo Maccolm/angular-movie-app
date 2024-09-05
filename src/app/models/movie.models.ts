@@ -68,6 +68,40 @@ export interface Video {
 	published_at: string,
 	id: string
 }
+export interface ReviewsApi {
+	id: number,
+	page: number,
+	results: [
+	  {
+		 author: string,
+		 author_details: {
+			name: string,
+			username: string,
+			avatar_path: string,
+			rating: 8
+		 },
+		 content: string,
+		 created_at: string,
+		 id: string,
+		 updated_at: string,
+		 url: string
+	  },
+	]
+}
+export interface Reviews {
+	author: string,
+	author_details: {
+	  name: string,
+	  username: string,
+	  avatar_path: string,
+	  rating: 8
+	},
+	content: string,
+	created_at: string,
+	id: string,
+	updated_at: string,
+	url: string
+}
 export enum MovieQuality {
 	SD,
 	HD,

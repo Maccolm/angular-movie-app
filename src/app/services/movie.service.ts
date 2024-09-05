@@ -6,7 +6,7 @@ import {
 	Observable,
 	throwError,
 } from 'rxjs';
-import { ApiMovieModel, DetailsMovie, Movie } from '../models/movie.models';
+import { ApiMovieModel, DetailsMovie, Movie, ReviewsApi } from '../models/movie.models';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -49,6 +49,9 @@ export class MovieService {
 	}
 	getSimilarMovies(id: number){
 		return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/${id}/similar?page=1&${this.apiKey}`)
+	}
+	getReviewsOnMovie(movieId: number, page: number = 1){
+		return this.httpClient.get<ReviewsApi>(`${this.apiUrl}/${movieId}/reviews?page=${page}&${this.apiKey}`)
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {

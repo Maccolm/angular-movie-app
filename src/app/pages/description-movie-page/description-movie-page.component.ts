@@ -20,11 +20,25 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { Movie, Video } from '../../models/movie.models';
 import { TabViewModule } from 'primeng/tabview';
 import { CarouselMovieListComponent } from '../../components/carousel-movie-list/carousel-movie-list.component';
+import { ReviewsOnMovieComponent } from '../../components/reviews-on-movie/reviews-on-movie.component';
 
 @Component({
 	selector: 'app-movie-description-page',
 	standalone: true,
-	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent, ToastModule, ConfirmPopupModule, TabViewModule, CarouselMovieListComponent],
+	imports: [
+		CardModule, 
+		NumberDurationFormatPipe, 
+		BudgetNumberFormatPipe, 
+		DividerModule, 
+		ButtonModule, 
+		CarouselModule, 
+		CarouselComponent, 
+		ToastModule, 
+		ConfirmPopupModule, 
+		TabViewModule, 
+		CarouselMovieListComponent, 
+		ReviewsOnMovieComponent
+	],
 	templateUrl: './description-movie-page.component.html',
 	styleUrl: './description-movie-page.component.scss',
 	providers: [ConfirmationService, MessageService]
