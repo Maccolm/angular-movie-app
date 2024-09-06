@@ -1,5 +1,4 @@
 .reviews {
-
 	&__title {
 		padding-left: 10px;
 		margin: 0 0 3rem 0;
@@ -22,8 +21,10 @@
 		&:nth-child(odd){
 			background-color: #fafafa;
 		}
+		@media screen and (max-width: 600px) {
+			display: block;
+		}
 	}
-	&__avatar {}
 	&__content {
 		p{
 			margin-top: 0;
@@ -36,8 +37,21 @@
 	}
  }
  .content-review {
-	&__header {}
-	&__body {}
-	&__footer {}
+	&__body{
+		color: #000000;
+		line-height: 1.7;
+	}
+	&__button{
+		margin-bottom: 2rem;
+		background: none;
+		border: none;
+		padding: 0;
+		text-decoration: underline;
+		cursor: pointer;
+		transition: color 0.3s ease 0s;
+		&:hover{
+			color: rgb(138, 138, 138);
+		}
+	}
  }
  

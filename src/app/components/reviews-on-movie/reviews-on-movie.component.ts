@@ -7,17 +7,19 @@ import { AvatarModule } from 'primeng/avatar';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { TransformDatePipe } from '../../pipes/transformDate/transform-date.pipe';
+import { LimitedSymbolsPipe } from "../../pipes/limitedSymbols/limited-symbols.pipe";
 
 @Component({
   selector: 'app-reviews-on-movie',
   standalone: true,
-  imports: [AvatarModule, RatingModule, FormsModule, TransformDatePipe],
+  imports: [AvatarModule, RatingModule, FormsModule, TransformDatePipe, LimitedSymbolsPipe],
   templateUrl: './reviews-on-movie.component.html',
   styleUrl: './reviews-on-movie.component.scss'
 })
 export class ReviewsOnMovieComponent extends ClearObservable implements OnInit, OnChanges {
 	@Input() movieId!: number;
 	public reviews: Reviews[] = [];
+	public expanded: boolean[] = [];
 	public page!: number;
 	public img_path: string = 'https://image.tmdb.org/t/p/w500/';
 	constructor(private movieService: MovieService){
@@ -36,5 +38,8 @@ export class ReviewsOnMovieComponent extends ClearObservable implements OnInit, 
 			this.reviews = reviews.results;
 			this.page = reviews.page;
 		})
+	}
+	toggleExpand(index: number){
+		this.expanded[index] = !this.expanded[index];
 	}
 }
