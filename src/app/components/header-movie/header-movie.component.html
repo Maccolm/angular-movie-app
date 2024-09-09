@@ -16,15 +16,6 @@
 				<p>Watch list</p>
 			</a>
 		} @else {
-			<p-toast />
-        <p-confirmPopup>
-			<ng-template pTemplate="content" let-message>
-				<div class="">
-					<i [class]="message.icon" class=""></i>
-					<p>{{ message.message }}</p>
-				</div>
-			</ng-template>
-		  </p-confirmPopup>
 			<a class="favorites header__item" (click)="tryAccessWithoutAuthorization($event)">
 				<i class="pi pi-heart-fill"></i>
 				<p>Favorites</p>
@@ -91,4 +82,13 @@
 			<app-login-registration></app-login-registration>
 		</div>
 	</div>
+	<p-toast />
+	<p-confirmPopup>
+	 <ng-template pTemplate="content" let-message>
+		 <div class="">
+			 <i [class]="message.icon" class=""></i>
+			 <p>{{ message.message }}</p>
+		 </div>
+	 </ng-template>
+	</p-confirmPopup>
 </div>
