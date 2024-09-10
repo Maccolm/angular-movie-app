@@ -1,0 +1,55 @@
+::ng-deep .filter{
+	&__button > button {
+		padding-left: 14px;
+		text-align: left;
+		background: none;
+		width: 100%;
+		border: none;
+		color: #545454;
+		font-family: "Montserrat";
+		transition: all 0.3s ease-out;
+		span{
+			font-size: 18px;
+			font-weight: 400;
+			&:before{
+				//icon
+				font-size: 23px;
+			}
+		}
+		&:hover{
+			background-color: rgb(216, 216, 216);
+		}	
+	}
+	&__button-cancel > button {
+		width: auto;
+		margin-right: 10px;
+	}
+	&__button-submit > button{
+		width: auto;
+		background-color: #e6edfc;
+		&:hover{
+			background-color: rgb(165, 179, 216);
+		}	
+	}
+	&__year{
+		margin-bottom: 20px;
+		.p-dropdown-label {
+			width: 130px;
+		}
+	}
+	&__actions{
+		padding-top: 10px;
+	}
+}
+.form-genres {
+	max-width: 500px;
+	display: flex;
+	column-gap: 2rem;
+	row-gap: 1rem;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+	&__item {
+		width: 135px;
+	}
+ }
+ 
