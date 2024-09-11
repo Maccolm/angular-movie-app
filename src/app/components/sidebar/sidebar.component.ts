@@ -7,6 +7,7 @@ import { SortingComponent } from '../sorting/sorting.component';
 import { SearchResultsPageComponent } from "../../pages/search-results-page/search-results-page.component";
 import { ClearObservable } from '../../directives/clearObservable';
 import { ConfirmationService } from 'primeng/api';
+import { FiltersMovieComponent } from '../filters-movie/filters-movie.component';
 @Component({
   selector: 'app-movie-sidebar',
   standalone: true,
@@ -20,6 +21,7 @@ import { ConfirmationService } from 'primeng/api';
     RouterModule,
     SortingComponent,
     SearchResultsPageComponent,
+	 FiltersMovieComponent
 ],
 providers: [ConfirmationService]
 })
@@ -39,10 +41,30 @@ export class MovieSidebarComponent extends ClearObservable {
 		}
 	}
 
-  links = [
-    { name: 'Now playing', url: 'now_playing' },
-    { name: 'Popular', url: 'popular' },
-    { name: 'Top Rate', url: 'top_rated' },
-    { name: 'Upcoming', url: 'upcoming' },
-  ];
+	links = [
+		{
+		  name: 'Now playing',
+		  url: 'now_playing',
+		  icon: 'pi pi-play-circle',
+		  color: 'color: rgb(89, 133, 92)',
+		},
+		{
+		  name: 'Popular',
+		  url: 'popular',
+		  icon: 'pi pi-chart-line',
+		  color: 'color: rgb(236, 200, 90)',
+		},
+		{
+		  name: 'Top rate',
+		  url: 'top_rated',
+		  icon: 'pi pi-star-fill',
+		  color: 'color: rgb(255, 140, 68)',
+		},
+		{
+		  name: 'Upcoming',
+		  url: 'upcoming',
+		  icon: 'pi pi-calendar-clock',
+		  color: 'color: rgb(89, 110, 133)',
+		},
+	 ];
 }

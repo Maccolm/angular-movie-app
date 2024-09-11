@@ -1,9 +1,11 @@
 ::ng-deep .filter{
 	&__button > button {
+		height: 44px !important;
 		padding-left: 14px;
 		text-align: left;
 		background: none;
-		width: 100%;
+		width: 100% !important;
+		border-radius: 0 !important;
 		border: none;
 		color: #545454;
 		font-family: "Montserrat";
@@ -17,18 +19,20 @@
 			}
 		}
 		&:hover{
-			background-color: rgb(216, 216, 216);
+			background-color: rgb(216, 216, 216) !important;
 		}	
 	}
 	&__button-cancel > button {
-		width: auto;
+		width: auto !important;
 		margin-right: 10px;
+		border-radius: 10px !important;
 	}
 	&__button-submit > button{
-		width: auto;
+		width: auto !important;
 		background-color: #e6edfc;
+		border-radius: 10px !important;
 		&:hover{
-			background-color: rgb(165, 179, 216);
+			background-color: rgb(165, 179, 216) !important;
 		}	
 	}
 	&__year{
@@ -52,4 +56,6 @@
 		width: 135px;
 	}
  }
- 
+ .filter__button{
+	padding: 5px 0;
+ }

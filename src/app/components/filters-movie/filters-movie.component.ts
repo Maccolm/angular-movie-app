@@ -10,7 +10,7 @@ import { CheckboxModule } from 'primeng/checkbox';
   standalone: true,
   imports: [OverlayPanelModule, ButtonModule, ReactiveFormsModule, DropdownModule, CheckboxModule],
   templateUrl: './filters-movie.component.html',
-  styleUrl: './filters-movie.component.scss'
+  styleUrl: './filters-movie.component.scss',
 })
 export class FiltersMovieComponent implements OnInit {
 	years: { label: string, value: number | null }[] = [];
