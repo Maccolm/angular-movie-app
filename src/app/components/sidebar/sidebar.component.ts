@@ -36,7 +36,8 @@ export class MovieSidebarComponent extends ClearObservable {
 	onDocumentClick(event: MouseEvent) {
 		const isClickedInside = (event.target as HTMLElement).closest('.custom-sidebar');
 		const clickedButton = (event.target as HTMLElement).closest('.bar-button');
-		if (!isClickedInside && !clickedButton && this.sidebarVisible) {
+		const filterPanel = (event.target as HTMLElement).closest('.p-overlaypanel');
+		if (!isClickedInside && !clickedButton && this.sidebarVisible && !filterPanel) {
 			this.sidebarVisible = false;
 		}
 	}

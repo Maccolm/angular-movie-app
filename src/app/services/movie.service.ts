@@ -53,6 +53,10 @@ export class MovieService {
 	getReviewsOnMovie(movieId: number, page: number = 1){
 		return this.httpClient.get<ReviewsApi>(`${this.apiUrl}/${movieId}/reviews?page=${page}&${this.apiKey}`)
 	}
+	getFilteredMovies(genres: number[], year: number, page: number = 1) {
+		const apiGenres = genres.join('%2C');
+		return this.httpClient.get<ApiMovieModel>(`${this.baseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${apiGenres}&year=${year}&${this.apiKey}`)
+	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
 		this.accountId = this.auth.getPublicAccountId();

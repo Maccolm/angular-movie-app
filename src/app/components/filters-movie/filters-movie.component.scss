@@ -36,26 +36,47 @@
 		}	
 	}
 	&__year{
-		margin-bottom: 20px;
 		.p-dropdown-label {
-			width: 130px;
+			width: 125px;
 		}
-	}
-	&__actions{
-		padding-top: 10px;
 	}
 }
 .form-genres {
-	max-width: 500px;
+	max-width: 440px;
 	display: flex;
 	column-gap: 2rem;
 	row-gap: 1rem;
 	flex-wrap: wrap;
 	margin-bottom: 15px;
 	&__item {
-		width: 135px;
+		width: 125px;
 	}
  }
  .filter__button{
 	padding: 5px 0;
  }
+ .form {
+	&__footer{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 20px;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+ }
+ @media screen and (max-width: 515px) {
+	.form{
+		width: 280px;
+	}
+}
+ @media screen and (max-width: 330px) {
+	.form-genres{
+		&__item{
+			width: 120px;
+		}
+	}
+	.form{
+		width: 270px;
+	}
+}

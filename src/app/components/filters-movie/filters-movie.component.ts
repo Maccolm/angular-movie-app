@@ -4,6 +4,9 @@ import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MovieService } from '../../services/movie.service';
+import { ClearObservable } from '../../directives/clearObservable';
+import { takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-filters-movie',
@@ -12,12 +15,14 @@ import { CheckboxModule } from 'primeng/checkbox';
   templateUrl: './filters-movie.component.html',
   styleUrl: './filters-movie.component.scss',
 })
-export class FiltersMovieComponent implements OnInit {
+export class FiltersMovieComponent extends ClearObservable implements OnInit {
 	years: { label: string, value: number | null }[] = [];
 	genres: { id: number, name: string }[] = [];
 	form: FormGroup = new FormGroup({});
 
-	
+	constructor(private movieService: MovieService) {
+		super();
+	}
 	ngOnInit(): void {
 		this.generateYears();
 		this.genres = [
@@ -30,7 +35,8 @@ export class FiltersMovieComponent implements OnInit {
 			{ id: 18, name: 'Drama' },
 			{ id: 10751, name: 'Family' },
 			{ id: 14, name: 'Fantasy' },
-			{ id: 36, name: 'History' }
+			{ id: 36, name: 'History' },
+			{ id: 828, name: 'Science Fiction' }
 		 ];
 		this.form = new FormGroup({
 			year: new FormControl(null),
@@ -59,9 +65,12 @@ export class FiltersMovieComponent implements OnInit {
 	onSubmit(){
 		const selectedGenres = this.form.value.genres
 		.map((checked: boolean, i: number) => checked ? this.genres[i].id : null)
-		.filter((v: number | null) => v !== null)
-		console.log(this.form.value.year);
-		console.log(selectedGenres);
-		
+		.filter((v: number | null) => v !== null);
+		const selectedYear = this.form.value.year;
+
+		this.movieService.getFilteredMovies(selectedGenres, selectedYear).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			console.log(movies.results);
+			
+		})
 	}
 }
