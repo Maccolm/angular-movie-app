@@ -11,5 +11,6 @@ export const routes: Routes = [
 	{path: 'watch-list', loadComponent: () => import('./pages/movie-watchList-page/movie-watchlist-page.component').then(m => m.MovieWatchListPageComponent)},
 	{path: 'movie/:id', loadComponent: () => import('./pages/description-movie-page/description-movie-page.component').then(m => m.MovieDescriptionComponent)},
 	{path: 'search_results', loadComponent: () => import('./pages/search-results-page/search-results-page.component').then(m => m.SearchResultsPageComponent)},
-	{path: 'sorting', loadComponent: () => import('./pages/sorted-movie-page/sorted-movie-page.component').then(m => m.SortedMoviePageComponent)}
+	{path: 'sorting', loadComponent: () => import('./pages/sorted-movie-page/sorted-movie-page.component').then(m => m.SortedMoviePageComponent)},
+	{path: 'filteredMovies', loadComponent: () => import('./pages/filtered-movies-page/filtered-movies-page.component').then(m => m.FilteredMoviesPageComponent)}
 ];

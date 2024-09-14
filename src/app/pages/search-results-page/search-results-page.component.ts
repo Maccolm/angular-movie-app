@@ -56,7 +56,6 @@ export class SearchResultsPageComponent extends ClearObservable implements OnIni
 			if (event instanceof NavigationStart && event.url !== this.router.url) {
 				localStorage.removeItem('searchQuery');
 				localStorage.removeItem('currentPage');
-
 			}
 		});
 	}

@@ -4,9 +4,8 @@ import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
-import { MovieService } from '../../services/movie.service';
 import { ClearObservable } from '../../directives/clearObservable';
-import { takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filters-movie',
@@ -20,7 +19,7 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 	genres: { id: number, name: string }[] = [];
 	form: FormGroup = new FormGroup({});
 
-	constructor(private movieService: MovieService) {
+	constructor(private router: Router) {
 		super();
 	}
 	ngOnInit(): void {
@@ -68,9 +67,9 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 		.filter((v: number | null) => v !== null);
 		const selectedYear = this.form.value.year;
 
-		this.movieService.getFilteredMovies(selectedGenres, selectedYear).pipe(takeUntil(this.destroy$)).subscribe(movies => {
-			console.log(movies.results);
-			
-		})
+		localStorage.setItem('selectedGenres', selectedGenres);
+		localStorage.setItem('selectedYear', selectedYear.value);
+		
+		this.router.navigate(['filteredMovies']);
 	}
 }
