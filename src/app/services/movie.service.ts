@@ -53,9 +53,16 @@ export class MovieService {
 	getReviewsOnMovie(movieId: number, page: number = 1){
 		return this.httpClient.get<ReviewsApi>(`${this.apiUrl}/${movieId}/reviews?page=${page}&${this.apiKey}`)
 	}
-	getFilteredMovies(genres: number[], year: number, page: number = 1) {
-		const apiGenres = genres.join('%2C');
-		return this.httpClient.get<ApiMovieModel>(`${this.baseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${apiGenres}&year=${year}&${this.apiKey}`)
+	getFilteredMovies(genres: number[] | null, year: number | null, page: number = 1) {
+		let url = `${this.baseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
+		if(genres) {
+			const apiGenres = genres.join('%2C');
+			url +=`&with_genres=${apiGenres}`
+		};
+		if(year) {
+			url +=`&primary_release_year=${year}`
+		}
+		return this.httpClient.get<ApiMovieModel>(`${url}&${this.apiKey}`);
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {

@@ -6,6 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ClearObservable } from '../../directives/clearObservable';
 import { Router } from '@angular/router';
+import { FilterService } from '../../services/filter.service';
 
 @Component({
   selector: 'app-filters-movie',
@@ -19,7 +20,7 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 	genres: { id: number, name: string }[] = [];
 	form: FormGroup = new FormGroup({});
 
-	constructor(private router: Router) {
+	constructor(private router: Router, private filterService: FilterService) {
 		super();
 	}
 	ngOnInit(): void {
@@ -35,7 +36,9 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 			{ id: 10751, name: 'Family' },
 			{ id: 14, name: 'Fantasy' },
 			{ id: 36, name: 'History' },
-			{ id: 828, name: 'Science Fiction' }
+			{ id: 27, name: 'Horror' },
+			{ id: 53, name: 'Thriller' },
+			{ id: 878, name: 'Science Fiction' }
 		 ];
 		this.form = new FormGroup({
 			year: new FormControl(null),
@@ -66,10 +69,20 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 		.map((checked: boolean, i: number) => checked ? this.genres[i].id : null)
 		.filter((v: number | null) => v !== null);
 		const selectedYear = this.form.value.year;
-
-		localStorage.setItem('selectedGenres', selectedGenres);
-		localStorage.setItem('selectedYear', selectedYear.value);
+		console.log(selectedYear);
 		
+		if(selectedGenres.length < 1){
+			localStorage.removeItem('selectedGenres');
+		} else {
+			localStorage.setItem('selectedGenres', selectedGenres);
+		}
+		if(!selectedYear || selectedYear.value === null) {
+			localStorage.removeItem('selectedYear')
+			this.filterService.setFilters({genres: selectedGenres});
+		} else {
+			localStorage.setItem('selectedYear', selectedYear.value.toString());
+			this.filterService.setFilters({genres: selectedGenres, year: selectedYear.value});
+		}
 		this.router.navigate(['filteredMovies']);
 	}
 }
