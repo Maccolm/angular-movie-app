@@ -1,35 +1,31 @@
 <h1>We found "{{totalResults}}" filtered movies</h1>
-@if(movies.length < 1) {
-	<div class="movie-list">
-		@for(movie of getSkeletonArray(); track skeletonCards){
-			<div class="movie__card" style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgb(214, 214, 214); border-radius: 12px; padding: 25px 25px 5px 20px;">
-				<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1rem;">
-					 <p-skeleton width="5.5rem" height="9rem"/>
-					 <div style="display: flex; flex-direction: column; gap: 15px; max-width: 16rem; width: 100%;">
-						  <p-skeleton width="100%"  height="1.8rem" />
-						  <p-skeleton width="10rem" styleClass="mb-2" />
-						  <p-skeleton height="1rem" />
-					 </div>
-				</div>
-				<div style="display: flex; flex-direction: column; gap: 1rem;">
-					<p-skeleton width="100%" height="55px" />
-					<p-skeleton width="8rem" height="2.5rem" />
-				</div>
-				<div style="margin: 12px 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;">
-					<div style="display: flex; gap: 1rem;">
-						<p-skeleton width="5rem" height="2rem" />
-						<p-skeleton width="5rem" height="2rem" />
-					</div>
-					 <p-skeleton width="12rem" height="2rem" />
-				</div>
-			</div>
-		}
-	</div>
-}
-@if(movies.length >= 1){
 	<div class="movie-list">
 		@for(movie of movies; track movies) {
 			<app-movie-card [data]="movie" style="display: block; max-width: 430px; width: 100%"></app-movie-card>
+		} @empty {
+			@for(movie of getSkeletonArray(); track skeletonCards){
+				<div class="movie__card" style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgb(214, 214, 214); border-radius: 12px; padding: 25px 25px 5px 20px;">
+					<div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 1rem;">
+						 <p-skeleton width="5.5rem" height="9rem"/>
+						 <div style="display: flex; flex-direction: column; gap: 15px; max-width: 16rem; width: 100%;">
+							  <p-skeleton width="100%"  height="1.8rem" />
+							  <p-skeleton width="10rem" styleClass="mb-2" />
+							  <p-skeleton height="1rem" />
+						 </div>
+					</div>
+					<div style="display: flex; flex-direction: column; gap: 1rem;">
+						<p-skeleton width="100%" height="55px" />
+						<p-skeleton width="8rem" height="2.5rem" />
+					</div>
+					<div style="margin: 12px 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;">
+						<div style="display: flex; gap: 1rem;">
+							<p-skeleton width="5rem" height="2rem" />
+							<p-skeleton width="5rem" height="2rem" />
+						</div>
+						 <p-skeleton width="12rem" height="2rem" />
+					</div>
+				</div>
+			}
 		}
 	</div>
 	@if(currentPage && totalPages) {
@@ -52,4 +48,3 @@
 			}
 		</div>
 	}
-}

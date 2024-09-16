@@ -35,7 +35,8 @@ export class AppComponent extends ClearObservable implements OnInit {
 		this.store.dispatch(loadTrendingMovies());
 		const login = window.localStorage.getItem('login');
 		const password = window.localStorage.getItem('password');
-		if (login && password) {
+		const isLoggedInWithGoogle = window.localStorage.getItem('loggedWithGoogle') === 'true';
+		if (login && password || isLoggedInWithGoogle) {
 			this.authService.authenticateAndGetAccountId().pipe(takeUntil(this.destroy$)).subscribe(data => {
 				const { accountId, sessionId } = data;
 				this.authService.setAccountId(accountId);

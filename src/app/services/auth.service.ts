@@ -22,8 +22,6 @@ export class AuthService {
 	private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn())
 	isLoggedIn$ = this.loggedInSubject.asObservable();
 	
-
-
 	constructor(private http: HttpClient, private router: Router, private auth: Auth) { 
 	}
 	setAccountId(accountId: number): void {
@@ -110,6 +108,7 @@ export class AuthService {
 	this.loggedInSubject.next(false);
 	return this.auth.signOut().then(() =>{
 		console.log('logged out');
+		localStorage.clear();
 	})
   }
   //FireBase===========================================================================
@@ -135,9 +134,10 @@ export class AuthService {
 	const provider = new GoogleAuthProvider();
 	return signInWithPopup(this.auth, provider).then(() =>{	
 		this.loggedInSubject.next(true);
+		localStorage.setItem('loggedWithGoogle', 'true');
 	}).catch((error) => {
 		console.error('Error within log in', error)
 	})
-}
+	}
 }
 
