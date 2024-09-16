@@ -1,5 +1,5 @@
-<p-button label="Filters" (onClick)="filter.toggle($event)" icon="pi pi-filter" iconPos="left" class="filter__button"/>
-<p-overlayPanel #filter [showCloseIcon]="true">
+<p-button label="Filters" (onClick)="showDialog()" icon="pi pi-filter" iconPos="left" class="filter__button"/>
+<p-dialog header="Filters" [(visible)]="visible" [modal]="true" >
 	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
 		<div class="form-genres">
 			@for(genreControl of getGenresControls(); let i = $index; track genres){
@@ -14,6 +14,7 @@
 		</div>
 		<div class="form__footer">
 			<p-dropdown
+				appendTo="body"
 				formControlName="year"
 				[options]="years"
 				optionLabel="label"
@@ -21,9 +22,9 @@
 				class="filter__year"
 			/>
 			<div class="filter__actions">
-				<p-button label="Cancel" (onClick)="filter.toggle($event)" class="filter__button filter__button-cancel"/>
+				<p-button label="Cancel" (onClick)="closeDialog()" class="filter__button filter__button-cancel"/>
 				<p-button label="Apply" type="submit" class="filter__button filter__button-submit"/>
 			</div>
 		</div>
 	</form>
-</p-overlayPanel>
+</p-dialog>

@@ -15,3 +15,26 @@
 h1{
 	font-weight: 500;
 }
+//pagination==============================================
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	padding: 20px;
+	gap: 5px;
+	&__button {
+		background-color: transparent;
+		border: none;
+		border-radius: 50%;
+		transition: all 0.3s ease-out 0s;
+		cursor: pointer;
+		height: 30px;
+		width: 30px;
+		&:hover{
+			background-color: rgb(167, 167, 167);
+		}
+		> .pi{
+			font-size: 14px !important;
+		}
+	}
+ }

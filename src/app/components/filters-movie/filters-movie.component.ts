@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ClearObservable } from '../../directives/clearObservable';
 import { Router } from '@angular/router';
 import { FilterService } from '../../services/filter.service';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-filters-movie',
   standalone: true,
-  imports: [OverlayPanelModule, ButtonModule, ReactiveFormsModule, DropdownModule, CheckboxModule],
+  imports: [ ButtonModule, ReactiveFormsModule, DropdownModule, CheckboxModule, DialogModule],
   templateUrl: './filters-movie.component.html',
   styleUrl: './filters-movie.component.scss',
 })
 export class FiltersMovieComponent extends ClearObservable implements OnInit {
+	visible: boolean = false;
 	years: { label: string, value: number | null }[] = [];
 	genres: { id: number, name: string }[] = [];
 	form: FormGroup = new FormGroup({});
@@ -33,12 +34,15 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 			{ id: 80, name: 'Crime' },
 			{ id: 99, name: 'Documentary' },
 			{ id: 18, name: 'Drama' },
+			{ id: 10749, name: 'Romance' },
 			{ id: 10751, name: 'Family' },
 			{ id: 14, name: 'Fantasy' },
 			{ id: 36, name: 'History' },
 			{ id: 27, name: 'Horror' },
+			{ id: 9648, name: 'Mystery' },
 			{ id: 53, name: 'Thriller' },
-			{ id: 878, name: 'Science Fiction' }
+			{ id: 878, name: 'Science Fiction' },
+			{ id: 37, name: 'Western' },
 		 ];
 		this.form = new FormGroup({
 			year: new FormControl(null),
@@ -78,11 +82,18 @@ export class FiltersMovieComponent extends ClearObservable implements OnInit {
 		}
 		if(!selectedYear || selectedYear.value === null) {
 			localStorage.removeItem('selectedYear')
-			this.filterService.setFilters({genres: selectedGenres});
+			this.filterService.setFilters({genres: selectedGenres, page: 1});
 		} else {
 			localStorage.setItem('selectedYear', selectedYear.value.toString());
-			this.filterService.setFilters({genres: selectedGenres, year: selectedYear.value});
+			this.filterService.setFilters({genres: selectedGenres, year: selectedYear.value, page: 1});
 		}
 		this.router.navigate(['filteredMovies']);
+		this.closeDialog();
+	}
+	showDialog(){
+		this.visible = true;
+	}
+	closeDialog(){
+		this.visible = false;
 	}
 }

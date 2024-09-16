@@ -11,7 +11,6 @@ import { ClearObservable } from '../../directives/clearObservable';
 import { Store } from '@ngrx/store';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
-import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../services/auth.service';
@@ -25,7 +24,6 @@ import { AuthService } from '../../services/auth.service';
 		CardModule,
 		LimitedSymbolsPipe,
 		ButtonModule,
-		SkeletonModule,
 		ToastModule
 	],
 	templateUrl: './card-movie.component.html',

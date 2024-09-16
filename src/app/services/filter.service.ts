@@ -9,7 +9,7 @@ export class FilterService {
 	private filtersSubject = new BehaviorSubject<filteredAttributes>({});
 	$filteredAttributes = this.filtersSubject.asObservable();
 
-	setFilters(filters: any){
+	setFilters(filters: filteredAttributes){
 		this.filtersSubject.next(filters);
 	}
 }
