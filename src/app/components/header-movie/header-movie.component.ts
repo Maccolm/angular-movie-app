@@ -10,7 +10,7 @@ import { BehaviorSubject, debounceTime, Observable, of, switchMap, takeUntil, ta
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../models/movie.models';
 import { CommonModule } from '@angular/common';
-import { ExtractYearFromDatePipe } from '../../pipes/extract-year-from-date.pipe';
+import { ExtractYearFromDatePipe } from '../../pipes/extractYearFromDatePipe/extract-year-from-date.pipe';
 import { Router } from '@angular/router';
 import { clearMoviesState, loadMoviesFromSearch } from '../../store/actions';
 import { Store } from '@ngrx/store';

@@ -17,11 +17,28 @@ import { AuthService } from '../../services/auth.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { Movie, Video } from '../../models/movie.models';
+import { TabViewModule } from 'primeng/tabview';
+import { CarouselMovieListComponent } from '../../components/carousel-movie-list/carousel-movie-list.component';
+import { ReviewsOnMovieComponent } from '../../components/reviews-on-movie/reviews-on-movie.component';
 
 @Component({
 	selector: 'app-movie-description-page',
 	standalone: true,
-	imports: [CardModule, NumberDurationFormatPipe, BudgetNumberFormatPipe, DividerModule, ButtonModule, CarouselModule, CarouselComponent, ToastModule, ConfirmPopupModule,],
+	imports: [
+		CardModule, 
+		NumberDurationFormatPipe, 
+		BudgetNumberFormatPipe, 
+		DividerModule, 
+		ButtonModule, 
+		CarouselModule, 
+		CarouselComponent, 
+		ToastModule, 
+		ConfirmPopupModule, 
+		TabViewModule, 
+		CarouselMovieListComponent, 
+		ReviewsOnMovieComponent
+	],
 	templateUrl: './description-movie-page.component.html',
 	styleUrl: './description-movie-page.component.scss',
 	providers: [ConfirmationService, MessageService]
@@ -32,6 +49,7 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	@Input() isInFavorite: boolean = false;
 
 	public movie: any;
+	public videos: Video[] = [];
 	public movieId!: number;
 	public displayDialog: boolean = false;
 	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
@@ -41,6 +59,10 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 	public companies!: string[];
 	public website!: string;
 	public isLoggedIn: boolean = false;
+	public picturesCategory: string = 'pictures';
+	public videosCategory: string = 'videos';
+	public carousel__title: string = 'Similar Movies'
+	public similarMovies: Movie[] = [];
 	loadingFavorites: Boolean = false;
 	loadingWatchList: Boolean = false;
 	ratingPercentage: number = 0;
@@ -74,11 +96,18 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 						this.isInWatchList = isWatchList;
 					})
 				})
+				this.movieService.getVideosById(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(videos => {
+					this.videos = videos.results;
+				})
+				this.movieService.getSimilarMovies(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+					this.similarMovies = movies.results;
+				})
 			}
 		});
 		this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
 			this.isLoggedIn = isLoggedIn;
 		})
+		
 	}
 	addToFavorites(event: Event) {
 		if(this.isLoggedIn){

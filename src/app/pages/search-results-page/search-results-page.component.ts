@@ -8,15 +8,17 @@ import { MovieCardComponent } from "../../components/card-movie/movie-card.compo
 import { CommonModule } from '@angular/common';
 import { loadMoviesFromSearch } from '../../store/actions';
 import { NavigationStart, Router } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-search-results-page',
   standalone: true,
-  imports: [MovieCardComponent, MovieCardComponent, CommonModule],
+  imports: [MovieCardComponent, MovieCardComponent, CommonModule, SkeletonModule],
   templateUrl: './search-results-page.component.html',
   styleUrl: './search-results-page.component.scss'
 })
 export class SearchResultsPageComponent extends ClearObservable implements OnInit {
+	skeletonCards: number = 6;
 	searchData!: ApiMovieModel | null;
 	searchQuery!: string;
 	moviesFromSearch!: Movie[] | null;
@@ -56,7 +58,6 @@ export class SearchResultsPageComponent extends ClearObservable implements OnIni
 			if (event instanceof NavigationStart && event.url !== this.router.url) {
 				localStorage.removeItem('searchQuery');
 				localStorage.removeItem('currentPage');
-
 			}
 		});
 	}
@@ -94,6 +95,9 @@ export class SearchResultsPageComponent extends ClearObservable implements OnIni
 	}
 	getPages(totalPages: number): number[] {
 		return Array.from({ length: totalPages }, (_, i) => i + 1);
+	}
+	getSkeletonArray(): number[]{
+		return Array(this.skeletonCards).fill(0);
 	}
 }
 

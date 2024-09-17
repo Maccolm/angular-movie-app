@@ -1,0 +1,25 @@
+@if(movies){
+	<div class="carousel__wrapper">
+		<h2 class="carousel__title">{{title}}</h2>
+		<p-carousel
+			[value]="movies"
+			[numVisible]="7"
+			[circular] = "true"
+			[autoplayInterval]="autoplay"
+			[responsiveOptions]="responsiveOptions"
+		>
+			<ng-template let-movie pTemplate="item">
+				<div class="trending__item">
+					<div class="trending__img">
+						<a (click)="navigateWithData(movie.id)">
+							<img [src]="BACKDROP_PATH + movie.poster_path" alt="backdrop_img">
+						</a>
+					</div>
+					<div class="trending__title">
+						<p>{{movie.title}}</p>
+					</div>
+				</div>
+			</ng-template>
+		</p-carousel>
+	</div>
+}

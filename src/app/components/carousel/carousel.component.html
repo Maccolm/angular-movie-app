@@ -1,12 +1,47 @@
-<p-carousel
-[value]="images"
-[numVisible]="2.5"
-[numScroll]="2" 
-[responsiveOptions]="responsiveOptions"
->
-	<ng-template let-image pTemplate="item">
+@if(category === 'pictures'){
+	<p-carousel
+		[value]="images"
+		[numVisible]="2.5"
+		[numScroll]="2" 
+		[responsiveOptions]="responsiveOptions"
+		>
+			<ng-template let-image pTemplate="item">
+				<div class="carousel__item" (click)="displayPicture = true;">
+					<img [src]="image" alt="Media_picture" class="carousel__img">
+				</div>
+			</ng-template>
+	</p-carousel>
+	<p-galleria 
+		[value]="images"
+		[(visible)]="displayPicture"
+		[circular]="true"
+		[fullScreen]="true"
+		[showItemNavigators]="true"
+		[showThumbnails]="false"
+		>
+		<ng-template let-item pTemplate="item">
+			<img [src]="item" alt="Media_picture" class="gallery-img">
+		</ng-template>
+	
+	</p-galleria>
+}
+@if(category === 'videos'){
+	<p-carousel
+		[value]="videos"
+		[numVisible]="2"
+		[numScroll]="2"
+		[responsiveOptions]="responsiveVideoOptions"
+	>
+	<ng-template let-video pTemplate="item">
 		<div class="carousel__item">
-			<img [src]="image" alt="Media_picture" class="carousel__img">
+			<div class="video__title">
+				<h3>{{video.name}}</h3>
+			</div>
+				<div class="video-container">
+					<youtube-player [videoId]="video.key" loadApi="true"/>
+				</div>
 		</div>
+
 	</ng-template>
-</p-carousel>
+	</p-carousel>
+}

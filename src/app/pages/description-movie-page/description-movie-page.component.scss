@@ -44,6 +44,9 @@ h1{
 		position: relative;
 	}
 }
+.text{
+	line-height: 1.7;
+}
 //body============================================================
 .movie__card-detail{
 	max-width: 1200px;
@@ -172,4 +175,7 @@ h1{
 .p-card-footer{
 	display: flex;
 	justify-content: space-between;
+}
+.similar-movies-container{
+	margin: 5rem 0;
 }

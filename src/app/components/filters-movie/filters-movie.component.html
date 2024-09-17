@@ -1,0 +1,30 @@
+<p-button label="Filters" (onClick)="showDialog()" icon="pi pi-filter" iconPos="left" class="filter__button"/>
+<p-dialog header="Filters" [(visible)]="visible" [modal]="true" >
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+		<div class="form-genres">
+			@for(genreControl of getGenresControls(); let i = $index; track genres){
+				<div class="form-genres__item">
+					<p-checkbox
+						[formControl]="genreControl"
+						[label]="genres[i].name"
+						[value]="genres[i].id"
+					/>
+				</div>
+			}
+		</div>
+		<div class="form__footer">
+			<p-dropdown
+				appendTo="body"
+				formControlName="year"
+				[options]="years"
+				optionLabel="label"
+				placeholder="Select a year"
+				class="filter__year"
+			/>
+			<div class="filter__actions">
+				<p-button label="Cancel" (onClick)="closeDialog()" class="filter__button filter__button-cancel"/>
+				<p-button label="Apply" type="submit" class="filter__button filter__button-submit"/>
+			</div>
+		</div>
+	</form>
+</p-dialog>

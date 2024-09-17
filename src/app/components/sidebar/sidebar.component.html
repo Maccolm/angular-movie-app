@@ -1,15 +1,16 @@
 
-<p-sidebar [(visible)]="sidebarVisible" styleClass="custom-sidebar w-30rem">
+<p-sidebar [(visible)]="sidebarVisible" [transitionOptions]="'400ms cubic-bezier(0.175, 0.72, 0.685, 1)'" styleClass="custom-sidebar w-30rem">
 	<ng-template pTemplate="body">
 		<div class="aside-menu__container">
 			<ul class="aside-menu__list">
 				@for(link of links; track link) {
 					<li class="aside-menu__item" routerLinkActive='active-link' [routerLinkActiveOptions]="{exact: true}">
-						<a [routerLink]="link.url" class="text">{{link.name}}</a>
+						<a [routerLink]="link.url" class="text"><span><i [class]="link.icon" [style]="link.color"></i></span> {{link.name}}</a>
 					</li>
 				}
 			</ul>
 			<div class="aside-menu__item-interactions"><app-sorting></app-sorting></div>
+			<div class="aside-menu__item-interactions"><app-filters-movie></app-filters-movie></div>
 		</div>
 	</ng-template>
 </p-sidebar>

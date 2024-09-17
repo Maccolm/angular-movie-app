@@ -1,0 +1,57 @@
+.reviews {
+	&__title {
+		padding-left: 10px;
+		margin: 0 0 3rem 0;
+		font-weight: 600;
+		font-family: proximanova, Matterhorn, Helvetica, sans-serif;
+		text-transform: uppercase;
+		text-align: left;
+		font-size: clamp(1rem, -0.078rem + 2.9vw, 2rem);
+		color: #000000;
+	}
+ }
+ .review {
+	&__container {
+		display: flex;
+		gap: 1rem;
+		padding: 10px;
+		&:nth-child(even){
+			background-color: rgb(228, 228, 228)
+		}
+		&:nth-child(odd){
+			background-color: #fafafa;
+		}
+		@media screen and (max-width: 600px) {
+			display: block;
+		}
+	}
+	&__content {
+		p{
+			margin-top: 0;
+		}
+		span{
+			font-size: 15px;
+			font-weight: 600;
+			color: #000000;
+		}
+	}
+ }
+ .content-review {
+	&__body{
+		color: #000000;
+		line-height: 1.7;
+	}
+	&__button{
+		margin-bottom: 2rem;
+		background: none;
+		border: none;
+		padding: 0;
+		text-decoration: underline;
+		cursor: pointer;
+		transition: color 0.3s ease 0s;
+		&:hover{
+			color: rgb(138, 138, 138);
+		}
+	}
+ }
+ 

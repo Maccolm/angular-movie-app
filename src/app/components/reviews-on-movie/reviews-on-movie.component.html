@@ -1,0 +1,43 @@
+<div class="reviews__wrapper">
+	<h2 class="reviews__title">Reviews</h2>
+	@for( review of reviews; let i = $index; track reviews ){
+		<div class="review__container">
+			<div class="review__avatar">
+				@if (review.author_details.avatar_path) {
+					<p-avatar
+						[image]="img_path + review.author_details.avatar_path"
+						size="xlarge"
+						shape="circle"
+					/>
+				} @else {
+					<p-avatar
+						icon="pi pi-user"
+						size="xlarge"
+						shape="circle"
+					/>
+				}
+			</div>
+			<div class="review__content content-review">
+				<div class="content-review__header">
+					<p><span>{{review.author_details.username}},</span> created {{review.created_at | transformDate}}</p>
+				</div>
+				<div class="content-review__body">
+					@if(!expanded[i]){
+						<p>{{review.content | limitedSymbols: 250}}</p>
+					}
+					@if(expanded[i]){
+						<p>{{review.content}}</p>
+					}
+					@if(review.content.length > 250){
+						<button class="content-review__button" (click)="toggleExpand(i)">
+							{{ expanded[i] ? 'Read less' : 'Read full review' }}
+						</button>
+					}
+				</div>
+				<div class="content-review__footer">
+					<p-rating [(ngModel)]="review.author_details.rating" [readonly]="true" [cancel]="false" />
+				</div>
+			</div>
+		</div>
+	}
+</div>

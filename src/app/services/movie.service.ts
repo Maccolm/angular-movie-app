@@ -6,7 +6,7 @@ import {
 	Observable,
 	throwError,
 } from 'rxjs';
-import { ApiMovieModel, DetailsMovie, Movie } from '../models/movie.models';
+import { ApiMovieModel, DetailsMovie, Movie, ReviewsApi } from '../models/movie.models';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -43,6 +43,26 @@ export class MovieService {
 	}
 	getMovieMedia(id: number){
 		return this.httpClient.get<any>(`${this.apiUrl}/${id}/images?${this.apiKey}`)
+	}
+	getVideosById(id: number){
+		return this.httpClient.get<any>(`${this.apiUrl}/${id}/videos?${this.apiKey}`)
+	}
+	getSimilarMovies(id: number){
+		return this.httpClient.get<ApiMovieModel>(`${this.apiUrl}/${id}/similar?page=1&${this.apiKey}`)
+	}
+	getReviewsOnMovie(movieId: number, page: number = 1){
+		return this.httpClient.get<ReviewsApi>(`${this.apiUrl}/${movieId}/reviews?page=${page}&${this.apiKey}`)
+	}
+	getFilteredMovies(genres: number[] | null, year: number | null, page: number = 1) {
+		let url = `${this.baseUrl}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
+		if(genres) {
+			const apiGenres = genres.join('%2C');
+			url +=`&with_genres=${apiGenres}`
+		};
+		if(year) {
+			url +=`&primary_release_year=${year}`
+		}
+		return this.httpClient.get<ApiMovieModel>(`${url}&${this.apiKey}`);
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {

@@ -58,11 +58,23 @@
 		<div class="movie__desc movie__desc-detail">
 			<div class="media">
 				<h4 class="media__title">Media</h4>
-				<div class="media__carousel">
-					<app-carousel 
-					[id]="movieId"
-					></app-carousel>
-				</div>
+				<p-tabView>
+					<p-tabPanel header="Pictures">
+						<div class="media__carousel">
+							<app-carousel 
+								[id]="movieId"
+								[category]="picturesCategory"
+							></app-carousel>
+						</div>
+					</p-tabPanel>
+					<p-tabPanel header="Videos">
+						<app-carousel
+							[id]="movieId"
+							[category]="videosCategory"
+						>
+						</app-carousel>
+					</p-tabPanel>
+				</p-tabView>
 			</div>
 			<h3>Description</h3>
 			<p class="text">{{ movie.overview }}</p>
@@ -70,6 +82,13 @@
 		<div class="blur__back blur__side">
 			<img class="bg-img" [src]="IMAGINE_PATH + movie.backdrop_path" alt="{{movie.title}}">
 		</div>
+		<div class="similar-movies-container">
+			<app-carousel-movie-list 
+				[movies]="similarMovies"
+				[title]="carousel__title"
+			/>
+		</div>
+		<app-reviews-on-movie [movieId]="movieId"/>
 	</p-card>
 }
 @if(!movie){
