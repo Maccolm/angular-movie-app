@@ -36,10 +36,10 @@ export class MovieService {
 		return this.httpClient.get<ApiMovieModel>(`${this.baseUrl}/trending/movie/week?language=en-US&${this.apiKey}`)
 	}
 	searchMovie(query: string, page: number = 1){
-		return this.httpClient.get<any>(`${this.baseUrl}/search/movie?query=${query}&page=${page}&${this.apiKey}`)
+		return this.httpClient.get<ApiMovieModel>(`${this.baseUrl}/search/movie?query=${query}&page=${page}&${this.apiKey}`)
 	}
 	sortMoviesBy(method: string, page: number = 1){
-		return this.httpClient.get<any>(`${this.baseUrl}/discover/movie?${this.apiKey}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${method}`)
+		return this.httpClient.get<ApiMovieModel>(`${this.baseUrl}/discover/movie?${this.apiKey}&include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${method}`)
 	}
 	getMovieMedia(id: number){
 		return this.httpClient.get<any>(`${this.apiUrl}/${id}/images?${this.apiKey}`)

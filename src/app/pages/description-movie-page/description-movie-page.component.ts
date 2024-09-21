@@ -96,9 +96,6 @@ export class MovieDescriptionComponent extends ClearObservable implements OnInit
 						this.isInWatchList = isWatchList;
 					})
 				})
-				this.movieService.getVideosById(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(videos => {
-					this.videos = videos.results;
-				})
 				this.movieService.getSimilarMovies(this.movieId).pipe(takeUntil(this.destroy$)).subscribe(movies => {
 					this.similarMovies = movies.results;
 				})

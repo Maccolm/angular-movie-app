@@ -66,11 +66,13 @@ export class MovieHeaderComponent extends ClearObservable implements OnInit {
 			switchMap((query) =>
 				this.movieService.searchMovie(query),
 			)).pipe(takeUntil(this.destroy$)).subscribe((movies) => {
-				if (movies) {
+				if(movies) {
 					this.isLoading = false;
 					this.moviesFromSearch = movies.results;
-					this.numberMoviesFromSearch = movies.total_results;
-					this.isFindMovie = movies.total_results > 0;
+					if(movies.total_results){
+						this.numberMoviesFromSearch = movies.total_results;
+						this.isFindMovie = movies.total_results > 0;
+					}
 				}
 			});
 			this.authService.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {

@@ -78,7 +78,7 @@ export interface ReviewsApi {
 			name: string,
 			username: string,
 			avatar_path: string,
-			rating: 8
+			rating: number
 		 },
 		 content: string,
 		 created_at: string,
@@ -94,7 +94,7 @@ export interface Reviews {
 	  name: string,
 	  username: string,
 	  avatar_path: string,
-	  rating: 8
+	  rating: number
 	},
 	content: string,
 	created_at: string,
