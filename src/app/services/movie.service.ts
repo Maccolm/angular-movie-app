@@ -79,7 +79,7 @@ export class MovieService {
 		const url = `${this.baseUrl}/account/${this.accountId}/favorite?${this.apiKey}&session_id=${this.sessionId}`;
 		const body = {
 			media_type: 'movie',
-			media_id: movie.	id,
+			media_id: movie.id,
 			favorite: true,
 		};
 		return this.httpClient.post<Movie>(url, body);

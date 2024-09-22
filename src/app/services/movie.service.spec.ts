@@ -9,9 +9,16 @@ import { popularMovies } from '../../../mock-data';
 import { AuthService } from './auth.service';
 
 describe('MovieService', () => {
+  let authService = AuthService;
   let service: MovieService;
   let httpTestingController: HttpTestingController;
   let injector: TestBed;
+  const mockAccountId = 12345;
+  const mockSessionId = 'session123';
+  const authServiceMock = {
+	getPublicAccountId: jest.fn().mockReturnValue(mockAccountId),
+	getSessionId: jest.fn().mockReturnValue(mockSessionId),
+ };
   const mockMovies: Movie[] = popularMovies;
   const mockMovie: Movie = {
     id: 1,
@@ -41,10 +48,6 @@ describe('MovieService', () => {
     popularity: 0,
     poster_path: '',
   };
-  const authServiceMock = {
-	 getPublicAccountId: jest.fn(),
-	 getSessionId: jest.fn(),
-  };
   const mockMoviesApi: ApiMovieModel = {
 	page: 1,
 	results: popularMovies,
@@ -70,8 +73,7 @@ describe('MovieService', () => {
 		 url: 'https://example.com/review/12345',
 	  },
 	],
- };
- 
+};
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -83,9 +85,10 @@ describe('MovieService', () => {
     });
 
     injector = getTestBed();
-
     service = injector.inject(MovieService);
     httpTestingController = injector.inject(HttpTestingController);
+	 service['accountId'] = mockAccountId;
+	 service['sessionId'] = mockSessionId;
   });
 
   afterEach(() => {
@@ -241,4 +244,108 @@ describe('MovieService', () => {
 	expect(req.request.method).toBe('GET');
 	req.flush(mockMoviesApi);
   });
+//favorite list functions===========================================
+  it('should return favorites movies', () => {
+	service.getFavoriteMovies().subscribe((movies) => {
+		expect(movies).toEqual(mockMovies);
+	});
+	const req = httpTestingController.expectOne(
+		(request) => 
+			request.url.includes(mockAccountId.toString()) &&
+			request.url.includes(service['apiKey']) &&
+			request.url.includes(mockSessionId)
+	);
+	expect(req.request.method).toBe('GET');
+	req.flush({ results: mockMovies });
+  });
+
+  it('should set movie to favorites', () => {
+	service.setToFavoriteMovies(mockMovie).subscribe((response) => {
+		expect(response).toEqual(mockMovie);
+	});
+	const req = httpTestingController.expectOne(
+		(request) =>
+			request.url.includes(mockAccountId.toString()) &&
+			request.url.includes(service['apiKey']) &&
+			request.url.includes(mockSessionId)
+	);
+	expect(req.request.method).toBe('POST');
+	expect(req.request.body).toEqual({
+		media_type: 'movie',
+		media_id: mockMovie.id,
+		favorite: true,
+	});
+	req.flush(mockMovie);
+  });
+
+  it('should remove movie from favorite list', () => {
+	service.removeFromFavoriteMovies(mockMovie).subscribe((response) => {
+		expect(response).toEqual(mockMovie);
+	});
+	const req = httpTestingController.expectOne(
+		(request) => 
+			request.url.includes(mockAccountId.toString()) &&
+			request.url.includes(service['apiKey']) &&
+			request.url.includes(mockSessionId)
+	);
+	expect(req.request.method).toBe('POST');
+	expect(req.request.body).toEqual({
+		media_type: 'movie',
+		media_id: mockMovie.id,
+		favorite: false,
+	});
+	req.flush(mockMovie);
+  });
+//watchList functions==================================================
+	it('should return watch list movies', () => {
+	service.getWatchList().subscribe((movies) => {
+		expect(movies).toEqual(mockMovies);
+	});
+	const req = httpTestingController.expectOne(
+		(request) => 
+			request.url.includes(mockAccountId.toString()) &&
+			request.url.includes(service['apiKey']) &&
+			request.url.includes(mockSessionId)
+	);
+	expect(req.request.method).toBe('GET');
+	req.flush({ results: mockMovies });
+	});
+
+	it('should set movie to watch list', () => {
+	service.setToWatchList(mockMovie).subscribe((response) => {
+		expect(response).toEqual(mockMovie);
+	});
+	const req = httpTestingController.expectOne(
+		(request) =>
+			request.url.includes(mockAccountId.toString()) &&
+			request.url.includes(service['apiKey']) &&
+			request.url.includes(mockSessionId)
+	);
+	expect(req.request.method).toBe('POST');
+	expect(req.request.body).toEqual({
+		media_type: 'movie',
+		media_id: mockMovie.id,
+		watchlist: true,
+	});
+	req.flush(mockMovie);
+	});
+	
+	it('should remove movie from watch list', () => {
+		service.removeFromWatchList(mockMovie).subscribe((response) => {
+			expect(response).toEqual(mockMovie);
+		});
+		const req = httpTestingController.expectOne(
+			(request) => 
+				request.url.includes(mockAccountId.toString()) &&
+				request.url.includes(service['apiKey']) &&
+				request.url.includes(mockSessionId)
+		);
+		expect(req.request.method).toBe('POST');
+		expect(req.request.body).toEqual({
+			media_type: 'movie',
+			media_id: mockMovie.id,
+			watchlist: false,
+		});
+		req.flush(mockMovie);
+	  });
 });
