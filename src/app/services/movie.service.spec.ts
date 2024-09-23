@@ -9,7 +9,6 @@ import { popularMovies } from '../../../mock-data';
 import { AuthService } from './auth.service';
 
 describe('MovieService', () => {
-  let authService = AuthService;
   let service: MovieService;
   let httpTestingController: HttpTestingController;
   let injector: TestBed;
