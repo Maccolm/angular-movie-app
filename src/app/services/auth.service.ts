@@ -108,7 +108,6 @@ export class AuthService {
 	this.loggedInSubject.next(false);
 	return this.auth.signOut().then(() =>{
 		console.log('logged out');
-		localStorage.clear();
 	})
   }
   //FireBase===========================================================================

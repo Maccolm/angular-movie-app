@@ -41,13 +41,13 @@ export class AppComponent extends ClearObservable implements OnInit {
 				const { accountId, sessionId } = data;
 				this.authService.setAccountId(accountId);
 				this.authService.setSessionId(sessionId);
+				this.store.dispatch(loadFavoriteMovies());
+				this.store.dispatch(loadWatchList());
 			},
 				error => {
 					console.error('Authentication failed:', error);
 				}
 			);
-			this.store.dispatch(loadFavoriteMovies());
-			this.store.dispatch(loadWatchList());
 		}
 	}
 }

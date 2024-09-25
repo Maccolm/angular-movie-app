@@ -99,10 +99,11 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 						this.errorMessage = 'Invalid email or password. Please try again.';
 						this.loading = false;
 						this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
+						
 					}
 				});
 			}).catch(() => {
-				this.errorMessage = 'Please fill in all required fields.'
+				this.errorMessage = 'Invalid email or password. Please try again.'
 				this.loading = false;
             this.messageService.add({ severity: 'error', summary: 'Login Failed', detail: 'Invalid email or password. Please try again.', life: 3000 });
 			})
@@ -129,7 +130,6 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 				this.showLogInForm();
 			}).catch(error => {
 				this.registerLoading = false;
-				this.errorMessage = `Registration failed: ${error.message}`
 				if(error.code = 'auth/email-already-in-use') {
 					this.registerErrorMessage = 'This email address already exists. Please use another email address'
 				}

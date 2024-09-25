@@ -11,26 +11,26 @@ import { Movie } from '../../models/movie.models';
 
 
 @Component({
-  selector: 'app-movie-upcoming-page',
-  standalone: true,
-  templateUrl: './upcoming-movie-page.component.html',
-  styleUrl: './upcoming-movie-page.component.scss',
-  imports: [MovieCardComponent, MovieHeaderComponent, DataViewModule],
+	selector: 'app-movie-upcoming-page',
+	standalone: true,
+	templateUrl: './upcoming-movie-page.component.html',
+	styleUrl: './upcoming-movie-page.component.scss',
+	imports: [MovieCardComponent, MovieHeaderComponent, DataViewModule],
 })
 export class MovieUpcomingPageComponent extends ClearObservable implements OnInit {
-  public upcoming: Movie[] = [];
+	public upcoming: Movie[] = [];
 
-  constructor(private store: Store) {
-	super();
-  }
-  ngOnInit(): void {
-	this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
-		this.upcoming = movies || [];
-	})
-  }
-  changeOnPage(event: any){
-	window.scrollTo({top: 0, behavior: 'smooth'})
-	const newPage = event.first + 1
-	this.store.dispatch(loadMovies({category: 'popular', page: newPage}))
-}
+	constructor(private store: Store) {
+		super();
+	}
+	ngOnInit(): void {
+		this.store.select(selectMovies).pipe(takeUntil(this.destroy$)).subscribe(movies => {
+			this.upcoming = movies || [];
+		})
+	}
+	changeOnPage(event: any) {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+		const newPage = event.first + 1
+		this.store.dispatch(loadMovies({ category: 'popular', page: newPage }))
+	}
 }
