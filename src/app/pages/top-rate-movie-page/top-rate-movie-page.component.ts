@@ -31,6 +31,6 @@ export class MovieTopRatePageComponent extends ClearObservable implements OnInit
 	changeOnPage(event: any){
 		window.scrollTo({top: 0, behavior: 'smooth'})
 		const newPage = event.first + 1
-		this.store.dispatch(loadMovies({category: 'popular', page: newPage}))
+		this.store.dispatch(loadMovies({category: 'top_rated', page: newPage}))
 	}
 }

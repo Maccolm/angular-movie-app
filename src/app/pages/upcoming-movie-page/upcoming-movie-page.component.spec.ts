@@ -10,7 +10,7 @@ import { MovieService } from '../../services/movie.service';
 import { of } from 'rxjs';
 
 class MockAuth {
-	isLoggedIn$ = of(false); // Mock implementation
+	isLoggedIn$ = of(false);
  }
 describe('MovieUpcomingPageComponent', () => {
   let component: MovieUpcomingPageComponent;
@@ -60,7 +60,7 @@ describe('MovieUpcomingPageComponent', () => {
   it('should dispatch loadMovies with correct page on page change', () => {
 	const mockEvent = { first: 2 };
 	const spyDispatch = jest.spyOn(store, 'dispatch');
-	const spyScroll = jest.spyOn(window, 'scrollTo').mockImplementation(() => {})
+	const spyScroll = jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
 	component.changeOnPage(mockEvent);
 	expect(spyDispatch).toHaveBeenCalledWith(loadMovies({ category: 'popular', page: 3 }));
 	expect(spyScroll).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
