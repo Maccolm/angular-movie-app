@@ -4,6 +4,7 @@ import { MovieNowPlayingPageComponent } from './now-playing-movie-page.component
 import { selectMovies } from '../../store/selectors';
 import { popularMovies } from '../../../../mock-data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { loadMovies } from '../../store/actions';
 
 describe('MovieNowPlayingPageComponent', () => {
   let component: MovieNowPlayingPageComponent;
@@ -44,5 +45,13 @@ describe('MovieNowPlayingPageComponent', () => {
     const spy = jest.spyOn(component.destroy$, 'next');
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalledWith(true);
+  });
+  it('should dispatch loadMovies with correct page on page change', () => {
+	const mockEvent = { first: 2 };
+	const spyDispatch = jest.spyOn(store, 'dispatch');
+	const spyScroll = jest.spyOn(window, 'scrollTo').mockImplementation(() => {});
+	component.changeOnPage(mockEvent);
+	expect(spyDispatch).toHaveBeenCalledWith(loadMovies({ category: 'now_playing', page: 3 }));
+	expect(spyScroll).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
 });

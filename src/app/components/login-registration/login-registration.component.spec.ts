@@ -105,7 +105,7 @@ describe('LoginRegistrationComponent', () => {
 	await component.onSubmitLogIn();
 
 	expect(authService.login).toHaveBeenCalled();
-	expect(component.errorMessage).toBe('Please fill in all required fields.');
+	expect(component.errorMessage).toBe('Invalid email or password. Please try again.');
   });
   it('should handle successful registration', () => {
 	const mockRegisterResponse = Promise.resolve();
