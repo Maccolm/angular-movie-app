@@ -10,7 +10,11 @@ import { CommonModule } from '@angular/common';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { ButtonModule } from 'primeng/button';
 import { By } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
 
+class MockAuth {
+	isLoggedIn$ = of(false);
+}
 describe('MovieFavoriteListPageComponent', () => {
   let component: MovieFavoriteListPageComponent;
   let fixture: ComponentFixture<MovieFavoriteListPageComponent>;
@@ -47,6 +51,7 @@ describe('MovieFavoriteListPageComponent', () => {
       providers: [
         provideMockStore({}),
         { provide: MovieService, useValue: movieServiceMock },
+		  { provide: AuthService, useClass: MockAuth },
       ],
     }).compileComponents();
 
