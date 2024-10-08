@@ -12,6 +12,12 @@ describe('MovieEffects', () => {
   let effects: MovieEffects;
   let actions$: ReplaySubject<any>;
   let movieService: MovieService;
+  const mockApiMovies: ApiMovieModel = {
+	page: 1,
+	total_pages: 1,
+	results: popularMovies,
+	total_results: popularMovies.length
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,6 +31,8 @@ describe('MovieEffects', () => {
             getMoviesByCategory: jest.fn(),
             getFavoriteMovies: jest.fn(),
             getWatchList: jest.fn(),
+				searchMovie: jest.fn(),
+				getTrendingMovies: jest.fn()
           }
         }
       ]
@@ -42,7 +50,7 @@ describe('MovieEffects', () => {
       results: mockMovies,
     };
 	 
-    actions$.next(actions.loadMovies({category: 'action'}));
+    actions$.next(actions.loadMovies({category: 'action', page: 1}));
 	 jest.spyOn(movieService, 'getMoviesByCategory').mockReturnValue(of(mockApiMovieModel));
 
     effects.loadMovies$.subscribe(result => {
@@ -76,6 +84,16 @@ describe('MovieEffects', () => {
 			done();
 		})
 	});
+	it('should return loadFavoriteMoviesFailure on error', (done) => {
+	 const error = new Error('Failed to load favorite movies');
+	 actions$.next(actions.loadFavoriteMovies());
+	 jest.spyOn(movieService, 'getFavoriteMovies').mockReturnValue(throwError(() => error));
+ 
+	 effects.loadFavoriteMovies$.subscribe(result => {
+		 expect(result).toEqual(actions.loadFavoriteMoviesFailure({ error }));
+		 done();
+	 });
+	});
   });
   describe('WatchList', () => {
 	it('should return loadWatchListSuccess on success', (done) => {
@@ -88,6 +106,57 @@ describe('MovieEffects', () => {
 			expect(result).toEqual(actions.loadWatchListSuccess({ watchList: mockWatchList}));
 			done();
 		})
+	});
+	it('should return loadWatchListFailure on error', (done) => {
+		const error = new Error('Failed to load watchlist');
+		actions$.next(actions.loadWatchList());
+		jest.spyOn(movieService, 'getWatchList').mockReturnValue(throwError(() => error));
+		effects.loadWatchList$.subscribe(result => {
+			expect(result).toEqual(actions.loadWatchListFailure({ error }));
+			done();
+		});
+	});
+  });
+  describe('SearchMovies', () => {
+	it('should return loadMoviesFromSearchSuccess on successful search', (done) => {
+		const mockSearchResults: ApiMovieModel = mockApiMovies;
+		const query = 'Test';
+		actions$.next(actions.loadMoviesFromSearch({ query, page: 1 }));
+		jest.spyOn(movieService, 'searchMovie').mockReturnValue(of(mockSearchResults));
+		effects.loadMoviesFromSearch$.subscribe(results => {
+			expect(results).toEqual(actions.loadMoviesFromSearchSuccess({ searchedMovies: mockSearchResults, query }));
+			done();
+		});
+	});
+	it('should return loadMoviesFailure on search error', (done) => {
+		const query = 'Test';
+		const error = new Error('Failed to search movies');
+		actions$.next(actions.loadMoviesFromSearch({query, page: 1}));
+		jest.spyOn(movieService, 'searchMovie').mockReturnValue(throwError(() => error));
+		effects.loadMoviesFromSearch$.subscribe(result => {
+			expect(result).toEqual(actions.loadMoviesFailure({ error }));
+			done();
+		});
+	});
+  });
+  describe('TrendingMovies', () => {
+	it('should return loadTrendingMoviesSuccess on success', (done) => {
+		const mockTrendingMovies: ApiMovieModel = mockApiMovies;
+		actions$.next(actions.loadTrendingMovies());
+		jest.spyOn(movieService, 'getTrendingMovies').mockReturnValue(of(mockTrendingMovies));
+		effects.loadTrendingMovies$.subscribe(result => {
+			expect(result).toEqual(actions.loadTrendingMoviesSuccess({ trendingMovies: mockTrendingMovies }));
+			done();
+		});
+	});
+	it('should return loadTrendingMoviesFailure on error', (done) => {
+		const error = new Error('Failed to load trending movies');
+		actions$.next(actions.loadTrendingMovies());
+		jest.spyOn(movieService, 'getTrendingMovies').mockReturnValue(throwError(() => error));
+		effects.loadTrendingMovies$.subscribe(result => {
+			expect(result).toEqual(actions.loadTrendingMoviesFailure({ error }));
+			done();
+		});
 	});
   });
 });

@@ -12,7 +12,7 @@ import { CarouselMovieListComponent } from '../../components/carousel-movie-list
   standalone: true,
   imports: [RouterModule, CarouselMovieListComponent],
   templateUrl: './start-page.component.html',
-  styleUrl: './start-page.component.scss',
+  styleUrls: ['./start-page.component.scss'],
 })
 export class StartPageComponent extends ClearObservable implements OnInit{
 	IMAGINE_PATH = '../../../assets/img/background/poster_bg.jpeg';

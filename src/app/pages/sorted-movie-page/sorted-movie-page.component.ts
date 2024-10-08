@@ -12,7 +12,7 @@ import { Movie } from '../../models/movie.models';
   standalone: true,
   imports: [MovieCardComponent, DataViewModule],
   templateUrl: './sorted-movie-page.component.html',
-  styleUrl: './sorted-movie-page.component.scss'
+  styleUrls: ['./sorted-movie-page.component.scss']
 })
 export class SortedMoviePageComponent extends ClearObservable implements OnInit{
 	public movies: Movie[] = [];
