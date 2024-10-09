@@ -16,7 +16,7 @@ import { YouTubePlayer } from '@angular/youtube-player';
 export class CarouselComponent extends ClearObservable implements OnInit, OnChanges {
 	@Input() id!: number;
 	@Input() category!: string;
-	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500/';
+	public IMAGINE_PATH: string = 'https://image.tmdb.org/t/p/w500';
 	public images: string[] = [];
 	public videos: string[] = [];
 	public displayPicture: boolean = false;
