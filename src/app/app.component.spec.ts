@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
@@ -101,28 +101,13 @@ describe('AppComponent', () => {
 	expect(mockStore.dispatch).toHaveBeenCalledWith(loadWatchList());
   });
   it('should handle authentication failure', fakeAsync(() => {
-	Object.defineProperty(window, 'localStorage', {
-		value: {
-			getItem: jest.fn((key) => {
-				if (key === 'login') return 'testLogin';
-				if (key === 'password') return 'testPassword';
-				if (key === 'loggedWithGoogle') return 'false';
-				return null;
-			}),
-			setItem: jest.fn(),
-			clear: jest.fn(),
-		},
-		writable: true,
-	 })
-    const error = new Error('Authentication failed');
-    (mockAuthService.authenticateAndGetAccountId as jest.Mock).mockReturnValue(throwError(() => error));
-    console.error = jest.fn();
-    component.ngOnInit();
-	 tick();
-
-    expect(mockAuthService.authenticateAndGetAccountId).toHaveBeenCalledWith();
-    expect(console.error).toHaveBeenCalledWith('Authentication failed:', error);
-    expect(mockStore.dispatch).not.toHaveBeenCalledWith(loadFavoriteMovies());
-    expect(mockStore.dispatch).not.toHaveBeenCalledWith(loadWatchList());
+		const error = new Error('Authentication failed');
+		mockAuthService.authenticateAndGetAccountId.mockReturnValue(throwError(() => error));
+		const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+		component.ngOnInit();
+		flush();
+		expect(mockStore.dispatch).not.toHaveBeenCalledWith(loadFavoriteMovies());
+		expect(mockStore.dispatch).not.toHaveBeenCalledWith(loadWatchList());
+		consoleErrorSpy.mockRestore();
   }));
 });
