@@ -5,7 +5,12 @@ import { selectMovies } from '../../store/selectors';
 import { popularMovies } from '../../../../mock-data';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { loadMovies } from '../../store/actions';
+import { of } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
+class MockAuth {
+	isLoggedIn$ = of(true);
+}
 describe('MovieNowPlayingPageComponent', () => {
   let component: MovieNowPlayingPageComponent;
   let fixture: ComponentFixture<MovieNowPlayingPageComponent>;
@@ -14,7 +19,10 @@ describe('MovieNowPlayingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideMockStore({ initialState })],
+      providers: [
+			provideMockStore({ initialState }),
+			{provide: AuthService, useClass: MockAuth }
+		],
       imports: [
         HttpClientTestingModule,
         MovieNowPlayingPageComponent,

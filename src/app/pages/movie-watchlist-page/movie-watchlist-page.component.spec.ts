@@ -8,6 +8,7 @@ import { removeMovieFromWatchList } from '../../store/actions';
 import { Movie } from '../../models/movie.models';
 import { MovieCardComponent } from '../../components/card-movie/movie-card.component';
 import { By } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
 
 describe('MovieWatchListPageComponent', () => {
   let component: MovieWatchListPageComponent;
@@ -31,6 +32,9 @@ describe('MovieWatchListPageComponent', () => {
   ];
 
   beforeEach(async () => {
+	let mockAuthService = {
+		isLoggedIn$: of(true),
+	}
     const movieServiceMock = {
       removeFromWatchList: jest.fn().mockReturnValue(of(mockMovies[0])),
     };
@@ -43,6 +47,7 @@ describe('MovieWatchListPageComponent', () => {
       providers: [
         provideMockStore({}),
         { provide: MovieService, useValue: movieServiceMock },
+        { provide: AuthService, useValue: mockAuthService },
       ],
     }).compileComponents();
 

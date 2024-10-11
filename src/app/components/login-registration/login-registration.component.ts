@@ -77,11 +77,11 @@ export class LoginRegistrationComponent extends ClearObservable implements OnIni
 			const enteredEmail = this.logInForm.value['email'];
 			const enteredPassword = this.logInForm.value['password'];
 
-			window.localStorage.setItem('login', enteredEmail);
-			window.localStorage.setItem('password', enteredPassword);
 			this.authService.login(enteredEmail, enteredPassword).then(() => {
 				this.authService.authenticateAndGetAccountId().pipe(takeUntil(this.destroy$)).subscribe({
 					next: ({ accountId, sessionId }) => {
+						window.localStorage.setItem('login', enteredEmail);
+						window.localStorage.setItem('password', enteredPassword);
 						console.log('Login successful:', { accountId, sessionId });
 						this.authService.setAccountId(accountId);
 						this.authService.setSessionId(sessionId);

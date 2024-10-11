@@ -4,8 +4,6 @@ import { BehaviorSubject, catchError, map, Observable, switchMap, tap, throwErro
 import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,7 +17,7 @@ export class AuthService {
 	private username = 'VitaliiShapovalov';
 	private password = 'cN.hwyTvag3s.8m';
 	private readonly tokenBearer = environment.apiToken;
-	private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn())
+	private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 	isLoggedIn$ = this.loggedInSubject.asObservable();
 	
 	constructor(private http: HttpClient, private router: Router, private auth: Auth) { 

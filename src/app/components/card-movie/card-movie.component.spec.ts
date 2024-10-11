@@ -8,7 +8,13 @@ import { setMovieToFavorite, setMovieToWatchList } from '../../store/actions';
 import { isInFavorite, isInWatchList } from '../../store/selectors';
 import { Movie } from '../../models/movie.models';
 import { NO_ERRORS_SCHEMA } from '@angular/compiler';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../../services/auth.service';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+class MockAuth {
+	isLoggedIn$ = of(true);
+}
 describe('MovieCardComponent', () => {
   let component: MovieCardComponent;
   let fixture: ComponentFixture<MovieCardComponent>;
@@ -40,11 +46,12 @@ describe('MovieCardComponent', () => {
 
     await TestBed.configureTestingModule({
 		imports: [
-			MovieCardComponent,
+			MovieCardComponent, HttpClientTestingModule, BrowserAnimationsModule, NoopAnimationsModule
 			],
       providers: [
         { provide: MovieService, useValue: movieService },
         { provide: Router, useValue: router },
+        { provide: AuthService, useClass: MockAuth },
         provideMockStore({
           selectors: [
             { selector: isInFavorite(mockMovie.id), value: false },
