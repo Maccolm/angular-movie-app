@@ -86,7 +86,11 @@
 			background-color: rgb(216, 216, 216);
 			color: white; 
 			font-weight: bold; 
-	}
+		}
+		&-section{
+			height: 53px;
+			pointer-events: none;
+		}
 	}
 }
 .aside-menu__item i {

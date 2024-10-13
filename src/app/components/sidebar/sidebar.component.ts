@@ -76,4 +76,30 @@ export class MovieSidebarComponent extends ClearObservable {
 		  color: 'color: rgb(89, 110, 133)',
 		},
 	 ];
+	 tvShowLinks = [
+		{
+			name: 'Airing today',
+			url: 'airing_today',
+			icon: 'pi pi-cloud',
+			color: 'color: #19769c',
+		},
+		{
+			name: 'On the air',
+			url: 'on_the_air',
+			icon: 'pi pi-check-circle',
+			color: 'color: rgb(89, 133, 92)',
+		},
+		{
+			name: 'Popular',
+			url: 'popular',
+			icon: 'pi pi-chevron-circle-right',
+			color: 'color: rgb(236, 200, 90)',
+		},
+		{
+			name: 'Top rated',
+			url: 'top_rated',
+			icon: 'pi pi-chevron-up',
+			color: 'color: rgb(255, 140, 68)',
+		}
+	 ];
 }

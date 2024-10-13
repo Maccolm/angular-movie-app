@@ -10,6 +10,21 @@
 				</a>
 			</li>
 		}
+		<div class="tv-container">
+			<li class="aside-menu__item aside-menu__item-section">
+				TV <span class="aside-menu__item-section-span">Shows</span>
+			</li>
+			@for(link of tvShowLinks; track link) {
+				<li class="aside-menu__item"  routerLinkActive='active-link' [routerLinkActiveOptions]="{exact: true}">
+					<a [routerLink]="link.url" class="icon">
+						<span><i [class]="link.icon" [style]="link.color"></i></span>
+					</a>
+					<a [routerLink]="link.url" class="text">
+						<p>{{link.name}}</p>
+					</a>
+				</li>
+			}
+		</div>
 		<li class="aside-menu__item-interactions"><app-sorting></app-sorting></li>
 		<li class="aside-menu__item-interactions"><app-filters-movie></app-filters-movie></li>
 	</ul>

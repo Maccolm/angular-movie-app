@@ -15,9 +15,9 @@ import { AuthService } from './auth.service';
 })
 export class MovieService {
 	private apiKey = environment.apiKey;
-	private apiToken = environment.apiToken;
 	private apiUrl = environment.apiUrl;
 	private baseUrl = environment.baseUrl;
+	private tvShowUrl = environment.tvShowUrl;
 	private accountId: any;
 	private sessionId: any;
 
@@ -63,6 +63,10 @@ export class MovieService {
 			url +=`&primary_release_year=${year}`
 		}
 		return this.httpClient.get<ApiMovieModel>(`${url}&${this.apiKey}`);
+	}
+	//tv shows =========================================================
+	getTvShowsByCategory(category: string, page: number = 1){
+		return this.httpClient.get<ApiMovieModel>(`${this.tvShowUrl}/${category}?page=${page}&${this.apiKey}`);
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
