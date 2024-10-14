@@ -5,7 +5,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { MovieService } from '../services/movie.service';
 import * as actions from './actions';
 import { MovieEffects } from './effects'; 
-import { ApiMovieModel, Movie } from '../models/movie.models';
+import { ApiMovieModel, mockApiTvShowModel, Movie, TvShow } from '../models/movie.models';
 import { popularMovies } from '../../../mock-data';
 
 describe('MovieEffects', () => {
@@ -18,7 +18,28 @@ describe('MovieEffects', () => {
 	results: popularMovies,
 	total_results: popularMovies.length
   };
-
+  const mockTvShows: TvShow[]  = [
+	{ 	id: 1,
+		title: 'Movie 1',
+		name: 'Movie 1',
+		original_name: 'Movie 1',
+		first_air_date:'2023-01-01',
+		backdrop_path: '/path/to/backdrop',
+		original_language: 'en',
+		overview: 'An overview of the movie.',
+		popularity: 7.8,
+		release_date: '2023-01-01',
+		vote_average: 8.2,
+		vote_count: 1200,
+		poster_path: '/path/to/poster' },
+ ];
+  const mockApiTvShowModel: mockApiTvShowModel = {
+	page: 1,
+	total_pages: 1,
+	results: mockTvShows,
+	total_results: mockTvShows.length
+  };
+ 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -159,4 +180,13 @@ describe('MovieEffects', () => {
 		});
 	});
   });
+  it('should return loadTvShow on success', (done) => {	
+	actions$.next(actions.loadMovies({category: 'action', page: 1}));
+	jest.spyOn(movieService, 'getMoviesByCategory').mockReturnValue(of(mockApiTvShowModel));
+
+	effects.loadTvShows$.subscribe(result => {
+	  expect(result).toEqual(actions.loadTvShowsSuccess({ tvShows: mockTvShows }));
+	  done();
+	});
+ });
 });

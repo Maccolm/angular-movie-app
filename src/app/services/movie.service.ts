@@ -6,7 +6,7 @@ import {
 	Observable,
 	throwError,
 } from 'rxjs';
-import { ApiMovieModel, DetailsMovie, Movie, ReviewsApi } from '../models/movie.models';
+import { ApiMovieModel, DetailsMovie, mockApiTvShowModel, Movie, ReviewsApi } from '../models/movie.models';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -66,7 +66,7 @@ export class MovieService {
 	}
 	//tv shows =========================================================
 	getTvShowsByCategory(category: string, page: number = 1){
-		return this.httpClient.get<ApiMovieModel>(`${this.tvShowUrl}/${category}?page=${page}&${this.apiKey}`);
+		return this.httpClient.get<mockApiTvShowModel>(`${this.tvShowUrl}/${category}?page=${page}&${this.apiKey}`);
 	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {

@@ -1,8 +1,23 @@
 import { MovieReducer, initialState } from './reducer';
 import * as MovieActions from './actions';
-import { Movie } from '../models/movie.models';
+import { Movie, TvShow } from '../models/movie.models';
 
 describe('MovieReducer', () => {
+	const tvShows: TvShow[] = [{
+		id: 1,
+		title: 'Movie 1',
+		name: 'Movie 1',
+		original_name: 'Movie 1',
+		first_air_date:'2023-01-01',
+		backdrop_path: '/path/to/backdrop',
+		original_language: 'en',
+		overview: 'An overview of the movie.',
+		popularity: 7.8,
+		release_date: '2023-01-01',
+		vote_average: 8.2,
+		vote_count: 1200,
+		poster_path: '/path/to/poster'
+	}]
   it('should return the initial state', () => {
     const state = MovieReducer(undefined, { type: 'unknown' });
     expect(state).toBe(initialState);
@@ -204,4 +219,14 @@ describe('MovieReducer', () => {
     const state = MovieReducer(initialTestState, MovieActions.removeMovieFromWatchList({ movieId: 1 }));
     expect(state).toEqual(expectedState);
   });
+
+  it('should handle loadTvShowSuccess', () => {
+	const expectedState = {
+		...initialState,
+		tvShows: tvShows,
+		error: null,
+	};
+	const state = MovieReducer(initialState, MovieActions.loadTvShowsSuccess({ tvShows }));
+	expect(state).toEqual(expectedState);
+  })
 });

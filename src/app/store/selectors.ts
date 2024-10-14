@@ -20,3 +20,5 @@ export const isInWatchList = (movieId: number) => createSelector( selectWatchLis
 export const selectSearchQuery = createSelector(selectState, state => state.query);
 export const selectSearchedMovies = createSelector(selectState, state => state.searchedMovies);
 export const selectTrendingMovies = createSelector(selectState, state => state.trendingMovies);
+
+export const selectTvShows = createSelector(selectState, state => state.tvShows);

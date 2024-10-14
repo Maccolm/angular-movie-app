@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { ApiMovieModel, Movie } from "../models/movie.models";
+import { ApiMovieModel, Movie, TvShow } from "../models/movie.models";
 
 export const loadMovies = createAction('[Movie] Load Movies',
 	props<{ category: string, page?: number; }>()
@@ -61,5 +61,15 @@ export const loadTrendingMoviesSuccess = createAction('[Movie] Load Trending Mov
 	props<{ trendingMovies: ApiMovieModel }>()
 )
 export const loadTrendingMoviesFailure = createAction('[Movie] Load Trending Movies Failure',
+	props<{ error: any }>()
+)
+
+export const loadTvShows = createAction('[TV Show] Load TV Show',
+	props<{ category: string, page?: number; }>()
+)
+export const loadTvShowsSuccess = createAction('[TV Show] Load TV Show Success', 
+	props<{ tvShows: TvShow[] | null }>()
+) 
+export const loadTvShowsFailure = createAction('[TV Show] Load TV Show failure',
 	props<{ error: any }>()
 )

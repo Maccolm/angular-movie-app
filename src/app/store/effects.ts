@@ -12,6 +12,9 @@ import {
   loadTrendingMovies,
   loadTrendingMoviesFailure,
   loadTrendingMoviesSuccess,
+  loadTvShows,
+  loadTvShowsFailure,
+  loadTvShowsSuccess,
   loadWatchList,
   loadWatchListFailure,
   loadWatchListSuccess,
@@ -88,6 +91,21 @@ export class MovieEffects {
 		return this.movieService.getTrendingMovies().pipe(
 			map((trendingMovies) => loadTrendingMoviesSuccess({ trendingMovies })),
 			catchError((error) => of(loadTrendingMoviesFailure({ error })))
+		)
+	})
+  ));
+
+  loadTvShows$ = createEffect(() => this.actions$.pipe(
+	ofType(loadTvShows),
+	switchMap((action) => {
+		const { category, page } = action;
+		return this.movieService.getTvShowsByCategory(category, page).pipe(
+			map((tvShows) => {
+				return loadTvShowsSuccess({
+					tvShows: tvShows.results,
+				})
+			}),
+			catchError((error) => of(loadTvShowsFailure({ error })))
 		)
 	})
   ))

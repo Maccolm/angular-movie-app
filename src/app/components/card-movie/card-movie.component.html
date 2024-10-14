@@ -5,8 +5,13 @@
 			<a (click)="navigateWithData()" class="movie__link">
 				<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 			</a>
-			<h1>{{ data.title }}</h1>
-			<h4>{{data.release_date}}</h4>
+			@if(data.title ){
+				<h1>{{ data.title }}</h1>
+				<h4>{{data.release_date}}</h4>
+			} @else {
+				<h1>{{ data.name }}</h1>
+				<h4>{{data.first_air_date}}</h4>
+			}
 		</div>
 	</ng-template>
 	<div class="movie__desc">

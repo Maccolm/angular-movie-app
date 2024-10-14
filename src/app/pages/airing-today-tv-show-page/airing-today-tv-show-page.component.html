@@ -1,1 +1,9 @@
-<p>airing-today-tv-show-page works!</p>
+<p-dataView [value]="serials" [rows]="1" [paginator]="true" (onPage)="changeOnPage($event)">
+	<ng-template pTemplate="list" let-products>
+		<div class="movie-list">
+			@for(serial of serials; track serial.id){
+				<app-movie-card [data]="serial" style="display: block; max-width: 430px; width: 100%;"></app-movie-card>
+			}
+		</div>
+	</ng-template>
+</p-dataView>

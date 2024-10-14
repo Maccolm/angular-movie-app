@@ -4,6 +4,9 @@ export interface ApiMovieModel {
 	total_pages?: number;
 	total_results?: number;
 }
+export interface mockApiTvShowModel extends ApiMovieModel {
+	results: TvShow[];
+}
 export interface Movie {
   adult?: boolean;
   backdrop_path: string;
@@ -20,7 +23,11 @@ export interface Movie {
   vote_average: number;
   vote_count?:number;
 }
-
+export interface TvShow extends Movie {
+	name: string,
+	original_name: string,
+	first_air_date: string,
+}
 export interface DetailsMovie extends Movie {
 	belongs_to_collection?: {
 		id: number;

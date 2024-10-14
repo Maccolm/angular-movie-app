@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store'
 import { initialState } from './state'
-import { clearMoviesState, loadFavoriteMoviesFailure, loadFavoriteMoviesSuccess, loadMoviesFailure, loadMoviesFromSearchSuccess, loadMoviesSuccess, loadTrendingMoviesFailure, loadTrendingMoviesSuccess, loadWatchListFailure, loadWatchListSuccess, removeMovieFromFavorite, removeMovieFromWatchList, setMovieToFavorite, setMovieToWatchList } from './actions';
+import { clearMoviesState, loadFavoriteMoviesFailure, loadFavoriteMoviesSuccess, loadMoviesFailure, loadMoviesFromSearchSuccess, loadMoviesSuccess, loadTrendingMoviesFailure, loadTrendingMoviesSuccess, loadTvShowsFailure, loadTvShowsSuccess, loadWatchListFailure, loadWatchListSuccess, removeMovieFromFavorite, removeMovieFromWatchList, setMovieToFavorite, setMovieToWatchList } from './actions';
 
 export const MovieReducer = createReducer(
 	initialState,
@@ -95,6 +95,20 @@ export const MovieReducer = createReducer(
 		return {
 			...state,
 			trendingMovies: null,
+			error: error
+		}
+	}),
+	on(loadTvShowsSuccess, (state, { tvShows }) => {
+		return {
+			...state,
+			tvShows: tvShows,
+			error: null
+		}
+	}),
+	on(loadTvShowsFailure, (state, { error }) => {
+		return {
+			...state,
+			tvShows: null,
 			error: error
 		}
 	})

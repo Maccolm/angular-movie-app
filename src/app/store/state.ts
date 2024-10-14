@@ -1,4 +1,4 @@
-import { ApiMovieModel, Movie } from "../models/movie.models";
+import { ApiMovieModel, Movie, TvShow } from "../models/movie.models";
 
 export interface MovieState {
 	movies: Movie[] | null;
@@ -9,6 +9,7 @@ export interface MovieState {
 	searchedMovies?: ApiMovieModel | null;
 	error?: any;
 	query?: string | null;
+	tvShows: TvShow[] | null;
 };
 export const initialState: MovieState = {
 	movies: null,
@@ -18,4 +19,5 @@ export const initialState: MovieState = {
 	trendingMovies: null,
 	searchedMovies: null,
 	query: null,
+	tvShows: null,
 };
