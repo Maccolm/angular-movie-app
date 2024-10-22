@@ -13,5 +13,6 @@ export const routes: Routes = [
 	{path: 'search_results', loadComponent: () => import('./pages/search-results-page/search-results-page.component').then(m => m.SearchResultsPageComponent)},
 	{path: 'sorting', loadComponent: () => import('./pages/sorted-movie-page/sorted-movie-page.component').then(m => m.SortedMoviePageComponent)},
 	{path: 'filteredMovies', loadComponent: () => import('./pages/filtered-movies-page/filtered-movies-page.component').then(m => m.FilteredMoviesPageComponent)},
-	{path: 'airing_today', loadComponent: () => import('./pages/airing-today-tv-show-page/airing-today-tv-show-page.component').then(m => m.AiringTodayTvShowPageComponent)}
+	{path: 'airing_today', loadComponent: () => import('./pages/airing-today-tv-show-page/airing-today-tv-show-page.component').then(m => m.AiringTodayTvShowPageComponent)},
+	{path: 'tv/:id', loadComponent: () => import('./pages/description-show-page/description-show-page.component').then(m => m.DescriptionShowPageComponent)}
 ];

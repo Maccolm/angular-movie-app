@@ -64,10 +64,6 @@ export class MovieService {
 		}
 		return this.httpClient.get<ApiMovieModel>(`${url}&${this.apiKey}`);
 	}
-	//tv shows =========================================================
-	getTvShowsByCategory(category: string, page: number = 1){
-		return this.httpClient.get<mockApiTvShowModel>(`${this.tvShowUrl}/${category}?page=${page}&${this.apiKey}`);
-	}
 	//favorite list functions===========================================
 	getFavoriteMovies(): Observable<Movie[]> {
 		this.accountId = this.auth.getPublicAccountId();

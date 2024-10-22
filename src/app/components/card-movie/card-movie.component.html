@@ -2,7 +2,7 @@
 <p-card class="movie__card">
 	<ng-template pTemplate="header">
 		<div class="movie__header">
-			<a (click)="navigateWithData()" class="movie__link">
+			<a (click)="data.first_air_date ? navigateWithData('tv') : navigateWithData('movie')" class="movie__link">
 				<img [src]="IMAGINE_PATH + data.poster_path" alt="{{ data.title }}" class="locandina">
 			</a>
 			@if(data.title ){
@@ -16,8 +16,7 @@
 	</ng-template>
 	<div class="movie__desc">
 		<p class="text">{{ data.overview | limitedSymbols: 120}}</p>
-		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="navigateWithData()"
-			severity="info"></p-button>
+		<p-button type="button" label=" Details" icon="pi pi-info-circle" (click)="data.first_air_date ? navigateWithData('tv') : navigateWithData('movie')" severity="info"></p-button>
 	</div>
 	<ng-template pTemplate="footer">
 		@if(isLoggedIn){

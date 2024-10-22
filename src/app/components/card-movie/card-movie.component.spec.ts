@@ -100,7 +100,7 @@ describe('MovieCardComponent', () => {
   });
 
   it('should navigate to movie details page on navigateWithData', () => {
-    component.navigateWithData();
+    component.navigateWithData('category');
 
     expect(router.navigate).toHaveBeenCalledWith(['/movie', mockMovie.id]);
   });79

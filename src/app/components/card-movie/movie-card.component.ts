@@ -90,9 +90,9 @@ export class MovieCardComponent extends ClearObservable implements OnInit {
 			}
 		});
 	}
-	navigateWithData() {
+	navigateWithData(category: string) {
 		const id = this.movie.id;
-		this.router.navigate(['/movie', id]);
+		this.router.navigate([`/${category}`, id]);
 	}
 	initRating(rating: number){
 		this.ratingPercentage = rating / 0.1;

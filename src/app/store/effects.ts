@@ -20,6 +20,7 @@ import {
   loadWatchListSuccess,
 } from './actions';
 import { MovieService } from '../services/movie.service';
+import { TvShowService } from '../services/tv-show.service';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -99,7 +100,7 @@ export class MovieEffects {
 	ofType(loadTvShows),
 	switchMap((action) => {
 		const { category, page } = action;
-		return this.movieService.getTvShowsByCategory(category, page).pipe(
+		return this.tvShowService.getTvShowsByCategory(category, page).pipe(
 			map((tvShows) => {
 				return loadTvShowsSuccess({
 					tvShows: tvShows.results,
@@ -110,5 +111,5 @@ export class MovieEffects {
 	})
   ))
 
-  constructor(private actions$: Actions, private movieService: MovieService) {}
+  constructor(private actions$: Actions, private movieService: MovieService, private tvShowService: TvShowService) {}
 }
